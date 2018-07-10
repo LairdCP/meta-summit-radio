@@ -24,6 +24,10 @@ do_unpack_append() {
     subprocess.call(cmd, cwd=os.path.dirname(s))
 }
 
+RPROVIDES_${PN} += "wpa-supplicant"
+RREPLACES_${PN} += "wpa-supplicant"
+RCONFLICTS_${PN} += "wpa-supplicant"
+
 DEPENDS = "dbus libnl"
 RRECOMMENDS_${PN} = "wpa-supplicant-passphrase wpa-supplicant-cli"
 
