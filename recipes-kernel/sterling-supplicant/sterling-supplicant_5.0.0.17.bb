@@ -17,11 +17,12 @@ SRC_URI[sha256sum] = "447bc451497b5e9ebe68ff2ce7f930bcbecb8edab502de12c35bee4c4c
 
 S = "${WORKDIR}/sterling_supplicant-src-${PV}/sterling_supplicant"
 
-do_unpack_extra() {
-	cd ${WORKDIR}/sterling_supplicant-src-${PV}
-	tar -xf sterling_supplicant-src.tar
+do_unpack_append() {
+    import subprocess, os.path
+    s = d.getVar("S", True)
+    cmd = "tar -xf sterling_supplicant-src.tar".split()
+    subprocess.call(cmd, cwd=os.path.dirname(s))
 }
-addtask unpack_extra after do_unpack before do_patch
 
 DEPENDS = "dbus libnl"
 RRECOMMENDS_${PN} = "wpa-supplicant-passphrase wpa-supplicant-cli"
