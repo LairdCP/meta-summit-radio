@@ -4,18 +4,21 @@ SECTION = "Wireless"
 LICENSE = "BSD"
 LIC_FILES_CHKSUM = "file://README;md5=3f01d778be8f953962388307ee38ed2b"
 
+inherit pkgconfig systemd lrd-url
+
 SRC_URI += "\
-	https://raw.github.com/LairdCP/Release-Packages/master/ST60/5.0.0.x/${PV}/sterling_supplicant-src-${PV}.tar.bz2 \
+	${LRD_URI_BASE}/sterling_supplicant-src-${PV}.tar.gz \
 	file://defconfig \
 	file://wpa-supplicant.sh \
 	file://wpa_supplicant.conf \
 	file://wpa_supplicant.conf-sane \
 	file://99_wpa_supplicant \
 	"
-SRC_URI[md5sum] = "533084a6688daa56004e6c5de1ac7bfa"
-SRC_URI[sha256sum] = "447bc451497b5e9ebe68ff2ce7f930bcbecb8edab502de12c35bee4c4c79c3ec"
 
-S = "${WORKDIR}/sterling_supplicant-src-${PV}/sterling_supplicant"
+SRC_URI[md5sum] = "45dc63b4262143c1d66bed61620286dc"
+SRC_URI[sha256sum] = "f803f2fec674a04ffd6219fd0b99670a146ea0cffbf7fdf0adc57c76da2a3c78"
+
+S = "${WORKDIR}/sterling_supplicant-${PV}"
 
 do_unpack_append() {
     import subprocess, os.path
@@ -34,8 +37,6 @@ RRECOMMENDS_${PN} = "wpa-supplicant-passphrase wpa-supplicant-cli"
 PACKAGECONFIG ??= "openssl"
 PACKAGECONFIG[gnutls] = ",,gnutls libgcrypt"
 PACKAGECONFIG[openssl] = ",,openssl"
-
-inherit systemd
 
 SYSTEMD_SERVICE_${PN} = "wpa_supplicant.service wpa_supplicant-nl80211@.service wpa_supplicant-wired@.service"
 SYSTEMD_AUTO_ENABLE = "disable"

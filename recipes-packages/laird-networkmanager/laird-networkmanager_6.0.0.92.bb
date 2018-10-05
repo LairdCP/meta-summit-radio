@@ -6,25 +6,25 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=cbbffd568227ada506640fe950a4823b \
                     file://libnm-util/COPYING;md5=1c4fa765d6eb3cd2fbd84344a1b816cd \
 "
 
+inherit autotools gettext systemd bluetooth bash-completion vala lrd-url
+
+SRC_URI += "${LRD_URI_BASE}/lrd-network-manager-src-${PV}.tar.xz"
+
+SRC_URI[md5sum] = "908baaf4d707640d2762bffa2370c5d7"
+SRC_URI[sha256sum] = "b6a4931be7a0c8adb456b1d9ec790f95506bf1accd4d096780bcbd779136af24"
+
 DEPENDS = "libnl dbus dbus-glib libgudev util-linux libndp libnewt intltool-native curl"
 
-inherit autotools gettext systemd bluetooth bash-completion vala
-
-SRC_URI += "git://git@git.devops.lairdtech.com/CP_linux/lrd_network_manager.git;protocol=ssh;branch=lrd-6.0.2.x"
-SRCREV = "a65cbfaaf7fc1acabe0502efc40c5cf2255555f4"
-
-S = "${WORKDIR}/git"
+S = "${WORKDIR}/lrd-network-manager-${PV}"
 
 EXTRA_OECONF = " \
-	--disable-ovs \
+    --disable-ovs \
     --disable-ifcfg-rh \
-    --disable-ifnet \
-	--disable-ifupdown \
-    --disable-ifcfg-suse \
+    --disable-ifupdown \
     --disable-more-warnings \
     --with-iptables=${sbindir}/iptables \
-	--disable-tests \
-	--disable-more-warnings \
+    --disable-tests \
+    --disable-more-warnings \
     --disable-introspection \
     --disable-nls \
     --disable-vala \
@@ -54,6 +54,7 @@ PACKAGECONFIG[modemmanager] = "--with-modem-manager-1=yes,--with-modem-manager-1
 PACKAGECONFIG[ppp] = "--enable-ppp,--disable-ppp,ppp,ppp"
 # Use full featured dhcp client instead of internal one
 PACKAGECONFIG[dhclient] = "--with-dhclient=${base_sbindir}/dhclient,,,dhcp-client"
+PACKAGECONFIG[dhcpcd] = "--with-dhcpcd=${base_sbindir}/dhcpcd,,,dhcpcd"
 PACKAGECONFIG[dnsmasq] = "--with-dnsmasq=${bindir}/dnsmasq"
 PACKAGECONFIG[nss] = "--with-crypto=nss,,nss"
 PACKAGECONFIG[gnutls] = "--with-crypto=gnutls,,gnutls libgcrypt"
@@ -67,16 +68,16 @@ PACKAGES =+ "libnmutil libnmglib libnmglib-vpn ${PN}-tests \
   ${PN}-adsl \
 "
 
-FILES_libnmutil += "${libdir}/libnm-util.so.*"
-FILES_libnmglib += "${libdir}/libnm-glib.so.*"
-FILES_libnmglib-vpn += "${libdir}/libnm-glib-vpn.so.*"
+FILES_libnmutil += "${libdir}/*/libnm-util.so.*"
+FILES_libnmglib += "${libdir}/*/libnm-glib.so.*"
+FILES_libnmglib-vpn += "${libdir}/*/libnm-glib-vpn.so.*"
 
-FILES_${PN}-adsl = "${libdir}/NetworkManager/libnm-device-plugin-adsl.so"
+FILES_${PN}-adsl = "${libdir}/NetworkManager/*/libnm-device-plugin-adsl.so"
 
 FILES_${PN} += " \
     ${libexecdir} \
     ${libdir}/pppd/*/nm-pppd-plugin.so \
-    ${libdir}/NetworkManager/*.so \
+    ${libdir}/NetworkManager/*/*.so \
     ${nonarch_libdir}/NetworkManager/VPN \
     ${nonarch_libdir}/NetworkManager/conf.d \
     ${datadir}/polkit-1 \
@@ -97,7 +98,7 @@ FILES_${PN}-dbg += " \
 FILES_${PN}-dev += " \
     ${datadir}/NetworkManager/gdb-cmd \
     ${libdir}/pppd/*/*.la \
-    ${libdir}/NetworkManager/*.la \
+    ${libdir}/NetworkManager/*/*.la \
 "
 
 FILES_${PN}-tests = " \
