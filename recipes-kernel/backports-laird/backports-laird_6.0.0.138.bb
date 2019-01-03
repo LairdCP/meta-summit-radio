@@ -6,12 +6,11 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=d7810fab7487fb0aad327b76f1be7cd7"
 inherit module lrd-url
 
 DEPENDS += "coreutils-native"
-RDEPENDS_${PN} += "laird-60-radio-firmware"
 
 SRC_URI += "${LRD_URI_BASE}/${PN}-${PV}.tar.bz2"
 
-SRC_URI[md5sum] = "a7c5403c67ad89e72a2025b0bff107f6"
-SRC_URI[sha256sum] = "08d75ed9cd6b61783f1b97dbbc05810a5d87023c71517013fa266bcfddc22632"
+SRC_URI[md5sum] = "2511ad69729d308da31636848d0c1b55"
+SRC_URI[sha256sum] = "791da482395f529a0aa8f935c23c79193634f8fc24498faa18ed6a9912099705"
 
 S = "${WORKDIR}/laird-backport-${PV}"
 

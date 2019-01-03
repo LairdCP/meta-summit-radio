@@ -63,7 +63,8 @@ This layer provides the following modules:
     - Sterling WPA supplicant
     - Laird NetworkManager
 
- - To use Wi-Fi driver add "backports-laird" recipe to your image
+ - To use Wi-Fi driver add "backports-laird" and appropriate firmware recipe 
+   to your image
    1. Remove cfg80211 and mac80211 from the kernel config
    2. Explicitly add the cfg80211 and mac80211 dependencies to the kernel config
 

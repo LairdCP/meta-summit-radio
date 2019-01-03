@@ -15,8 +15,8 @@ SRC_URI += "\
 	file://99_wpa_supplicant \
 	"
 
-SRC_URI[md5sum] = "45dc63b4262143c1d66bed61620286dc"
-SRC_URI[sha256sum] = "f803f2fec674a04ffd6219fd0b99670a146ea0cffbf7fdf0adc57c76da2a3c78"
+SRC_URI[md5sum] = "bfedffa851916fec88124711a336acaa"
+SRC_URI[sha256sum] = "f3eb9935be214f13eecf662c50612098cd4cb17e4e447f3af9a7a055004eb23f"
 
 S = "${WORKDIR}/sterling_supplicant-${PV}"
 
