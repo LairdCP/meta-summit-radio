@@ -26,5 +26,5 @@ do_install_append() {
     KD=`cd  ${D}/lib/modules; ls`
     echo KV $KD
     mkdir -v ${D}/lib/modules/${KD}/updates
-    mv -v ${D}/lib/modules/${KD}/{compat,drivers,net} ${D}/lib/modules/${KD}/updates
+    mv -v ${D}/lib/modules/${KD}/[a-t]* ${D}/lib/modules/${KD}/updates
 }
