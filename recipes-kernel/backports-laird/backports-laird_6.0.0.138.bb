@@ -20,3 +20,11 @@ do_compile_prepend() {
 	rm -f ${S}/.kernel_config_md5
 	oe_runmake CC=${BUILD_CC} defconfig-sterling60
 }
+
+do_install_append() {
+    # backports need to go into updates/ to be detected correctly
+    KD=`cd  ${D}/lib/modules; ls`
+    echo KV $KD
+    mkdir -v ${D}/lib/modules/${KD}/updates
+    mv -v ${D}/lib/modules/${KD}/{compat,drivers,net} ${D}/lib/modules/${KD}/updates
+}
