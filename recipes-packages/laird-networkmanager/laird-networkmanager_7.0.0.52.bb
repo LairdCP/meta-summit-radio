@@ -10,8 +10,8 @@ inherit autotools gettext systemd bluetooth bash-completion vala lrd-url
 
 SRC_URI += "${LRD_URI_BASE}/lrd-network-manager-src-${PV}.tar.xz"
 
-SRC_URI[md5sum] = "f0e557ccffc5850d65797d3310e27f70"
-SRC_URI[sha256sum] = "5968eed67af9e8763f8e2c58b68c63516475f909d20dab438eca2baa1e7f5a36"
+SRC_URI[md5sum] = "feb9206a701f65b2eadda18f0da2611e"
+SRC_URI[sha256sum] = "0f741d558c40356122a6061996a9c78ef4bae8f92eba96cb7b949e9a00c0a296"
 
 DEPENDS = "libnl dbus dbus-glib libgudev util-linux libndp libnewt intltool-native curl"
 

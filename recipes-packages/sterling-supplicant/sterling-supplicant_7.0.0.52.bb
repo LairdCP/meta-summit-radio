@@ -2,7 +2,7 @@ SUMMARY = "Laird Wi-Fi Sterling Supplicant"
 SECTION = "Wireless"
 
 LICENSE = "BSD"
-LIC_FILES_CHKSUM = "file://README;md5=3f01d778be8f953962388307ee38ed2b"
+LIC_FILES_CHKSUM = "file://README;md5=495cbce6008253de4b4d8f4cdfae9f4f"
 
 inherit pkgconfig systemd lrd-url
 
@@ -15,8 +15,8 @@ SRC_URI += "\
 	file://99_wpa_supplicant \
 	"
 
-SRC_URI[md5sum] = "bfedffa851916fec88124711a336acaa"
-SRC_URI[sha256sum] = "f3eb9935be214f13eecf662c50612098cd4cb17e4e447f3af9a7a055004eb23f"
+SRC_URI[md5sum] = "11f803aa44c3b0f2c4596be1bdcde889"
+SRC_URI[sha256sum] = "298c6447b0b58fcf5b13a13e9997a73fbd547baa8157b3c02b44f1b50dc88c36"
 
 S = "${WORKDIR}/sterling_supplicant-${PV}"
 

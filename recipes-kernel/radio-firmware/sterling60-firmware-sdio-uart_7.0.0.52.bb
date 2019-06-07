@@ -1,4 +1,4 @@
-SUMMARY = "Laird Sterling 60 Firmware PCIE-USB"
+SUMMARY = "Laird Sterling 60 Firmware SDIO-UART"
 SECTION = "kernel"
 
 LICENSE = "MIT"
@@ -6,10 +6,10 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/MIT;md5=0835ad
 
 inherit allarch lrd-url
 
-SRC_URI += "${LRD_URI_BASE}/laird-sterling60-firmware-pcie-usb-${PV}.tar.bz2"
+SRC_URI += "${LRD_URI_BASE}/laird-sterling60-firmware-sdio-uart-${PV}.tar.bz2"
 
-SRC_URI[md5sum] = "483bad22f90dfa7009a561d32dd2cf19"
-SRC_URI[sha256sum] = "c639be0e23880a3377e5ae643e7343f611b8182b313971b7e44efe97da05e345"
+SRC_URI[md5sum] = "8f523019687dfdf9c3ba0fffdeae59ed"
+SRC_URI[sha256sum] = "43352dcf245a53c370122a31e49bcd19978915dd4b4cf059d086fa3cdb98d7dd"
 
 do_configure[noexec] = "1"
 do_compile[noexec] = "1"
