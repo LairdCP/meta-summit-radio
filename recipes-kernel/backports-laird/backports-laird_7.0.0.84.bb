@@ -9,8 +9,8 @@ DEPENDS += "coreutils-native"
 
 SRC_URI += "${LRD_URI_BASE}/${PN}-${PV}.tar.bz2"
 
-SRC_URI[md5sum] = "8b705b4820b458844a82bf3213e6ff57"
-SRC_URI[sha256sum] = "e0ec35e001e17493fdee9f8dfcfb3eab9da65346a0d1aa8bc6ac7d2d93476219"
+SRC_URI[md5sum] = "e1bdb2f83fa86acd65c5f8ee019db8d4"
+SRC_URI[sha256sum] = "194a3546beff23f17b0cba41f9ac472d594be2cc2e80f6f2d19cb6acb86434cf"
 
 S = "${WORKDIR}/laird-backport-${PV}"
 

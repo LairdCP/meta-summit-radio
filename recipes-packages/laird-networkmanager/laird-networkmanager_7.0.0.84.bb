@@ -10,8 +10,8 @@ inherit autotools gettext systemd bluetooth bash-completion vala lrd-url
 
 SRC_URI += "${LRD_URI_BASE}/lrd-network-manager-src-${PV}.tar.xz"
 
-SRC_URI[md5sum] = "feb9206a701f65b2eadda18f0da2611e"
-SRC_URI[sha256sum] = "0f741d558c40356122a6061996a9c78ef4bae8f92eba96cb7b949e9a00c0a296"
+SRC_URI[md5sum] = "dcafe0b89d2685706a24634e48aaa7ff"
+SRC_URI[sha256sum] = "4364e68a5ef35c55784b78956bce5b7aa23ec02a2e5c700617cd5f6faed78b50"
 
 DEPENDS = "libnl dbus dbus-glib libgudev util-linux libndp libnewt intltool-native curl"
 
@@ -37,7 +37,7 @@ do_compile_prepend() {
         export GIR_EXTRA_LIBS_PATH="${B}/libnm-util/.libs"
 }
 
-PACKAGECONFIG ??= "nss ifupdown netconfig dhclient dnsmasq \
+PACKAGECONFIG ??= "nss ifupdown dhclient dnsmasq \
     ${@bb.utils.contains('DISTRO_FEATURES','systemd','systemd','consolekit',d)} \
     ${@bb.utils.contains('DISTRO_FEATURES','bluetooth','${BLUEZ}','',d)} \
     ${@bb.utils.contains('DISTRO_FEATURES','wifi','wifi','',d)} \
