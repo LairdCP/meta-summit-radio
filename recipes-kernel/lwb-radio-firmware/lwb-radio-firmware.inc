@@ -1,4 +1,3 @@
-SUMMARY = "Laird Sterling 60 Firmware SDIO-SDIO"
 SECTION = "kernel"
 
 LICENSE = "MIT"
@@ -6,10 +5,7 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/MIT;md5=0835ad
 
 inherit allarch lrd-url
 
-SRC_URI += "${LRD_URI_BASE}/laird-sterling60-firmware-sdio-sdio-${PV}.tar.bz2"
-
-SRC_URI[md5sum] = "dc3f66184f19f68c228d20926a43c8f3"
-SRC_URI[sha256sum] = "a10f1ec236e283a770aca3ea33d2e11f71e0e723feb13b131b04a1caf9680d2c"
+SRC_URI += "${LRD_URI_LOCAL}/${LWB_PART_NAME}-${PV}.zip"
 
 do_configure[noexec] = "1"
 do_compile[noexec] = "1"
@@ -18,7 +14,10 @@ FILES_${PN} += "${nonarch_base_libdir}/*"
 
 S = "${WORKDIR}"
 
+ALLOW_EMPTY_${PN}-dev = "0"
+ALLOW_EMPTY_${PN}-dbg = "0"
+
 do_install() {
 	install -d  ${D}${nonarch_base_libdir}
-	cp -r ${S}/lib/* ${D}${nonarch_base_libdir}
+	tar -xjf ${S}/${LWB_PART_NAME}.tar.bz2 -C ${D}${nonarch_base_libdir} --strip-components=2 --no-same-owner
 }
