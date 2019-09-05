@@ -59,8 +59,8 @@ II. Misc
 ========
 
 This layer provides the following modules:
-    - Sterling 60 Wi-Fi driver and firmware
-    - Sterling WPA supplicant
+    - Sterling & Summit 60, LWB, LWB5 Wi-Fi driver and firmware
+    - Sterling & Summit WPA supplicant
     - Laird NetworkManager
 
  - To use Wi-Fi driver add "backports-laird" and appropriate firmware recipe
@@ -68,13 +68,16 @@ This layer provides the following modules:
    1. Remove cfg80211 and mac80211 from the kernel config
    2. Explicitly add the cfg80211 and mac80211 dependencies to the kernel config
 
+ - To use Laird Network Manager add "laird-networkmanager" recipe to your image
+
+ - Layer provides a set custom images that could be used as example or a base for building ones own
+
  - To use Sterling WPA Supplicant add "sterling-supplicant" recipe to your
    image, and in local.conf or <disto>.conf add the following:
         PREFERRED_PROVIDER_wpa-supplicant = "sterling-supplicant"
         PREFERRED_PROVIDER_wpa-supplicant-cli = "sterling-supplicant-cli"
         PREFERRED_PROVIDER_wpa-supplicant-passphrase = "sterling-supplicant-passphrase"
 
- - To use Laird Network Manager add "laird-networkmanager" recipe to your image
-
  - Summit or LWB packages needs to be manually downloaded and placed into
     <yocto top dir>/release folder (if needed)
+

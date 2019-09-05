@@ -1,8 +1,6 @@
 DESCRIPTION = "CP LWB Sample Image"
 LICENSE = "MIT"
 
-IMAGE_FSTYPES = "sdcard.xz tar.bz2"
-
 inherit core-image
 
 export IMAGE_BASENAME = "${PN}"
