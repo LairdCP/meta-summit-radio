@@ -1,4 +1,3 @@
-SUMMARY = "Laird Wi-Fi Sterling Supplicant"
 SECTION = "Wireless"
 
 LICENSE = "BSD"
@@ -7,16 +6,12 @@ LIC_FILES_CHKSUM = "file://README;md5=495cbce6008253de4b4d8f4cdfae9f4f"
 inherit pkgconfig systemd lrd-url
 
 SRC_URI += "\
-	${LRD_URI_BASE}/sterling_supplicant-src-${PV}.tar.gz \
 	file://defconfig \
 	file://wpa-supplicant.sh \
 	file://wpa_supplicant.conf \
 	file://wpa_supplicant.conf-sane \
 	file://99_wpa_supplicant \
 	"
-
-SRC_URI[md5sum] = "f1ad04f62719a7b14971c713f8edf8a8"
-SRC_URI[sha256sum] = "b1ff34606a0259be448625ced21986fecdeccfb25474f3accecc7de03cd4a6da"
 
 S = "${WORKDIR}/sterling_supplicant-${PV}"
 
@@ -40,7 +35,7 @@ RREPLACES_${PN}-cli  += "wpa-supplicant-cli"
 RCONFLICTS_${PN}-cli += "wpa-supplicant-cli"
 
 DEPENDS = "dbus libnl"
-RRECOMMENDS_${PN} = "sterling-supplicant-passphrase sterling-supplicant-cli"
+RRECOMMENDS_${PN} = "${PN}-passphrase ${PN}-cli"
 
 PACKAGECONFIG ??= "openssl"
 PACKAGECONFIG[gnutls] = ",,gnutls libgcrypt"
@@ -49,9 +44,9 @@ PACKAGECONFIG[openssl] = ",,openssl"
 SYSTEMD_SERVICE_${PN} = "wpa_supplicant.service wpa_supplicant-nl80211@.service wpa_supplicant-wired@.service"
 SYSTEMD_AUTO_ENABLE = "disable"
 
-PACKAGES_prepend = "sterling-supplicant-passphrase sterling-supplicant-cli "
-FILES_sterling-supplicant-passphrase = "${bindir}/wpa_passphrase"
-FILES_sterling-supplicant-cli = "${sbindir}/wpa_cli"
+PACKAGES_prepend = "${PN}-passphrase ${PN}-cli "
+FILES_${PN}-passphrase = "${bindir}/wpa_passphrase"
+FILES_${PN}-cli = "${sbindir}/wpa_cli"
 FILES_${PN} += "${datadir}/dbus-1/system-services/*"
 CONFFILES_${PN} += "${sysconfdir}/wpa_supplicant.conf"
 
@@ -118,7 +113,7 @@ do_install () {
 	install -m 0644 ${WORKDIR}/99_wpa_supplicant ${D}/etc/default/volatiles
 }
 
-pkg_postinst_sterling-supplicant () {
+pkg_postinst_${PN} () {
 	# If we're offline, we don't need to do this.
 	if [ "x$D" = "x" ]; then
 		killall -q -HUP dbus-daemon || true

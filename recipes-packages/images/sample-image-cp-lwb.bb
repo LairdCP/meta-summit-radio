@@ -31,4 +31,5 @@ IMAGE_INSTALL += "\
 	iw \
 	lwb-backports-laird \
 	lwb-radio-firmware-fcc \
+	sterling-supplicant-lwb \
 	"

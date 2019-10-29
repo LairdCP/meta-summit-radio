@@ -35,6 +35,7 @@ IMAGE_INSTALL += "\
 	sterling60-firmware-pcie-uart \
 	sterling60-firmware-pcie-usb \
 	sterling60-firmware-usb-uart \
+	sterling60-firmware-usb-usb \
 	sterling-supplicant \
 	laird-networkmanager \
 	"
