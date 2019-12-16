@@ -1,4 +1,4 @@
-SUMMARY = "NetworkManager"
+SUMMARY = "Laird NetworkManager"
 SECTION = "net/misc"
 
 LICENSE = "GPLv2+"
@@ -8,6 +8,8 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=cbbffd568227ada506640fe950a4823b \
 
 DEPENDS = " \
     intltool-native \
+    libxslt-native \
+    glib-2.0-native \
     libnl \
     libgudev \
     util-linux \
