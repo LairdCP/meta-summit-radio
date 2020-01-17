@@ -1,26 +1,32 @@
+SUMMARY = "Laird Wi-Fi 60 Sterling Supplicant"
 SECTION = "Wireless"
 
-LICENSE = "BSD"
-LIC_FILES_CHKSUM = "file://README;md5=495cbce6008253de4b4d8f4cdfae9f4f"
+LICENSE = "BSD-3-Clause"
+LIC_FILES_CHKSUM = "file://COPYING;md5=279b4f5abb9c153c285221855ddb78cc \
+                    file://README;beginline=1;endline=56;md5=e7d3dbb01f75f0b9799e192731d1e1ff \
+                    file://wpa_supplicant/wpa_supplicant.c;beginline=1;endline=12;md5=0a8b56d3543498b742b9c0e94cc2d18b"
+DEPENDS = "dbus libnl"
+RRECOMMENDS_${PN} = "${PN}-passphrase ${PN}-cli"
 
+PACKAGECONFIG ??= "openssl"
+PACKAGECONFIG[gnutls] = ",,gnutls libgcrypt"
+PACKAGECONFIG[openssl] = ",,openssl"
 inherit pkgconfig systemd lrd-url
 
+SYSTEMD_SERVICE_${PN} = "wpa_supplicant.service wpa_supplicant-nl80211@.service wpa_supplicant-wired@.service"
+SYSTEMD_AUTO_ENABLE = "disable"
 SRC_URI += "\
+	${LRD_60_URI_BASE}/sterling_supplicant-src-${PV}.tar.gz \
 	file://defconfig \
 	file://wpa-supplicant.sh \
 	file://wpa_supplicant.conf \
 	file://wpa_supplicant.conf-sane \
 	file://99_wpa_supplicant \
 	"
+SRC_URI[md5sum] = "a5c45e5b8f214e44bdb05bb7ea769f32"
+SRC_URI[sha256sum] = "648ba7dda0dc04f83e5381ac9ca4d483e415c2f1600489953351914136b4e38b"
 
 S = "${WORKDIR}/sterling_supplicant-${PV}"
-
-do_unpack_append() {
-    import subprocess, os.path
-    s = d.getVar("S", True)
-    cmd = "tar -xf sterling_supplicant-src.tar".split()
-    subprocess.call(cmd, cwd=os.path.dirname(s))
-}
 
 RPROVIDES_${PN} += "wpa-supplicant"
 RREPLACES_${PN} += "wpa-supplicant"
@@ -34,16 +40,6 @@ RPROVIDES_${PN}-cli  += "wpa-supplicant-cli"
 RREPLACES_${PN}-cli  += "wpa-supplicant-cli"
 RCONFLICTS_${PN}-cli += "wpa-supplicant-cli"
 
-DEPENDS = "dbus libnl"
-RRECOMMENDS_${PN} = "${PN}-passphrase ${PN}-cli"
-
-PACKAGECONFIG ??= "openssl"
-PACKAGECONFIG[gnutls] = ",,gnutls libgcrypt"
-PACKAGECONFIG[openssl] = ",,openssl"
-
-SYSTEMD_SERVICE_${PN} = "wpa_supplicant.service wpa_supplicant-nl80211@.service wpa_supplicant-wired@.service"
-SYSTEMD_AUTO_ENABLE = "disable"
-
 PACKAGES_prepend = "${PN}-passphrase ${PN}-cli "
 FILES_${PN}-passphrase = "${bindir}/wpa_passphrase"
 FILES_${PN}-cli = "${sbindir}/wpa_cli"
@@ -53,9 +49,7 @@ CONFFILES_${PN} += "${sysconfdir}/wpa_supplicant.conf"
 do_configure () {
 	${MAKE} -C wpa_supplicant clean
 	install -m 0755 ${WORKDIR}/defconfig wpa_supplicant/.config
-	echo "CFLAGS +=\"-I${STAGING_INCDIR}/libnl3\"" >> wpa_supplicant/.config
-	echo "DRV_CFLAGS +=\"-I${STAGING_INCDIR}/libnl3\"" >> wpa_supplicant/.config
-	
+
 	if echo "${PACKAGECONFIG}" | grep -qw "openssl"; then
 		ssl=openssl
 	elif echo "${PACKAGECONFIG}" | grep -qw "gnutls"; then
@@ -118,4 +112,5 @@ pkg_postinst_${PN} () {
 	if [ "x$D" = "x" ]; then
 		killall -q -HUP dbus-daemon || true
 	fi
+
 }

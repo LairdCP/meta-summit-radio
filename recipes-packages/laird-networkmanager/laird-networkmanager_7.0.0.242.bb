@@ -23,8 +23,8 @@ SRC_URI = " \
     ${LRD_60_URI_BASE}/lrd-network-manager-src-${PV}.tar.xz \
     file://networkmanager.initd \
 "
-SRC_URI[md5sum] = "945ac3244e7c7730ad6bd479f736b3ee"
-SRC_URI[sha256sum] = "3bf686526589bd2dfc7e04a84a7bf0dceb8390ecbedaa0f23cdcd881a9f5dc07"
+SRC_URI[md5sum] = "e0301339c83442e9ade379005964cd77"
+SRC_URI[sha256sum] = "90a537e02624792265e54a4ed1ee6c583cc7ed33aed165090ca7fbca9b526fe9"
 
 S = "${WORKDIR}/lrd-network-manager-${PV}"
 
@@ -47,7 +47,7 @@ do_compile_prepend() {
         export GIR_EXTRA_LIBS_PATH="${B}/libnm/.libs:${B}/libnm-glib/.libs:${B}/libnm-util/.libs"
 }
 
-PACKAGECONFIG ??= "nss ifupdown dhclient dnsmasq \
+PACKAGECONFIG ??= "nss ifupdown dnsmasq \
     ${@bb.utils.contains('DISTRO_FEATURES','systemd','systemd','consolekit',d)} \
     ${@bb.utils.contains('DISTRO_FEATURES','bluetooth','${BLUEZ}','',d)} \
     ${@bb.utils.contains('DISTRO_FEATURES','wifi','wifi','',d)} \
