@@ -2,9 +2,7 @@ SUMMARY = "Laird NetworkManager"
 SECTION = "net/misc"
 
 LICENSE = "GPLv2+"
-LIC_FILES_CHKSUM = "file://COPYING;md5=cbbffd568227ada506640fe950a4823b \
-                    file://libnm-util/COPYING;md5=1c4fa765d6eb3cd2fbd84344a1b816cd \
-"
+LIC_FILES_CHKSUM = "file://COPYING;md5=cbbffd568227ada506640fe950a4823b"
 
 DEPENDS = " \
     intltool-native \
@@ -71,7 +69,7 @@ PACKAGECONFIG[nss] = "--with-crypto=nss,,nss"
 PACKAGECONFIG[glib] = "--with-libnm-glib,,dbus-glib-native dbus-glib"
 PACKAGECONFIG[resolvconf] = "--with-resolvconf=${base_sbindir}/resolvconf,,,resolvconf"
 PACKAGECONFIG[gnutls] = "--with-crypto=gnutls,,gnutls"
-PACKAGECONFIG[wifi] = "--enable-wifi=yes,--enable-wifi=no,,wpa-supplicant"
+PACKAGECONFIG[wifi] = "--enable-wifi=yes,--enable-wifi=no,wpa-supplicant"
 PACKAGECONFIG[ifupdown] = "--enable-ifupdown,--disable-ifupdown"
 PACKAGECONFIG[qt4-x11-free] = "--enable-qt,--disable-qt,qt4-x11-free"
 
@@ -91,6 +89,8 @@ FILES_${PN} += " \
     ${libdir}/NetworkManager/*/*.so \
     ${nonarch_libdir}/NetworkManager/VPN \
     ${nonarch_libdir}/NetworkManager/conf.d \
+    ${nonarch_libdir}/NetworkManager/dispatcher.d \
+    ${nonarch_libdir}/NetworkManager/system-connections \
     ${datadir}/polkit-1 \
     ${datadir}/dbus-1 \
     ${noarch_base_libdir}/udev/* \
