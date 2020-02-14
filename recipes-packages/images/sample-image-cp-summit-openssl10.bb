@@ -36,6 +36,6 @@ IMAGE_INSTALL += "\
 	summit60-firmware-pcie-usb \
 	summit60-firmware-usb-uart \
 	summit60-firmware-usb-usb \
-	summit-supplicant \
+	summit-supplicant-openssl10 \
 	laird-networkmanager \
 	"

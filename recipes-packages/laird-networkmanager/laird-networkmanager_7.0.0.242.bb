@@ -15,11 +15,12 @@ DEPENDS = " \
     libnewt \
     curl \
 "
-inherit autotools gettext update-rc.d systemd bluetooth bash-completion gtk-doc lrd-url
+inherit autotools gettext update-rc.d systemd bash-completion gtk-doc lrd-url
 
 SRC_URI = " \
     ${LRD_60_URI_BASE}/lrd-network-manager-src-${PV}.tar.xz \
     file://networkmanager.initd \
+    file://NetworkManager.conf \
 "
 SRC_URI[md5sum] = "e0301339c83442e9ade379005964cd77"
 SRC_URI[sha256sum] = "90a537e02624792265e54a4ed1ee6c583cc7ed33aed165090ca7fbca9b526fe9"
@@ -47,7 +48,7 @@ do_compile_prepend() {
 
 PACKAGECONFIG ??= "nss ifupdown dnsmasq \
     ${@bb.utils.contains('DISTRO_FEATURES','systemd','systemd','consolekit',d)} \
-    ${@bb.utils.contains('DISTRO_FEATURES','bluetooth','${BLUEZ}','',d)} \
+    ${@bb.utils.contains('DISTRO_FEATURES','bluetooth','bluez5','',d)} \
     ${@bb.utils.contains('DISTRO_FEATURES','wifi','wifi','',d)} \
     ${@bb.utils.contains('DISTRO_FEATURES','polkit','polkit','',d)} \
 "
@@ -127,6 +128,7 @@ INITSCRIPT_NAME = "network-manager"
 SYSTEMD_SERVICE_${PN} = "${@bb.utils.contains('PACKAGECONFIG', 'systemd', 'NetworkManager.service NetworkManager-dispatcher.service', '', d)}"
 
 do_install_append() {
+    install -Dm 0644 ${WORKDIR}/NetworkManager.conf ${D}${sysconfdir}/NetworkManager/NetworkManager.conf
     install -Dm 0755 ${WORKDIR}/networkmanager.initd ${D}${sysconfdir}/init.d/network-manager
     rm -rf ${D}/run ${D}${localstatedir}/run
 }

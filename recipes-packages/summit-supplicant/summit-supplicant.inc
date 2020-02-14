@@ -25,14 +25,54 @@ S = "${WORKDIR}/src"
 RDEPENDS_${PN} = "dbus-lib libnl-genl libssl libcrypto"
 
 INSANE_SKIP_${PN} = "ldflags"
+INSANE_SKIP_${PN}-passphrase = "ldflags"
+INSANE_SKIP_${PN}-cli = "ldflags"
 INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
 INHIBIT_PACKAGE_STRIP = "1"
 
 ALLOW_EMPTY_${PN}-dev = "0"
 ALLOW_EMPTY_${PN}-dbg = "0"
 
-FILES_${PN} += "/usr/*"
+RPROVIDES_${PN} += "wpa-supplicant"
+RREPLACES_${PN} += "wpa-supplicant"
+RCONFLICTS_${PN} += "wpa-supplicant"
 
-do_install() {
-	cp -r ${S}/* ${D}
+RPROVIDES_${PN}-passphrase  += "wpa-supplicant-passphrase"
+RREPLACES_${PN}-passphrase  += "wpa-supplicant-passphrase"
+RCONFLICTS_${PN}-passphrase += "wpa-supplicant-passphrase"
+
+RPROVIDES_${PN}-cli  += "wpa-supplicant-cli"
+RREPLACES_${PN}-cli  += "wpa-supplicant-cli"
+RCONFLICTS_${PN}-cli += "wpa-supplicant-cli"
+
+PACKAGES_prepend = "${PN}-passphrase ${PN}-cli "
+FILES_${PN}-passphrase = "${bindir}/wpa_passphrase"
+FILES_${PN}-cli = "${sbindir}/wpa_cli"
+FILES_${PN} += "${datadir}/dbus-1/system-services/* {sysconfdir}/dbus-1/system.d/* ${systemd_unitdir}/system/*"
+
+do_install () {
+	install -d ${D}${sbindir}
+	install -m 755 ${S}/usr/sbin/sdcsupp ${D}${sbindir}
+	install -m 755 ${S}/usr/sbin/wpa_cli ${D}${sbindir}
+
+#	install -d ${D}${bindir}
+#	install -m 755 ${S}/usr/bin/wpa_passphrase ${D}${bindir}
+
+	install -d ${D}${sysconfdir}/dbus-1/system.d
+	install -m 644 ${S}/etc/dbus-1/system.d/wpa_supplicant.conf ${D}${sysconfdir}/dbus-1/system.d
+	install -d ${D}${datadir}/dbus-1/system-services
+	install -m 644 ${S}/usr/share/dbus-1/system-services/*.service ${D}${datadir}/dbus-1/system-services
+
+	if ${@bb.utils.contains('DISTRO_FEATURES','systemd','true','false',d)}; then
+		install -d ${D}${systemd_unitdir}/system
+		install -m 644 ${S}/usr/lib/systemd/system/*.service ${D}${systemd_unitdir}/system
+	fi
+}
+
+pkg_postinst_${PN} () {
+	# If we're offline, we don't need to do this.
+	if [ "x$D" = "x" ]; then
+		killall -q -HUP dbus-daemon || true
+	fi
+
 }
