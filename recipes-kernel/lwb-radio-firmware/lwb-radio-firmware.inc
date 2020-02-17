@@ -18,6 +18,6 @@ ALLOW_EMPTY_${PN}-dev = "0"
 ALLOW_EMPTY_${PN}-dbg = "0"
 
 do_install() {
-	install -d  ${D}${nonarch_base_libdir}
-	tar -xjf ${S}/${LWB_PART_NAME}.tar.bz2 -C ${D}${nonarch_base_libdir} --strip-components=2 --no-same-owner
+	install -d ${D}${nonarch_base_libdir}
+	tar -xjf ${S}/${LWB_PART_NAME}.tar.bz2 -C ${D}${nonarch_base_libdir} --strip-components=1 --no-same-owner
 }
