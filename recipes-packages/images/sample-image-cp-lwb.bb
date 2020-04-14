@@ -17,8 +17,6 @@ IMAGE_FEATURES_remove = "\
 	"
 
 IMAGE_INSTALL += "\
-	net-config \
-	usb-gadget \
 	iproute2 \
 	rng-tools \
 	ca-certificates \
@@ -30,6 +28,6 @@ IMAGE_INSTALL += "\
 	tcpdump \
 	iw \
 	lwb-backports-laird \
-	lwb-radio-firmware-fcc \
+	lwb-fcc-firmware \
 	sterling-supplicant-lwb \
 	"

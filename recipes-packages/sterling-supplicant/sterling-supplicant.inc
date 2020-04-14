@@ -1,30 +1,31 @@
-SUMMARY = "Laird Wi-Fi 60 Sterling Supplicant"
 SECTION = "Wireless"
 
 LICENSE = "BSD-3-Clause"
 LIC_FILES_CHKSUM = "file://COPYING;md5=279b4f5abb9c153c285221855ddb78cc \
                     file://README;beginline=1;endline=56;md5=e7d3dbb01f75f0b9799e192731d1e1ff \
                     file://wpa_supplicant/wpa_supplicant.c;beginline=1;endline=12;md5=0a8b56d3543498b742b9c0e94cc2d18b"
+
 DEPENDS = "dbus libnl"
 RRECOMMENDS_${PN} = "${PN}-passphrase ${PN}-cli"
 
 PACKAGECONFIG ??= "openssl"
 PACKAGECONFIG[gnutls] = ",,gnutls libgcrypt"
 PACKAGECONFIG[openssl] = ",,openssl"
+
 inherit pkgconfig systemd lrd-url
 
 SYSTEMD_SERVICE_${PN} = "wpa_supplicant.service wpa_supplicant-nl80211@.service wpa_supplicant-wired@.service"
 SYSTEMD_AUTO_ENABLE = "disable"
+
 SRC_URI += "\
-	${LRD_60_URI_BASE}/sterling_supplicant-src-${PV}.tar.gz \
-	file://defconfig \
 	file://wpa-supplicant.sh \
 	file://wpa_supplicant.conf \
 	file://wpa_supplicant.conf-sane \
 	file://99_wpa_supplicant \
 	"
-SRC_URI[md5sum] = "a5c45e5b8f214e44bdb05bb7ea769f32"
-SRC_URI[sha256sum] = "648ba7dda0dc04f83e5381ac9ca4d483e415c2f1600489953351914136b4e38b"
+
+SRC_URI[md5sum] = "c8c228045b9fbd98be692aebfd063038"
+SRC_URI[sha256sum] = "d922546a619b0dc9ed019636944c4e79a52234c6a49364320e02282e2fd9e169"
 
 S = "${WORKDIR}/sterling_supplicant-${PV}"
 
@@ -48,7 +49,7 @@ CONFFILES_${PN} += "${sysconfdir}/wpa_supplicant.conf"
 
 do_configure () {
 	${MAKE} -C wpa_supplicant clean
-	install -m 0755 ${WORKDIR}/defconfig wpa_supplicant/.config
+	install -m 0755 laird/config_laird wpa_supplicant/.config
 
 	if echo "${PACKAGECONFIG}" | grep -qw "openssl"; then
 		ssl=openssl
@@ -73,38 +74,28 @@ do_compile () {
 }
 
 do_install () {
-	install -d ${D}${sbindir}
-	install -m 755 wpa_supplicant/wpa_supplicant ${D}${sbindir}
-	install -m 755 wpa_supplicant/wpa_cli        ${D}${sbindir}
+	install -D -t ${D}${sbindir} -m 755 wpa_supplicant/wpa_supplicant
+	install -D -t ${D}${sbindir} -m 755 wpa_supplicant/wpa_cli
+	install -D -t ${D}${bindir} -m 755 wpa_supplicant/wpa_passphrase
 
-	install -d ${D}${bindir}
-	install -m 755 wpa_supplicant/wpa_passphrase ${D}${bindir}
-
-	install -d ${D}${docdir}/wpa_supplicant
-	install -m 644 wpa_supplicant/README ${WORKDIR}/wpa_supplicant.conf ${D}${docdir}/wpa_supplicant
-
-	install -d ${D}${sysconfdir}
-	install -m 600 ${WORKDIR}/wpa_supplicant.conf-sane ${D}${sysconfdir}/wpa_supplicant.conf
+	install -D -t ${D}${docdir}/wpa_supplicant -m 644 wpa_supplicant/README ${WORKDIR}/wpa_supplicant.conf
+	install -D -m 600 ${WORKDIR}/wpa_supplicant.conf-sane ${D}${sysconfdir}/wpa_supplicant.conf
 
 	install -d ${D}${sysconfdir}/network/if-pre-up.d/
 	install -d ${D}${sysconfdir}/network/if-post-down.d/
 	install -d ${D}${sysconfdir}/network/if-down.d/
-	install -m 755 ${WORKDIR}/wpa-supplicant.sh ${D}${sysconfdir}/network/if-pre-up.d/wpa-supplicant
-	cd ${D}${sysconfdir}/network/ && \
-	ln -sf ../if-pre-up.d/wpa-supplicant if-post-down.d/wpa-supplicant
 
-	install -d ${D}/${sysconfdir}/dbus-1/system.d
-	install -m 644 ${S}/wpa_supplicant/dbus/dbus-wpa_supplicant.conf ${D}/${sysconfdir}/dbus-1/system.d
-	install -d ${D}/${datadir}/dbus-1/system-services
-	install -m 644 ${S}/wpa_supplicant/dbus/*.service ${D}/${datadir}/dbus-1/system-services
+	install -m 755 ${WORKDIR}/wpa-supplicant.sh ${D}${sysconfdir}/network/if-pre-up.d/wpa-supplicant
+	ln -rsf ${D}${sysconfdir}/network/if-pre-up.d/wpa-supplicant ${D}${sysconfdir}/network/if-post-down.d/wpa-supplicant
+
+	install -D -t ${D}/${sysconfdir}/dbus-1/system.d -m 644 ${S}/wpa_supplicant/dbus/dbus-wpa_supplicant.conf
+	install -D -t ${D}/${datadir}/dbus-1/system-services -m 644 ${S}/wpa_supplicant/dbus/*.service
 
 	if ${@bb.utils.contains('DISTRO_FEATURES','systemd','true','false',d)}; then
-		install -d ${D}/${systemd_unitdir}/system
-		install -m 644 ${S}/wpa_supplicant/systemd/*.service ${D}/${systemd_unitdir}/system
+		install -D -t ${D}/${systemd_unitdir}/system -m 644 ${S}/wpa_supplicant/systemd/*.service
 	fi
 
-	install -d ${D}/etc/default/volatiles
-	install -m 0644 ${WORKDIR}/99_wpa_supplicant ${D}/etc/default/volatiles
+	install -D -t ${D}/etc/default/volatiles -m 0644 ${WORKDIR}/99_wpa_supplicant
 }
 
 pkg_postinst_${PN} () {
@@ -112,5 +103,4 @@ pkg_postinst_${PN} () {
 	if [ "x$D" = "x" ]; then
 		killall -q -HUP dbus-daemon || true
 	fi
-
 }

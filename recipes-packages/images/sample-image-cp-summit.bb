@@ -17,8 +17,6 @@ IMAGE_FEATURES_remove = "\
 	"
 
 IMAGE_INSTALL += "\
-	net-config \
-	usb-gadget \
 	iproute2 \
 	rng-tools \
 	ca-certificates \
@@ -37,5 +35,6 @@ IMAGE_INSTALL += "\
 	summit60-firmware-usb-uart \
 	summit60-firmware-usb-usb \
 	summit-supplicant \
+	adaptive_ww \
 	laird-networkmanager \
 	"

@@ -1,4 +1,4 @@
-SUMMARY = "Laird Wi-Fi Summit Supplicant"
+SUMMARY = "Laird Connectivity Wi-Fi Summit Supplicant"
 SECTION = "Wireless"
 
 LICENSE = "BSD"
@@ -14,6 +14,8 @@ HFP = "${@bb.utils.contains('TUNE_FEATURES', 'callconvention-hard', 'eabihf', 'e
 SRC_URI += "file://COPYING"
 
 SRC_URI_append_x86 = " ${LRD_URI_LOCAL}/summit_supplicant${OPENSSLVER}-x86-${PV}.tar.bz2;subdir=src "
+SRC_URI_append_x86-64 = " ${LRD_URI_LOCAL}/summit_supplicant${OPENSSLVER}-x86-64-${PV}.tar.bz2;subdir=src "
+SRC_URI_append_powerpc64 = " ${LRD_URI_LOCAL}/summit_supplicant${OPENSSLVER}-powerpc-e5500-${PV}.tar.bz2;subdir=src "
 SRC_URI_append_arm = " ${LRD_URI_LOCAL}/summit_supplicant${OPENSSLVER}-arm-${HFP}-${PV}.tar.bz2;subdir=src "
 SRC_URI_append_aarch64 = " ${LRD_URI_LOCAL}/summit_supplicant${OPENSSLVER}-aarch64-eabihf-${PV}.tar.bz2;subdir=src "
 
@@ -51,21 +53,16 @@ FILES_${PN}-cli = "${sbindir}/wpa_cli"
 FILES_${PN} += "${datadir}/dbus-1/system-services/* {sysconfdir}/dbus-1/system.d/* ${systemd_unitdir}/system/*"
 
 do_install () {
-	install -d ${D}${sbindir}
-	install -m 755 ${S}/usr/sbin/sdcsupp ${D}${sbindir}
-	install -m 755 ${S}/usr/sbin/wpa_cli ${D}${sbindir}
+	install -D -t ${D}${sbindir} -m 755 ${S}/usr/sbin/sdcsupp
+	install -D -t ${D}${sbindir} -m 755 ${S}/usr/sbin/wpa_cli
 
-#	install -d ${D}${bindir}
-#	install -m 755 ${S}/usr/bin/wpa_passphrase ${D}${bindir}
+	install -D -t ${D}${bindir} -m 755 ${S}/usr/bin/wpa_passphrase
 
-	install -d ${D}${sysconfdir}/dbus-1/system.d
-	install -m 644 ${S}/etc/dbus-1/system.d/wpa_supplicant.conf ${D}${sysconfdir}/dbus-1/system.d
-	install -d ${D}${datadir}/dbus-1/system-services
-	install -m 644 ${S}/usr/share/dbus-1/system-services/*.service ${D}${datadir}/dbus-1/system-services
+	install -D -t ${D}${sysconfdir}/dbus-1/system.d -m 644 ${S}/etc/dbus-1/system.d/wpa_supplicant.conf
+	install -D -t ${D}${datadir}/dbus-1/system-services -m 644 ${S}/usr/share/dbus-1/system-services/*.service
 
 	if ${@bb.utils.contains('DISTRO_FEATURES','systemd','true','false',d)}; then
-		install -d ${D}${systemd_unitdir}/system
-		install -m 644 ${S}/usr/lib/systemd/system/*.service ${D}${systemd_unitdir}/system
+		install -D -t ${D}${systemd_unitdir}/system -m 644 ${S}/usr/lib/systemd/system/*.service
 	fi
 }
 

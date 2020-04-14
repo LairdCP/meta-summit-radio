@@ -17,8 +17,6 @@ IMAGE_FEATURES_remove = "\
 	"
 
 IMAGE_INSTALL += "\
-	net-config \
-	usb-gadget \
 	iproute2 \
 	rng-tools \
 	ca-certificates \

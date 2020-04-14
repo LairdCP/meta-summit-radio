@@ -1,4 +1,4 @@
-SUMMARY = "Laird NetworkManager"
+SUMMARY = "Laird Connectivity NetworkManager"
 SECTION = "net/misc"
 
 LICENSE = "GPLv2+"
@@ -22,8 +22,8 @@ SRC_URI = " \
     file://networkmanager.initd \
     file://NetworkManager.conf \
 "
-SRC_URI[md5sum] = "e0301339c83442e9ade379005964cd77"
-SRC_URI[sha256sum] = "90a537e02624792265e54a4ed1ee6c583cc7ed33aed165090ca7fbca9b526fe9"
+SRC_URI[md5sum] = "ab20889f7ccde8ebf4893453cfdc21af"
+SRC_URI[sha256sum] = "8f717bceb6399f8df397a4e488e0feff756df01334d5ff5f688b6f5fd086b446"
 
 S = "${WORKDIR}/lrd-network-manager-${PV}"
 
