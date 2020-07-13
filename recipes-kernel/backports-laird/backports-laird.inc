@@ -5,7 +5,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=bbea815ee2795b2f4230826c0c6b8814"
 
 inherit module lrd-url
 
-DEPENDS += "coreutils-native"
+DEPENDS += "coreutils-native bison-native flex-native"
 
 S = "${WORKDIR}/laird-backport-${PV}"
 
