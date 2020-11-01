@@ -4,5 +4,5 @@ SUMMARY = "Laird Connectivity Wi-Fi 60 Sterling Supplicant"
 
 SRC_URI =+ "${LRD_60_URI_BASE}/sterling_supplicant-src-${PV}.tar.gz"
 
-SRC_URI[md5sum] = "6199c7180af82c06190f90a3696c3659"
-SRC_URI[sha256sum] = "f3a03e1a54ca523e6f65537271e51968f84d0e1b34132880a2e59241cf754e9c"
+SRC_URI[md5sum] = "210db7688e83cd527646bf58760cb44b"
+SRC_URI[sha256sum] = "569f5d1239ac38b6999f5630f3ebdfd974acbff7e665df36def763901b8f9e33"
