@@ -81,3 +81,10 @@ This layer provides the following modules:
  - Summit or LWB packages needs to be manually downloaded and placed into
     <yocto top dir>/release folder (if needed)
 
+ - For releases dunfell and later OpenSSL 1.0.x related recipes must be disabled
+   This is done by adding the following text into local.conf or <disto>.conf:
+
+   BBMASK += " \
+       meta-laird-cp/recipes-packages/openssl \
+       meta-laird-cp/recipes-packages/.*/.*openssl10.* \
+   "
