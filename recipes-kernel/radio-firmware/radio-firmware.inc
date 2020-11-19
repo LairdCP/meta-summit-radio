@@ -8,9 +8,9 @@ inherit allarch lrd-url
 do_configure[noexec] = "1"
 do_compile[noexec] = "1"
 
-RPROVIDES_${PN}  += "wireless-regdb"
-RREPLACES_${PN}  += "wireless-regdb"
-RCONFLICTS_${PN} += "wireless-regdb"
+RPROVIDES_${PN}  += "wireless-regdb-static"
+RREPLACES_${PN}  += "wireless-regdb-static"
+RCONFLICTS_${PN} += "wireless-regdb-static"
 
 FILES_${PN} += "${nonarch_base_libdir}/*"
 

@@ -31,11 +31,7 @@ IMAGE_INSTALL += "\
 	iw \
 	summit-backports-laird \
 	summit60-firmware-sdio-sdio \
-	summit60-firmware-sdio-uart \
-	summit60-firmware-pcie-uart \
-	summit60-firmware-pcie-usb \
-	summit60-firmware-usb-uart \
-	summit60-firmware-usb-usb \
 	summit-supplicant-openssl10 \
+	adaptive-ww-openssl10 \
 	laird-networkmanager \
 	"
