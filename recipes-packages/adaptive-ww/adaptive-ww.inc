@@ -41,8 +41,8 @@ do_install () {
 	install -D -t ${D}${base_libdir}/firmware/lrdmwl -m 644 ${S}/lib/firmware/lrdmwl/regpwr.db
 
 	if ${@bb.utils.contains('DISTRO_FEATURES','systemd','true','false',d)}; then
-		install -D -m 644 ${S}/usr/lib/systemd/system/awm.service ${D}${systemd_unitdir}/system/adaptive_ww.service
+		install -D -t ${D}${systemd_unitdir}/system -m 644 ${S}/usr/lib/systemd/system/adaptive_ww.service
 	else
-		install -D -m 755 ${S}/etc/init.d/S30adaptive-ww ${D}${sysconfdir}/init.d/adaptive_ww
+		install -D -t ${D}${sysconfdir}/init.d -m 755 ${S}/etc/init.d/adaptive_ww
 	fi
 }
