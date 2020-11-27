@@ -72,19 +72,26 @@ This layer provides the following modules:
 
  - Layer provides a set custom images that could be used as example or a base for building ones own
 
- - To use Sterling WPA Supplicant add "sterling-supplicant" recipe to your
-   image, and in local.conf or <disto>.conf add the following:
-        PREFERRED_PROVIDER_wpa-supplicant = "sterling-supplicant"
-        PREFERRED_PROVIDER_wpa-supplicant-cli = "sterling-supplicant-cli"
-        PREFERRED_PROVIDER_wpa-supplicant-passphrase = "sterling-supplicant-passphrase"
+ - To use Laird Connectivity provided supplicant:
+    - add the following "<type>-supplicant" recipe to your image
+    - add to local.conf or <disto>.conf add the following:
+        PREFERRED_RPROVIDER_wpa-supplicant = "<type>-supplicant"
+        PREFERRED_RPROVIDER_wpa-supplicant-cli = "<type>-supplicant"
+        PREFERRED_RPROVIDER_wpa-supplicant-passphrase = "<type>-supplicant"
+    - Where <type> is 'sterling' for Sterling Supplicant and 'summit' for Summit Supplicant
 
  - Summit or LWB packages needs to be manually downloaded and placed into
     <yocto top dir>/release folder (if needed)
 
- - For releases dunfell and later OpenSSL 1.0.x related recipes must be disabled
-   This is done by adding the following text into local.conf or <disto>.conf:
+Additional requirements for Yocto release 'zeus' (3.0) and later:
 
-   BBMASK += " \
-       meta-laird-cp/recipes-packages/openssl \
-       meta-laird-cp/recipes-packages/.*/.*openssl10.* \
-   "
+ - wireless-regdb-static provider must be specified in local.conf or <disto>.conf:
+        PREFERRED_RPROVIDER_wireless-regdb-static = "<firmware package>"
+   The firmware package must be the one added to the image and used for the radio
+
+ - OpenSSL 1.0.x related recipes must be disabled:
+   Adding the following text into local.conf or <disto>.conf:
+        BBMASK += " \
+            meta-laird-cp/recipes-packages/openssl \
+            meta-laird-cp/recipes-packages/.*/.*openssl10.* \
+        "
