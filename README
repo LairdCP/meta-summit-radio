@@ -65,8 +65,14 @@ This layer provides the following modules:
 
  - To use Wi-Fi driver add "backports-laird" and appropriate firmware recipe
    to your image
-   1. Remove cfg80211 and mac80211 from the kernel config
-   2. Explicitly add the cfg80211 and mac80211 dependencies to the kernel config
+   1. Remove cfg80211, mac80211, bluetooth from the kernel config
+   2. Explicitly add the cfg80211, mac80211, bluetooth  dependencies (mostly crypto)
+      to the kernel config
+   To make these changes one needs to run menuconfig and/or change kernel defconfig
+   and completely rebuild the kernel, which means run:
+     bitbake -c clean virtual/kernel
+     bitbake -c menuconfig virtual/kernel
+     bitbake <image name>
 
  - To use Laird Network Manager add "laird-networkmanager" recipe to your image
 
