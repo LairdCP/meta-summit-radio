@@ -102,3 +102,11 @@ Additional requirements for Yocto release 'zeus' (3.0) and later:
             meta-laird-cp/recipes-packages/openssl \
             meta-laird-cp/recipes-packages/.*/.*openssl10.* \
         "
+
+LWB, LWB5, LWB5+ driver common issues:
+  - 130 ms delay on loading the firmware
+    Remove CONFIG_FW_LOADER_USER_HELPER_FALLBACK from kernel config
+
+  - STMicro unaligned scatterlist error
+    Add  entry to the device tree for brcm driver:
+      brcm,sd_sgentry_align = /bits/ 16 <32>;
