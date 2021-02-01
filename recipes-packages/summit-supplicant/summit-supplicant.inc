@@ -17,14 +17,15 @@ SRC_URI_append_x86 = " ${LRD_URI_LOCAL}/summit_supplicant${OPENSSLVER}-x86-${PV}
 SRC_URI_append_x86-64 = " ${LRD_URI_LOCAL}/summit_supplicant${OPENSSLVER}-x86-64-${PV}.tar.bz2;subdir=src "
 SRC_URI_append_powerpc64 = " ${LRD_URI_LOCAL}/summit_supplicant${OPENSSLVER}-powerpc-e5500-${PV}.tar.bz2;subdir=src "
 SRC_URI_append_arm = " ${LRD_URI_LOCAL}/summit_supplicant${OPENSSLVER}-arm-${HFP}-${PV}.tar.bz2;subdir=src "
-SRC_URI_append_aarch64 = " ${LRD_URI_LOCAL}/summit_supplicant${OPENSSLVER}-aarch64-eabihf-${PV}.tar.bz2;subdir=src "
+SRC_URI_append_aarch64 = " ${LRD_URI_LOCAL}/summit_supplicant${OPENSSLVER}-aarch64-${PV}.tar.bz2;subdir=src "
 
 do_configure[noexec] = "1"
 do_compile[noexec] = "1"
 
 S = "${WORKDIR}/src"
 
-RDEPENDS_${PN} = "dbus-lib libnl-genl libssl libcrypto"
+RDEPENDS_${PN} = "dbus-lib libnl libnl-genl libcrypto libssl"
+RDEPENDS_${PN}-passphrase = "dbus-lib libnl libnl-genl libcrypto libssl"
 
 INSANE_SKIP_${PN} = "ldflags"
 INSANE_SKIP_${PN}-passphrase = "ldflags"

@@ -18,14 +18,14 @@ SRC_URI_append_x86 = " ${LRD_URI_LOCAL}/adaptive_ww${OPENSSLVER}-x86-${PV}.tar.b
 SRC_URI_append_x86-64 = " ${LRD_URI_LOCAL}/adaptive_ww${OPENSSLVER}-x86-64-${PV}.tar.bz2;subdir=src "
 SRC_URI_append_powerpc64 = " ${LRD_URI_LOCAL}/adaptive_ww${OPENSSLVER}-powerpc-e5500-${PV}.tar.bz2;subdir=src "
 SRC_URI_append_arm = " ${LRD_URI_LOCAL}/adaptive_ww${OPENSSLVER}-arm-${HFP}-${PV}.tar.bz2;subdir=src "
-SRC_URI_append_aarch64 = " ${LRD_URI_LOCAL}/adaptive_ww${OPENSSLVER}-arm-eabiaarch64-${PV}.tar.bz2;subdir=src "
+SRC_URI_append_aarch64 = " ${LRD_URI_LOCAL}/adaptive_ww${OPENSSLVER}-aarch64-${PV}.tar.bz2;subdir=src "
 
 do_configure[noexec] = "1"
 do_compile[noexec] = "1"
 
 S = "${WORKDIR}/src"
 
-RDEPENDS_${PN} = "libnl-genl libcrypto"
+RDEPENDS_${PN} = "libnl libnl-genl libnl-route libcrypto"
 
 INSANE_SKIP_${PN} = "ldflags"
 INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
