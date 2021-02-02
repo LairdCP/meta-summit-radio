@@ -14,7 +14,7 @@ HFP = "${@bb.utils.contains('TUNE_FEATURES', 'callconvention-hard', 'eabihf', 'e
 SRC_URI += "file://COPYING"
 
 SRC_URI_append_x86 = " ${LRD_URI_LOCAL}/summit_supplicant${OPENSSLVER}-x86-${PV}.tar.bz2;subdir=src "
-SRC_URI_append_x86-64 = " ${LRD_URI_LOCAL}/summit_supplicant${OPENSSLVER}-x86-64-${PV}.tar.bz2;subdir=src "
+SRC_URI_append_x86-64 = " ${LRD_URI_LOCAL}/summit_supplicant${OPENSSLVER}-x86_64-${PV}.tar.bz2;subdir=src "
 SRC_URI_append_powerpc64 = " ${LRD_URI_LOCAL}/summit_supplicant${OPENSSLVER}-powerpc-e5500-${PV}.tar.bz2;subdir=src "
 SRC_URI_append_arm = " ${LRD_URI_LOCAL}/summit_supplicant${OPENSSLVER}-arm-${HFP}-${PV}.tar.bz2;subdir=src "
 SRC_URI_append_aarch64 = " ${LRD_URI_LOCAL}/summit_supplicant${OPENSSLVER}-aarch64-${PV}.tar.bz2;subdir=src "
