@@ -4,8 +4,8 @@ BACKPORTS_CONFIG = "defconfig-sterling60"
 
 SRC_URI += "${LRD_60_URI_BASE}/${BACKPORTS_FILE}"
 
-SRC_URI[md5sum] = "ed8a0a89b3403ef8ba662515e05b8f77"
-SRC_URI[sha256sum] = "47f08dac6b0a4bff67d0bb6ebbd6cbc56d636a50947300592b527db3e659bf38"
+SRC_URI[md5sum] = "fd437a01a6cfba0a87ab2ed3eb15800b"
+SRC_URI[sha256sum] = "df98bda9b307cb5f7150f5583c27d01d5569dcccb67e7da2e86830939a71d6ff"
 
 RCONFLICTS_${PN} = "summit-backports-laird lwb-backports-laird lwb5p-backports-laird"
 
