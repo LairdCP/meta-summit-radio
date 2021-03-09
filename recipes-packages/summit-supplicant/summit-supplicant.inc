@@ -51,7 +51,7 @@ RCONFLICTS_${PN}-cli += "wpa-supplicant-cli"
 PACKAGES_prepend = "${PN}-passphrase ${PN}-cli "
 FILES_${PN}-passphrase = "${bindir}/wpa_passphrase"
 FILES_${PN}-cli = "${sbindir}/wpa_cli"
-FILES_${PN} += "${datadir}/dbus-1/system-services/* {sysconfdir}/dbus-1/system.d/* ${systemd_unitdir}/system/*"
+FILES_${PN} += "${datadir}/dbus-1/system-services/* ${sysconfdir}/dbus-1/system.d/* ${systemd_unitdir}/system/*"
 
 do_install () {
 	install -D -t ${D}${sbindir} -m 755 ${S}/usr/sbin/sdcsupp
@@ -72,5 +72,4 @@ pkg_postinst_${PN} () {
 	if [ "x$D" = "x" ]; then
 		killall -q -HUP dbus-daemon || true
 	fi
-
 }

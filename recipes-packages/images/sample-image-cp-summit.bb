@@ -27,8 +27,8 @@ IMAGE_INSTALL += "\
 	iperf3 \
 	tcpdump \
 	iw \
-	summit-backports-laird \
-	summit60-firmware-sdio-sdio \
+	kernel-module-summit-backports-laird \
+	summit60-firmware-pcie-uart \
 	summit-supplicant \
 	adaptive-ww \
 	laird-networkmanager \

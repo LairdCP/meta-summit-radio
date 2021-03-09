@@ -29,7 +29,7 @@ IMAGE_INSTALL += "\
 	iperf3 \
 	tcpdump \
 	iw \
-	summit-backports-laird \
+	kernel-module-summit-backports-laird \
 	summit60-firmware-sdio-sdio \
 	summit-supplicant-openssl10 \
 	adaptive-ww-openssl10 \

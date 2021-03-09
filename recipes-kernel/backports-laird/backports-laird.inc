@@ -30,3 +30,9 @@ do_compile_prepend() {
 do_install_prepend () {
 	cd ${STAGING_KERNEL_DIR}
 }
+
+do_install_append () {
+	cp -R --no-dereference --preserve=mode,links -v ${S}/include ${D}${includedir}/${BPN}
+	cp -R --no-dereference --preserve=mode,links -v ${S}/backport-include ${D}${includedir}/${BPN}
+	rm -f ${D}${includedir}/${BPN}/backport-include/linux/module.h
+}

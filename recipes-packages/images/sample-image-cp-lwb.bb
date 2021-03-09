@@ -27,7 +27,7 @@ IMAGE_INSTALL += "\
 	iperf3 \
 	tcpdump \
 	iw \
-	lwb-backports-laird \
+	kernel-module-lwb-backports-laird \
 	lwb-fcc-firmware \
 	sterling-supplicant-lwb \
 	"

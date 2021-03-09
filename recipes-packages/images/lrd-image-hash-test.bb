@@ -12,7 +12,7 @@ IMAGE_FEATURES_remove = "\
 	"
 
 IMAGE_INSTALL += "\
-	sterling-backports-laird \
+	kernel-module-sterling-backports-laird \
 	sterling60-firmware-sdio-sdio \
 	sterling60-firmware-sdio-uart \
 	sterling60-firmware-pcie-uart \
@@ -21,7 +21,8 @@ IMAGE_INSTALL += "\
 	sterling60-firmware-usb-usb \
 	sterling-supplicant \
 	laird-networkmanager \
-	lwb-backports-laird \
+	kernel-module-lwb-backports-laird \
+	kernel-module-lwb5p-backports-laird \
 	sterling-supplicant-lwb \
-	summit-backports-laird \
+	kernel-module-summit-backports-laird \
 	"

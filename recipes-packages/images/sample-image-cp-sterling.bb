@@ -27,7 +27,7 @@ IMAGE_INSTALL += "\
 	iperf3 \
 	tcpdump \
 	iw \
-	sterling-backports-laird \
+	kernel-module-sterling-backports-laird \
 	sterling60-firmware-sdio-sdio \
 	sterling-supplicant \
 	laird-networkmanager \

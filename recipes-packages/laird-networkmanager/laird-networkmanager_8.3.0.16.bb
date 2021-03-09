@@ -17,6 +17,9 @@ DEPENDS = " \
     libnewt \
     curl \
 "
+
+RDEPENDS_${PN} += "less"
+
 inherit autotools gettext update-rc.d systemd bash-completion gtk-doc lrd-url
 
 SRC_URI = " \
@@ -114,11 +117,12 @@ FILES_${PN} += " \
     ${datadir}/dbus-1 \
     ${nonarch_base_libdir}/udev/* \
     ${systemd_system_unitdir} \
-    ${libdir}/pppd \"
+    ${libdir}/pppd \
+    "
+
 RRECOMMENDS_${PN} += "iptables \
     ${@bb.utils.contains('PACKAGECONFIG','dnsmasq','dnsmasq','',d)} \
 "
-
 RCONFLICTS_${PN} = "connman networkmanager"
 RREPLACES_${PN} = "networkmanager"
 

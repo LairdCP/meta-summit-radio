@@ -14,7 +14,7 @@ S = "${WORKDIR}/git"
 
 DEPENDS += "${@bb.utils.contains('DISTRO_FEATURES','bluez5','bluez5','bluez4',d)}"
 
-RRECOMMENDS_${PN} = "lwb-backports-laird"
+RRECOMMENDS_${PN} = "kernel-module-lwb-backports-laird"
 
 do_compile () {
 	oe_runmake brcm_patchram_plus
