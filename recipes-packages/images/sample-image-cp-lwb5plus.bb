@@ -1,4 +1,4 @@
-DESCRIPTION = "Summit 60 Series (PCIE/UART) sample image"
+DESCRIPTION = "Sterling LWB5+ SDIO/UART M.2 (diversity antenna) sample image"
 LICENSE = "MIT"
 
 inherit core-image
@@ -27,9 +27,7 @@ IMAGE_INSTALL += "\
 	iperf3 \
 	tcpdump \
 	iw \
-	kernel-module-summit-backports-laird \
-	summit60-firmware-pcie-uart \
-	summit-supplicant \
-	adaptive-ww \
-	laird-networkmanager \
+	kernel-module-lwb5p-backports-laird \
+	lwb5plus-sdio-div-firmware \
+	sterling-supplicant-lwb \
 	"

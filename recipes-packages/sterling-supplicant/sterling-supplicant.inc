@@ -24,9 +24,6 @@ SRC_URI += "\
 	file://99_wpa_supplicant \
 	"
 
-SRC_URI[md5sum] = "c8c228045b9fbd98be692aebfd063038"
-SRC_URI[sha256sum] = "d922546a619b0dc9ed019636944c4e79a52234c6a49364320e02282e2fd9e169"
-
 S = "${WORKDIR}/sterling_supplicant-${PV}"
 
 RPROVIDES_${PN} += "wpa-supplicant"

@@ -24,8 +24,8 @@ This layer depends on:
 Support, Patches and other help
 =======
 
-If you require help with layer integration, or have any other questions or recommendations,
-please Open the Support Ticket at:
+If you require help with layer integration or have any other questions or recommendations,
+please open a support ticket at:
 https://www.lairdconnect.com/resources/support
 
 Table of Contents
@@ -37,8 +37,6 @@ Table of Contents
 
 I. Adding the laird-cp layer to your build
 =================================================
-
---- replace with specific instructions for the laird-cp layer ---
 
 In order to use this layer, you need to make the build system aware of
 it.
@@ -59,42 +57,47 @@ other layers needed. e.g.:
 II. Misc
 ========
 
-This layer provides the following modules:
-    - Sterling & Summit 60, LWB, LWB5 Wi-Fi driver and firmware
+This layer supports the following modules:
+    - Sterling & Summit 60, Sterling LWB/LWB5/LWB5+ Wi-Fi & BT drivers and firmware
     - Sterling & Summit WPA supplicant
     - Laird NetworkManager
 
- - To use Wi-Fi driver add "backports-laird" and appropriate firmware recipe
-   to your image
-   1. Remove cfg80211, mac80211, bluetooth from the kernel config
-   2. Explicitly add the cfg80211, mac80211, bluetooth  dependencies (mostly crypto)
-      to the kernel config
-   To make these changes one needs to run menuconfig and/or change kernel defconfig
-   and completely rebuild the kernel, which means run:
+ - To use the Wi-Fi and BT driver add the backports and firmware package corresponding to the
+   desired module to your image recipe.  Ensure the kernel config does not include Wi-Fi and
+   Bluetooth components that are provided via backports.
+   To make these changes perform a kernel menuconfig and/or change the kernel defconfig
+   then completely rebuild the kernel:
      bitbake -c clean virtual/kernel
      bitbake -c menuconfig virtual/kernel
+       1. Remove cfg80211, mac80211, bluetooth from the kernel config
+       2. Explicitly add the cfg80211, mac80211, and bluetooth  dependencies (mostly crypto)
+          to the kernel config
      bitbake <image name>
 
- - To use Laird Network Manager add "laird-networkmanager" recipe to your image
+ - To use Laird Network Manager add the "laird-networkmanager" package to your image recipe
 
- - Layer provides a set custom images that could be used as example or a base for building ones own
+ - Summit firmware and userspace packages are not provided on the public Github.  They must
+   be manually downloaded and placed into <yocto top dir>/release folder if needed.
 
- - To use Laird Connectivity provided supplicant:
-    - add the following "<type>-supplicant" recipe to your image
-    - add to local.conf or <disto>.conf add the following:
-        PREFERRED_RPROVIDER_wpa-supplicant = "<type>-supplicant"
-        PREFERRED_RPROVIDER_wpa-supplicant-cli = "<type>-supplicant"
-        PREFERRED_RPROVIDER_wpa-supplicant-passphrase = "<type>-supplicant"
-    - Where <type> is 'sterling' for Sterling Supplicant and 'summit' for Summit Supplicant
+ - To use the Laird Connectivity Sterling or Summit supplicant:
+    - add the  "<sterling|summit>-supplicant" package to your image recipe
+    - add the following to your local.conf or <distro>.conf:
+        PREFERRED_RPROVIDER_wpa-supplicant = "<sterling|summit>-supplicant"
+        PREFERRED_RPROVIDER_wpa-supplicant-cli = "<sterling|summit>-supplicant"
+        PREFERRED_RPROVIDER_wpa-supplicant-passphrase = "<sterling|summit>-supplicant"
 
- - Summit or LWB packages needs to be manually downloaded and placed into
-    <yocto top dir>/release folder (if needed)
+ - This layer provides a set of example image recipes that can be used as references
 
 Additional requirements for Yocto release 'zeus' (3.0) and later:
 
- - wireless-regdb-static provider must be specified in local.conf or <disto>.conf:
+ - wireless-regdb-static provider must be specified in local.conf or <distro>.conf
+   When using 60 Series firmware packages, the wireless-regdb-static provider must be set
+   to the firmware package added to the image and used for the radio:
         PREFERRED_RPROVIDER_wireless-regdb-static = "<firmware package>"
-   The firmware package must be the one added to the image and used for the radio
+
+   When using LWB/LWB5/LWB5+ firmware packages, the wireless-regdb-static provider must 
+   be set to the upstream provider:
+		PREFERRED_RPROVIDER_wireless-regdb-static = "wireless-regdb"
 
  - OpenSSL 1.0.x related recipes must be disabled:
    Adding the following text into local.conf or <disto>.conf:
@@ -102,11 +105,15 @@ Additional requirements for Yocto release 'zeus' (3.0) and later:
             meta-laird-cp/recipes-packages/openssl \
             meta-laird-cp/recipes-packages/.*/.*openssl10.* \
         "
-
 LWB, LWB5, LWB5+ driver common issues:
+  - The regulatory domain must be specified in the platform based on the destination of the
+    target device.  Failure to do this will prevent the Wi-Fi driver from loading.  See the
+	Software Integration Guide for more details.
+
   - 130 ms delay on loading the firmware
     Remove CONFIG_FW_LOADER_USER_HELPER_FALLBACK from kernel config
 
   - STMicro unaligned scatterlist error
     Add  entry to the device tree for brcm driver:
       brcm,sd_sgentry_align = /bits/ 16 <32>;
+

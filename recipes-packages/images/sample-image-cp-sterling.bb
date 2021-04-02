@@ -1,4 +1,4 @@
-DESCRIPTION = "Sterling Sample Image"
+DESCRIPTION = "Sterling 60 Series (SDIO/SDIO) sample image"
 LICENSE = "MIT"
 
 inherit core-image
