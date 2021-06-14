@@ -1,0 +1,293 @@
+From a3828373df28229cc0b3b9fe8b02c905f758b336 Mon Sep 17 00:00:00 2001
+From: Boris Krasnovskiy <boris.krasnovskiy@lairdconnect.com>
+Date: Mon, 14 Jun 2021 11:41:46 -0400
+Subject: [PATCH] adaptive_bt: Fixed compilation issues with newer gcc and
+ Yocto
+
+Bug 19113
+---
+ Makefile    |  8 +-------
+ src/debug.c | 46 +++++++++++++++++++++++-----------------------
+ src/io.c    |  4 ++--
+ src/main.c  |  5 +++--
+ 4 files changed, 29 insertions(+), 34 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index d8b5282..060ae48 100644
+--- a/Makefile
++++ b/Makefile
+@@ -46,14 +46,8 @@ endif
+ 
+ CXXFLAGS += $(CFLAGS)
+ 
+-LINKOPT += -pthread
+-
+-ifndef DEBUG
+-LINKOPT += -s
+-endif
+-
+ LIBS += $(shell $(PKG_CONFIG) --libs  libnl-3.0 libnl-genl-3.0 libnl-route-3.0)
+-LIBS += -lbluetooth
++LIBS += -lbluetooth -lpthread
+ 
+ SOURCES=\
+ src/main.c \
+diff --git a/src/debug.c b/src/debug.c
+index 36f38e1..6fbbec4 100644
+--- a/src/debug.c
++++ b/src/debug.c
+@@ -195,7 +195,7 @@ void hex_dump(uint32_t lvl, void *start, int len)
+ 
+ char *str_nl80211_cmd(enum nl80211_commands cmd )
+ {
+-	static char buf[sizeof(unsigned short) +3];
++	static char buf[16];
+ 	char *ptr = buf;
+ 
+ 	switch (cmd) {
+@@ -337,7 +337,7 @@ char *str_nl80211_cmd(enum nl80211_commands cmd )
+ 
+ static char *str_nl80211_reg_type(enum nl80211_reg_type type)
+ {
+-	static char buf[sizeof(unsigned short) + 3];
++	static char buf[16];
+ 	char *ptr = buf;
+ 
+ 	switch (type) {
+@@ -355,7 +355,7 @@ static char *str_nl80211_reg_type(enum nl80211_reg_type type)
+ 
+ static char *str_nl80211_reg_init(enum nl80211_reg_initiator init)
+ {
+-	static char buf[sizeof(unsigned short) + 3];
++	static char buf[16];
+ 	char *ptr = buf;
+ 
+ 	switch (init) {
+@@ -377,7 +377,7 @@ static char *str_nl80211_user_hint(enum nl80211_user_reg_hint_type hint)
+ static char *str_nl80211_user_hint(uint32_t hint)
+ #endif
+ {
+-	static char buf[sizeof(unsigned short) + 3];
++	static char buf[16];
+ 	char *ptr = buf;
+ 
+ 	switch (hint) {
+@@ -396,7 +396,7 @@ static char *str_nl80211_user_hint(uint32_t hint)
+ 
+ static char *str_nl80211_reg_flag(enum nl80211_reg_rule_flags flag)
+ {
+-	static char buf[sizeof(unsigned short) + 3];
++	static char buf[16];
+ 	char *ptr = buf;
+ 
+ 	switch (flag) {
+@@ -427,7 +427,7 @@ static char *str_nl80211_reg_flag(enum nl80211_reg_rule_flags flag)
+ 
+ static char *str_nl80211_reg_attr(enum nl80211_reg_rule_attr attr)
+ {
+-	static char buf[sizeof(unsigned short) +3];
++	static char buf[16];
+ 	char *ptr = buf;
+ 
+ 	switch (attr) {
+@@ -455,7 +455,7 @@ static char *str_nl80211_dfs(enum nl80211_dfs_regions dfs)
+ static char *str_nl80211_dfs(uint32_t dfs)
+ #endif
+ {
+-	static char buf[sizeof(unsigned short) + 3];
++	static char buf[16];
+ 	char *ptr = buf;
+ 
+ 	switch (dfs) {
+@@ -475,7 +475,7 @@ static char *str_nl80211_dfs(uint32_t dfs)
+ 
+ static char * str_nl80211_iftype(enum nl80211_iftype type)
+ {
+-	static char buf[sizeof(unsigned short) + 3];
++	static char buf[16];
+ 	char *ptr = buf;
+ 
+ 	switch (type) {
+@@ -504,7 +504,7 @@ static char * str_nl80211_iftype(enum nl80211_iftype type)
+ 
+ static char *str_nl80211_bss(enum nl80211_bss attr)
+ {
+-	static char buf[sizeof(unsigned short) +3];
++	static char buf[16];
+ 	char *ptr = buf;
+ 
+ 	switch (attr) {
+@@ -539,7 +539,7 @@ static char *str_nl80211_bss(enum nl80211_bss attr)
+ 
+ char *str_nl80211_attr(enum nl80211_attrs attr )
+ {
+-	static char buf[sizeof(unsigned short) +3];
++	static char buf[16];
+ 	char *ptr = buf;
+ 
+ 	switch (attr) {
+@@ -851,7 +851,7 @@ char *str_nl80211_mcast_grp(enum nl80211_mcast_grp group )
+ /* Netlink protocol types */
+ static char *str_nl_proto(int type)
+ {
+-	static char buf[sizeof(unsigned short) +3];
++	static char buf[16];
+ 	char *ptr = buf;
+ 
+ 	switch (type) {
+@@ -887,7 +887,7 @@ static char *str_nl_proto(int type)
+ /* Routing Message Types */
+ char *str_rtm_type(uint32_t type)
+ {
+-	static char buf[sizeof(unsigned short) +3];
++	static char buf[16];
+ 	char *ptr = buf;
+ 
+ 	switch (type) {
+@@ -1008,7 +1008,7 @@ char *str_rt_mcast_grp(enum rtnetlink_groups group)
+ /* arp protocol hardware identiers */
+ static char *str_arp_type(uint16_t type)
+ {
+-	static char buf[sizeof(unsigned short) +3];
++	static char buf[16];
+ 	char *ptr = buf;
+ 
+ 	switch (type) {
+@@ -1093,7 +1093,7 @@ static char *str_arp_type(uint16_t type)
+ /* Interface device flag */
+ static char *str_if_dev_flags(uint32_t flag)
+ {
+-	static char buf[sizeof(unsigned short) +3];
++	static char buf[16];
+ 	char *ptr = buf;
+ 
+ 	switch (flag) {
+@@ -1127,7 +1127,7 @@ static char *str_if_dev_flags(uint32_t flag)
+ //Interface link/route attributes
+ char *str_if_la(uint32_t attr)
+ {
+-	static char buf[sizeof(unsigned short) +3];
++	static char buf[16];
+ 	char *ptr = buf;
+ 
+ 	switch (attr) {
+@@ -1195,7 +1195,7 @@ char *str_if_la(uint32_t attr)
+ 
+ static char *str_ifla_inet(uint32_t inet)
+ {
+-	static char buf[sizeof(unsigned short) +3];
++	static char buf[16];
+ 	char *ptr = buf;
+ 
+ 	switch (inet) {
+@@ -1211,7 +1211,7 @@ static char *str_ifla_inet(uint32_t inet)
+ 
+ static char *str_ifla_inet6(uint32_t inet6)
+ {
+-	static char buf[sizeof(unsigned short) +3];
++	static char buf[16];
+ 	char *ptr = buf;
+ 
+ 	switch (inet6) {
+@@ -1236,7 +1236,7 @@ static char *str_ifla_inet6(uint32_t inet6)
+ 
+ static char *str_ipv4_devconf(uint32_t conf)
+ {
+-	static char buf[sizeof(unsigned short) +3];
++	static char buf[16];
+ 	char *ptr = buf;
+ 
+ 	switch (conf) {
+@@ -1284,7 +1284,7 @@ static char *str_ipv4_devconf(uint32_t conf)
+ /* Socket Address Family attributes*/
+ static char *str_af(uint32_t family)
+ {
+-	static char buf[sizeof(unsigned short) +3];
++	static char buf[16];
+ 	char *ptr = buf;
+ 
+ 	switch (family) {
+@@ -1350,7 +1350,7 @@ static char *str_af(uint32_t family)
+ /* Bluetooth HCI event types */
+ char *str_hci_evt_bt(uint32_t code)
+ {
+-	static char buf[sizeof(unsigned short) +3];
++	static char buf[16];
+ 	char *ptr = buf;
+ 
+ 	switch (code) {
+@@ -1428,7 +1428,7 @@ char *str_hci_evt_bt(uint32_t code)
+ 
+ static char * str_si_evt(uint16_t event)
+ {
+-	static char buf[sizeof(unsigned short) +3];
++	static char buf[16];
+ 	char *ptr = buf;
+ 
+ 	switch (event) {
+@@ -1448,7 +1448,7 @@ static char * str_si_evt(uint16_t event)
+ 
+ static char * str_si_type(uint16_t type)
+ {
+-	static char buf[sizeof(unsigned short) +3];
++	static char buf[16];
+ 	char *ptr = buf;
+ 
+ 	switch (type) {
+@@ -1894,7 +1894,7 @@ int dump_adapter_list(uint32_t lvl, struct adapter_list_rsp *adp)
+ 
+ static void dump_bt_features(uint32_t lvl, uint8_t *features)
+ {
+-	static char buf[sizeof(unsigned short) +3];
++	static char buf[16];
+ 	char *ptr = buf;
+ 
+ 	int x = 0;
+diff --git a/src/io.c b/src/io.c
+index 53e3c41..1888672 100644
+--- a/src/io.c
++++ b/src/io.c
+@@ -412,7 +412,7 @@ static int thread_wait(struct abt_socket *sk)
+ 		}
+ 		else if (FD_ISSET(sk->evt.rfd, &readfds)) {
+ 			//Thread resumed - clear out message
+-			read(sk->evt.rfd, &x, sizeof(x));
++			if (read(sk->evt.rfd, &x, sizeof(x)));
+ 			rc = 1;
+ 		}
+ 		else {
+@@ -493,7 +493,7 @@ static int thread_pause(struct abt_socket *sk)
+ 		}
+ 		else if (FD_ISSET(sk->evt.wfd, &readfds)) {
+ 			//Thread paused - clear out message
+-			read(sk->evt.wfd, &x, sizeof(x));
++			if (read(sk->evt.wfd, &x, sizeof(x)));
+ 			rc = 1;
+ 		}
+ 		else {
+diff --git a/src/main.c b/src/main.c
+index c942bff..6f97bab 100644
+--- a/src/main.c
++++ b/src/main.c
+@@ -480,7 +480,8 @@ static void sigint_handler(int signo)
+ 	if (g_ctx && g_ctx->exit >= 0) {
+ 		uint64_t x = 1;
+ 
+-		write(g_ctx->exit, &x, sizeof(x));
++	if (write(g_ctx->exit, &x, sizeof(x)) != sizeof(x))
++		dbgPrint(DBG_INFO, "Failed to send exit message\n");
+ 	}
+ }
+ 
+@@ -680,7 +681,7 @@ static int Run(struct abt_ctx *ctx)
+ 		}
+ 
+ 		if (FD_ISSET(ctx->evt_fd, & readfds)) {
+-			read(ctx->evt_fd, &x, sizeof(x));
++			if (read(ctx->evt_fd, &x, sizeof(x)));
+ 
+ 			SetBlePowers(ctx);
+ 		}
+-- 
+2.32.0
+
