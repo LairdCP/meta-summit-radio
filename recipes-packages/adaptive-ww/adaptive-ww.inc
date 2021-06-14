@@ -10,7 +10,7 @@ SYSTEMD_SERVICE_${PN} = "adaptive_ww.service"
 SYSTEMD_AUTO_ENABLE = "enable"
 
 INITSCRIPT_NAME = "adaptive_ww"
-INITSCRIPT_PARAMS_${PN} = "defaults 30"
+INITSCRIPT_PARAMS = "defaults 30"
 
 HFP = "${@bb.utils.contains('TUNE_FEATURES', 'callconvention-hard', 'eabihf', 'eabi', d)}"
 
