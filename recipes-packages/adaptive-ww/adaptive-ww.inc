@@ -4,12 +4,12 @@ SECTION = "Wireless"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
 
-inherit lrd-url
+inherit lrd-url update-rc.d systemd
 
 SYSTEMD_SERVICE_${PN} = "adaptive_ww.service"
 SYSTEMD_AUTO_ENABLE = "enable"
 
-INITSCRIPT_NAME_${PN} = "adaptive_ww"
+INITSCRIPT_NAME = "adaptive_ww"
 INITSCRIPT_PARAMS_${PN} = "defaults 30"
 
 HFP = "${@bb.utils.contains('TUNE_FEATURES', 'callconvention-hard', 'eabihf', 'eabi', d)}"
