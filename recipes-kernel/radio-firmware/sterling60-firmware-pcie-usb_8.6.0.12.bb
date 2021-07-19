@@ -2,7 +2,7 @@ SUMMARY = "Laird Connectivity Sterling 60 Firmware PCIE-USB"
 
 SRC_URI += "${LRD_60_URI_BASE}/laird-${BPN}-${PV}.tar.bz2"
 
-SRC_URI[md5sum] = "5ce115c8c2014a0673a423401001102d"
-SRC_URI[sha256sum] = "7f01151a232d2da4a95011187f1682fd05d119cd77483a7e7a1ec2cf7fc4bbe7"
+SRC_URI[md5sum] = "013f86378b2d86de9e8ec81e83705a0d"
+SRC_URI[sha256sum] = "fb81470ed96edc8ae29723e0ecc4fa31f650fb26bf94df83cf9a19e13b7e521f"
 
 include radio-firmware-60.inc

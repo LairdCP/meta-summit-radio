@@ -6,8 +6,8 @@ BACKPORTS_CONFIG = " \
 
 SRC_URI += "${LRD_60_URI_BASE}/${BACKPORTS_FILE}"
 
-SRC_URI[md5sum] = "1d858a6072a8e304f8663281af42f7e9"
-SRC_URI[sha256sum] = "0c72fb63d520ab442a951f5c37b25bb8e8618b225ee5694a14db9c0274148641"
+SRC_URI[md5sum] = "579e20e71bd5a46359ea7c046bdf1f81"
+SRC_URI[sha256sum] = "62c257d980db6f643a76d4156afd1967ad2c5ca5c2737c25be66e58b489c3cdd"
 
 RCONFLICTS_${PN} = " \
         kernel-module-sterling-backports-laird \

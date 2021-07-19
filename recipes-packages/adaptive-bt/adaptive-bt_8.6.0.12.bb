@@ -10,11 +10,10 @@ DEPENDS = "libnl bluez5"
 
 SRC_URI = "\
 	${LRD_URI_LOCAL}/adaptive_bt-src-${PV}.tar.gz \
-	file://0001-adaptive_bt-Fixed-compilation-issues-with-newer-gcc-.patch \
 	"
 
-SRC_URI[md5sum] = "7b05f33a86423418e29531246b693a4b"
-SRC_URI[sha256sum] = "00cc823250b3b1d12b4b733b01e3d539ba0bfe4d33063747008ee0874afb6ab7"
+SRC_URI[md5sum] = "e51925edbb8b0e24eadbbf18955b5af7"
+SRC_URI[sha256sum] = "de46a69e0a124c45226a8122ee19dde86a68f51d49beb5872e81e28968e5e588"
 
 S = "${WORKDIR}/adaptive_bt-${PV}"
 

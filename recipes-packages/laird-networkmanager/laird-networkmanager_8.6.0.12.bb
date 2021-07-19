@@ -31,8 +31,8 @@ SRC_URI = " \
     file://0001-install-firewalld-to-var-libdir-rather-than-hardcod-.patch \
 "
 
-SRC_URI[md5sum] = "ac5b6bdb851fc0b58e86c5a29e62b829"
-SRC_URI[sha256sum] = "7306dd26d830c0e43e3b6f1bd10d2364199a10ae9a5ff79ac3e45574518f1189"
+SRC_URI[md5sum] = "5e5a502942481134aa9680caf7a568a4"
+SRC_URI[sha256sum] = "832d7f3440c0563b66b24a3cb202267d78928d1ad7c1a812db7af096ec1fe48d"
 
 S = "${WORKDIR}/lrd-network-manager-${PV}"
 
