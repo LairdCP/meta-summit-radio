@@ -62,6 +62,8 @@ This layer supports the following modules:
     - Sterling & Summit WPA supplicant
     - Laird NetworkManager
 
+Integration notes:
+
  - To use the Wi-Fi and BT driver add the backports and firmware package corresponding to the
    desired module to your image recipe.  Ensure the kernel config does not include Wi-Fi and
    Bluetooth components that are provided via backports.
@@ -90,25 +92,25 @@ This layer supports the following modules:
 
 Additional requirements for Yocto release 'zeus' (3.0) and later:
 
- - wireless-regdb-static provider must be specified in local.conf or <distro>.conf
-   When using 60 Series firmware packages, the wireless-regdb-static provider must be set
-   to the firmware package added to the image and used for the radio:
-        PREFERRED_RPROVIDER_wireless-regdb-static = "<firmware package>"
-
-   When using LWB/LWB5/LWB5+ firmware packages, the wireless-regdb-static provider must 
-   be set to the upstream provider:
-		PREFERRED_RPROVIDER_wireless-regdb-static = "wireless-regdb"
-
- - OpenSSL 1.0.x related recipes must be disabled:
+ - For all radios OpenSSL 1.0.x related recipes must be disabled:
    Adding the following text into local.conf or <disto>.conf:
         BBMASK += " \
             meta-laird-cp/recipes-packages/openssl \
             meta-laird-cp/recipes-packages/.*/.*openssl10.* \
         "
+
+ - wireless-regdb-static provider must be specified in local.conf or <distro>.conf
+   - When using 60 Series firmware packages, the wireless-regdb-static provider must be set
+     to the firmware package added to the image and used for the radio:
+        PREFERRED_RPROVIDER_wireless-regdb-static = "<firmware package>"
+   - When using LWB/LWB5/LWB5+ firmware packages, the wireless-regdb-static provider must 
+     be set to the upstream provider:
+		    PREFERRED_RPROVIDER_wireless-regdb-static = "wireless-regdb"
+
 LWB, LWB5, LWB5+ driver common issues:
   - The regulatory domain must be specified in the platform based on the destination of the
     target device.  Failure to do this will prevent the Wi-Fi driver from loading.  See the
-	Software Integration Guide for more details.
+	  Software Integration Guide for more details.
 
   - 130 ms delay on loading the firmware
     Remove CONFIG_FW_LOADER_USER_HELPER_FALLBACK from kernel config
@@ -116,4 +118,3 @@ LWB, LWB5, LWB5+ driver common issues:
   - STMicro unaligned scatterlist error
     Add  entry to the device tree for brcm driver:
       brcm,sd_sgentry_align = /bits/ 16 <32>;
-
