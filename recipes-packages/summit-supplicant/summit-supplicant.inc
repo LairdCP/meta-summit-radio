@@ -4,20 +4,24 @@ SECTION = "Wireless"
 LICENSE = "BSD"
 LIC_FILES_CHKSUM = "file://../COPYING;md5=279b4f5abb9c153c285221855ddb78cc"
 
-inherit lrd-url
-
 SYSTEMD_SERVICE_${PN} = "wpa_supplicant.service wpa_supplicant-nl80211@.service wpa_supplicant-wired@.service"
 SYSTEMD_AUTO_ENABLE = "disable"
 
 HFP = "${@bb.utils.contains('TUNE_FEATURES', 'callconvention-hard', 'eabihf', 'eabi', d)}"
 
-SRC_URI += "file://COPYING"
+LRD_URI ?= "${LRD_URI_BASE}"
+LRD_URI_laird-internal = "https://files.devops.rfpros.com/builds/linux/summit_supplicant/laird/${PV}"
 
-SRC_URI_append_x86 = " ${LRD_URI_LOCAL}/summit_supplicant${OPENSSLVER}-x86-${PV}.tar.bz2;subdir=src "
-SRC_URI_append_x86-64 = " ${LRD_URI_LOCAL}/summit_supplicant${OPENSSLVER}-x86_64-${PV}.tar.bz2;subdir=src "
-SRC_URI_append_powerpc64 = " ${LRD_URI_LOCAL}/summit_supplicant${OPENSSLVER}-powerpc-e5500-${PV}.tar.bz2;subdir=src "
-SRC_URI_append_arm = " ${LRD_URI_LOCAL}/summit_supplicant${OPENSSLVER}-arm-${HFP}-${PV}.tar.bz2;subdir=src "
-SRC_URI_append_aarch64 = " ${LRD_URI_LOCAL}/summit_supplicant${OPENSSLVER}-aarch64-${PV}.tar.bz2;subdir=src "
+SUPP_ARCH_x86 = "-x86"
+SUPP_ARCH_x86-64 = "-x86_64"
+SUPP_ARCH_powerpc64 = "-powerpc-e5500"
+SUPP_ARCH_arm = "-arm-${HFP}"
+SUPP_ARCH_aarch64 = "-aarch64"
+
+SRC_URI = "\
+	${LRD_URI}/summit_supplicant${OPENSSLVER}${SUPP_ARCH}-${PV}.tar.bz2;subdir=src;name=summit-supplicant${OPENSSLVER}${SUPP_ARCH} \
+	file://COPYING \
+	"
 
 do_configure[noexec] = "1"
 do_compile[noexec] = "1"

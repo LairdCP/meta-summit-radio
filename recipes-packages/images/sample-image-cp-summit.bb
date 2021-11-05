@@ -31,5 +31,5 @@ IMAGE_INSTALL += "\
 	summit60-firmware-pcie-uart \
 	summit-supplicant \
 	adaptive-ww \
-	laird-networkmanager \
+	lrd-networkmanager-sterling \
 	"

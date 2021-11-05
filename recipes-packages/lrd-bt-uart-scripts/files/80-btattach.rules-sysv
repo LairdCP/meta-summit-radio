@@ -1,0 +1,2 @@
+DRIVERS=="lrdmwl*", ACTION=="change", ENV{FIRMWARE}=="on",  DEVPATH=="*pcie*|*mmc*", PROGRAM="/usr/bin/bt-service.sh start"
+DRIVERS=="lrdmwl*", ACTION=="change", ENV{FIRMWARE}=="off", DEVPATH=="*pcie*|*mmc*", PROGRAM="/usr/bin/bt-service.sh stop"

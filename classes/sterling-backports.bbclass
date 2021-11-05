@@ -1,8 +1,10 @@
-DEPENDS += "kernel-module-sterling-backports-laird"
+BACKPORTS_PROVIDER = "kernel-module-sterling-backports-laird"
+
+DEPENDS += "${BACKPORTS_PROVIDER}"
 
 NOSTDINC_FLAGS = " \
-        -I${STAGING_INCDIR}/kernel-module-backports-laird/backport-include \
-        -I${STAGING_INCDIR}/kernel-module-backports-laird/include \
+        -I${STAGING_INCDIR}/${BACKPORTS_PROVIDER}/backport-include \
+        -I${STAGING_INCDIR}/${BACKPORTS_PROVIDER}/include \
         -include backport/backport.h \
         "
 

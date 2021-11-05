@@ -12,12 +12,16 @@ PACKAGECONFIG ??= "openssl"
 PACKAGECONFIG[gnutls] = ",,gnutls libgcrypt"
 PACKAGECONFIG[openssl] = ",,openssl"
 
-inherit pkgconfig systemd lrd-url
+inherit pkgconfig systemd
 
 SYSTEMD_SERVICE_${PN} = "wpa_supplicant.service wpa_supplicant-nl80211@.service wpa_supplicant-wired@.service"
 SYSTEMD_AUTO_ENABLE = "disable"
 
+LRD_URI ?= "${LRD_URI_BASE}"
+LRD_URI_laird-internal = "https://files.devops.rfpros.com/builds/linux/sterling_supplicant/src/${PV}"
+
 SRC_URI += "\
+	${LRD_URI}/sterling_supplicant-src-${PV}.tar.gz;name=sterling-supplicant \
 	file://wpa-supplicant.sh \
 	file://wpa_supplicant.conf \
 	file://wpa_supplicant.conf-sane \

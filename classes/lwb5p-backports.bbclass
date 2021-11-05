@@ -1,8 +1,10 @@
-DEPENDS += "kernel-module-lwb5p-backports-laird"
+BACKPORTS_PROVIDER = "kernel-module-lwb5p-backports-laird"
+
+DEPENDS += "${BACKPORTS_PROVIDER}"
 
 NOSTDINC_FLAGS = " \
-        -I${STAGING_INCDIR}/kernel-module-backports-laird/backport-include \
-        -I${STAGING_INCDIR}/kernel-module-backports-laird/include \
+        -I${STAGING_INCDIR}/${BACKPORTS_PROVIDER}/backport-include \
+        -I${STAGING_INCDIR}/${BACKPORTS_PROVIDER}/include \
         -include backport/backport.h \
         "
 

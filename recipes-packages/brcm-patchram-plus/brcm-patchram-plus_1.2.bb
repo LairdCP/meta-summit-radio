@@ -4,7 +4,7 @@ SECTION = "Wireless"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=691691b063f1b4034300dc452e36b68d"
 
-inherit pkgconfig lrd-url
+inherit pkgconfig
 
 SRC_URI = "git://github.com/LairdCP/brcm_patchram.git;protocol=https"
 

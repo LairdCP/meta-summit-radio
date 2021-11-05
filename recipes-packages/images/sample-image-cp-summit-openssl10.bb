@@ -33,5 +33,5 @@ IMAGE_INSTALL += "\
 	summit60-firmware-sdio-sdio \
 	summit-supplicant-openssl10 \
 	adaptive-ww-openssl10 \
-	laird-networkmanager \
+	lrd-networkmanager-sterling \
 	"
