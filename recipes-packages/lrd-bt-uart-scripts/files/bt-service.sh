@@ -5,8 +5,8 @@
 case "${1}" in
 	start)
 		mfg_mode=/sys/class/ieee80211/phy0/device/lrd/mfg_mode
-		[ -e "${mfg_mode}" ] && [ "$(cat ${mfg_mode})" == 1 ] && \
-			baud=115200 || baud=3000000
+		[ -f "${mfg_mode}" ] && read -r mfg_val < ${mfg_mode} && \
+		[ "${mfg_val}" = 1 ] && baud=115200 || baud=3000000
 
 		/usr/bin/btattach -B ${PORT} -P h4 -S ${baud} &
 		;;
