@@ -29,6 +29,7 @@ IMAGE_INSTALL += "\
 	iw \
 	kernel-module-summit-backports-laird \
 	summit60-firmware-pcie-uart \
+	lrd-bt-uart-scripts \
 	summit-supplicant \
 	adaptive-ww \
 	lrd-networkmanager-summit \
