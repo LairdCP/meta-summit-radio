@@ -30,5 +30,6 @@ IMAGE_INSTALL += "\
 	kernel-module-sterling-backports-laird \
 	sterling60-firmware-sdio-sdio \
 	sterling-supplicant \
-	lrd-networkmanager \
+	lrd-networkmanager-sterling \
+	lrd-networkmanager-sterling-nmcli \
 	"
