@@ -73,8 +73,8 @@ do_install () {
 		install -D -t ${D}${systemd_unitdir}/system -m 644 ${S}/usr/lib/systemd/system/*.service
 	fi
 
-	install -D -m 0755 ${S}${includedir}/wpa_ctrl.h ${D}${includedir}/wpa_ctrl.h
-	install -D -m 0755 ${S}${libdir}/libwpa_client.so ${D}${libdir}/libwpa_client.so
+	install -D -m 0644 ${S}${includedir}/wpa_ctrl.h ${D}${includedir}/wpa_ctrl.h
+	install -D -m 0644 ${S}${libdir}/libwpa_client.so ${D}${libdir}/libwpa_client.so
 }
 
 pkg_postinst_${PN} () {
