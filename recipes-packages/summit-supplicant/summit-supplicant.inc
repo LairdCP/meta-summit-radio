@@ -57,6 +57,9 @@ FILES_${PN}-passphrase = "${bindir}/wpa_passphrase"
 FILES_${PN}-cli = "${sbindir}/wpa_cli"
 FILES_${PN} += "${datadir}/dbus-1/system-services/* ${sysconfdir}/dbus-1/system.d/* ${systemd_unitdir}/system/*"
 
+SOLIBS = ".so*"
+FILES_SOLIBSDEV = ""
+
 do_install () {
 	install -D -t ${D}${sbindir} -m 755 ${S}/usr/sbin/sdcsupp
 	install -D -t ${D}${sbindir} -m 755 ${S}/usr/sbin/wpa_cli
@@ -69,6 +72,9 @@ do_install () {
 	if ${@bb.utils.contains('DISTRO_FEATURES','systemd','true','false',d)}; then
 		install -D -t ${D}${systemd_unitdir}/system -m 644 ${S}/usr/lib/systemd/system/*.service
 	fi
+
+	install -D -m 0755 ${S}${includedir}/wpa_ctrl.h ${D}${includedir}/wpa_ctrl.h
+	install -D -m 0755 ${S}${libdir}/libwpa_client.so ${D}${libdir}/libwpa_client.so
 }
 
 pkg_postinst_${PN} () {
