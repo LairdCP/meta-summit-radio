@@ -31,9 +31,9 @@ S = "${WORKDIR}/src"
 RDEPENDS_${PN} = "dbus-lib libnl libnl-genl libcrypto libssl"
 RDEPENDS_${PN}-passphrase = "dbus-lib libnl libnl-genl libcrypto libssl"
 
-INSANE_SKIP_${PN} = "ldflags"
-INSANE_SKIP_${PN}-passphrase = "ldflags"
-INSANE_SKIP_${PN}-cli = "ldflags"
+INSANE_SKIP_${PN} = "ldflags already-stripped"
+INSANE_SKIP_${PN}-passphrase = "ldflags already-stripped"
+INSANE_SKIP_${PN}-cli = "ldflags already-stripped"
 INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
 INHIBIT_PACKAGE_STRIP = "1"
 

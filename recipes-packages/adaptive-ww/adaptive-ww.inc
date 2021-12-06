@@ -32,7 +32,7 @@ S = "${WORKDIR}/src"
 
 RDEPENDS_${PN} = "libnl libnl-genl libnl-route libcrypto libconfig"
 
-INSANE_SKIP_${PN} = "ldflags"
+INSANE_SKIP_${PN} = "ldflags already-stripped"
 INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
 INHIBIT_PACKAGE_STRIP = "1"
 
