@@ -14,7 +14,7 @@ LRD_URI_laird-internal = "https://files.devops.rfpros.com/builds/linux/summit_su
 
 SUPP_ARCH_x86 = "-x86"
 SUPP_ARCH_x86-64 = "-x86_64"
-SUPP_ARCH_powerpc64 = "-powerpc-e5500"
+SUPP_ARCH_powerpc64 = "-powerpc64-e5500"
 SUPP_ARCH_arm = "-arm-${HFP}"
 SUPP_ARCH_aarch64 = "-aarch64"
 

@@ -11,7 +11,7 @@ DEPENDS = "libnl bluez5"
 LRD_URI ?= "${LRD_URI_BASE}"
 LRD_URI_laird-internal = "https://files.devops.rfpros.com/builds/linux/adaptive_bt/src/${PV}"
 
-SRC_URI = "${LRD_URI}/adaptive_bt-src-${PV}.tar.gz"
+SRC_URI = "${LRD_URI}/adaptive_bt-src-${PV}.tar.gz;name=adaptive-bt"
 
 S = "${WORKDIR}/adaptive_bt-${PV}"
 
