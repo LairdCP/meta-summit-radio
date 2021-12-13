@@ -1,0 +1,8 @@
+*.o
+/*.patch
+/*.diff
+*.orig
+*.rej
+*~
+*.pyc
+.vscode
