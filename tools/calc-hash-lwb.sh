@@ -16,6 +16,7 @@ echo -e "PV = \"${ver}\"\n" > ${file}
 
 calc_file "${prefix}/sterling_supplicant/src/${ver}/sterling_supplicant-src-${ver}.tar.gz" "sterling-supplicant"
 calc_file "${prefix}/backports/laird/${ver}/backports-laird-${ver}.tar.bz2" "backports-laird"
+calc_file "${prefix}/firmware/${ver}/laird-lwbplus-firmware-${ver}.tar.bz2" "lwbplus-firmware"
 
 for i in etsi fcc jp
 do
@@ -27,7 +28,7 @@ do
   calc_file "${prefix}/firmware/${ver}/laird-lwb5-${i}-firmware-${ver}.tar.bz2" "lwb5-${i}-firmware"
 done
 
-for i in sdio-div sdio-sa usb-div usb-sa
+for i in sdio-div sdio-sa sdio-sa-m2 usb-div usb-sa usb-sa-m2
 do
   calc_file "${prefix}/firmware/${ver}/laird-lwb5plus-${i}-firmware-${ver}.tar.bz2" "lwb5plus-${i}-firmware"
 done
