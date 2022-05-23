@@ -30,3 +30,4 @@ for i in pcie-uart pcie-usb sdio-uart sdio-sdio usb-usb usb-uart
 do
   calc_file "${prefix}/firmware/${ver}/laird-summit60-firmware-${i}-${ver}.tar.bz2" "summit60-firmware-${i}"
 done
+

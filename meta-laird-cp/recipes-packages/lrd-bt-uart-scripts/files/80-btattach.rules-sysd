@@ -1,0 +1,2 @@
+DRIVERS=="lrdmwl*", ACTION=="change", ENV{FIRMWARE}=="on",  DEVPATH=="*pcie*|*mmc*|*usb*", PROGRAM="/bin/systemctl start btattach.service"
+DRIVERS=="lrdmwl*", ACTION=="change", ENV{FIRMWARE}=="off", DEVPATH=="*pcie*|*mmc*|*usb*", PROGRAM="/bin/systemctl stop  btattach.service"

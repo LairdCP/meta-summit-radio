@@ -1,0 +1,8 @@
+[Unit]
+Description=Enable Bluetooth
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/bt-service.sh start
+ExecStop=/usr/bin/bt-service.sh stop
