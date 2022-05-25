@@ -95,8 +95,8 @@ Additional requirements for Yocto release 'zeus' (3.0) and later:
  - For all radios OpenSSL 1.0.x related recipes must be disabled:
    Adding the following text into local.conf or <disto>.conf:
         BBMASK += " \
-            meta-laird-cp/recipes-packages/openssl \
-            meta-laird-cp/recipes-packages/.*/.*openssl10.* \
+            meta-laird-cp-pre-3.4/recipes-packages/openssl \
+            meta-laird-cp-pre-3.4/recipes-packages/.*/.*openssl10.* \
         "
 
  - wireless-regdb-static provider must be specified in local.conf or <distro>.conf
@@ -112,8 +112,9 @@ LWB, LWB5, LWB5+ driver common issues:
     target device.  Failure to do this will prevent the Wi-Fi driver from loading.  See the
 	  Software Integration Guide for more details.
 
-  - 130 ms delay on loading the firmware
-    Remove CONFIG_FW_LOADER_USER_HELPER_FALLBACK from kernel config
+  - 60 s delay on loading the firmware
+    Remove CONFIG_FW_LOADER_USER_HELPER_FALLBACK from kernel config, 
+    to resolve problems with SDMA driver after that one will need to make CONFIG_IMX_SDMA a module
 
   - STMicro unaligned scatterlist error
     Add  entry to the device tree for brcm driver:

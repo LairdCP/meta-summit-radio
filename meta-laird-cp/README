@@ -105,8 +105,9 @@ LWB, LWB5, LWB5+ driver common issues:
     target device.  Failure to do this will prevent the Wi-Fi driver from loading.  See the
 	  Software Integration Guide for more details.
 
-  - 130 ms delay on loading the firmware
-    Remove CONFIG_FW_LOADER_USER_HELPER_FALLBACK from kernel config
+  - 60 s delay on loading the firmware
+    Remove CONFIG_FW_LOADER_USER_HELPER_FALLBACK from kernel config, 
+    to resolve problems with SDMA driver after that one will need to make CONFIG_IMX_SDMA a module
 
   - STMicro unaligned scatterlist error
     Add  entry to the device tree for brcm driver:
