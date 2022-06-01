@@ -17,11 +17,11 @@ HFP = "${@bb.utils.contains('TUNE_FEATURES', 'callconvention-hard', 'eabihf', 'e
 LRD_URI ?= "${LRD_URI_BASE}"
 LRD_URI:laird-internal = "https://files.devops.rfpros.com/builds/linux/adaptive_ww/laird/${PV}"
 
-ADAP_ARCH_x86 = "-x86"
-ADAP_ARCH_x86-64 = "-x86_64"
-ADAP_ARCH_powerpc64 = "-powerpc64-e5500"
-ADAP_ARCH_arm = "-arm-${HFP}"
-ADAP_ARCH_aarch64 = "-aarch64"
+ADAP_ARCH:x86 = "-x86"
+ADAP_ARCH:x86-64 = "-x86_64"
+ADAP_ARCH:powerpc64 = "-powerpc64-e5500"
+ADAP_ARCH:arm = "-arm-${HFP}"
+ADAP_ARCH:aarch64 = "-aarch64"
 
 SRC_URI = "${LRD_URI}/adaptive_ww${OPENSSLVER}${ADAP_ARCH}-${PV}.tar.bz2;subdir=src;name=adaptive-ww${OPENSSLVER}${ADAP_ARCH}"
 

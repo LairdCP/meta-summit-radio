@@ -12,11 +12,11 @@ HFP = "${@bb.utils.contains('TUNE_FEATURES', 'callconvention-hard', 'eabihf', 'e
 LRD_URI ?= "${LRD_URI_BASE}"
 LRD_URI:laird-internal = "https://files.devops.rfpros.com/builds/linux/summit_supplicant/laird/${PV}"
 
-SUPP_ARCH_x86 = "-x86"
-SUPP_ARCH_x86-64 = "-x86_64"
-SUPP_ARCH_powerpc64 = "-powerpc64-e5500"
-SUPP_ARCH_arm = "-arm-${HFP}"
-SUPP_ARCH_aarch64 = "-aarch64"
+SUPP_ARCH:x86 = "-x86"
+SUPP_ARCH:x86-64 = "-x86_64"
+SUPP_ARCH:powerpc64 = "-powerpc64-e5500"
+SUPP_ARCH:arm = "-arm-${HFP}"
+SUPP_ARCH:aarch64 = "-aarch64"
 
 SRC_URI = "\
 	${LRD_URI}/summit_supplicant${OPENSSLVER}${SUPP_ARCH}-${PV}.tar.bz2;subdir=src;name=summit-supplicant${OPENSSLVER}${SUPP_ARCH} \

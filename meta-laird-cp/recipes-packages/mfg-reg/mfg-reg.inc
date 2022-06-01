@@ -5,11 +5,11 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/MIT;md5=0835ad
 
 HFP = "${@bb.utils.contains('TUNE_FEATURES', 'callconvention-hard', 'eabihf', 'eabi', d)}"
 
-REG_ARCH_x86 = "-x86"
-REG_ARCH_x86-64 = "-x86_64"
-REG_ARCH_powerpc64 = "-powerpc-e5500"
-REG_ARCH_arm = "-arm-${HFP}"
-REG_ARCH_aarch64 = "-aarch64"
+REG_ARCH:x86 = "-x86"
+REG_ARCH:x86-64 = "-x86_64"
+REG_ARCH:powerpc64 = "-powerpc-e5500"
+REG_ARCH:arm = "-arm-${HFP}"
+REG_ARCH:aarch64 = "-aarch64"
 
 REG_FULL_NAME = "${REG_NAME}${REG_ARCH}-${PV}"
 
