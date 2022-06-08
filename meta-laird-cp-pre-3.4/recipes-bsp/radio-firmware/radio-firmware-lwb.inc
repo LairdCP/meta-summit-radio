@@ -1,4 +1,4 @@
-require radio-firmware.inc ../radio-stack-lwb-version.inc
+require radio-firmware.inc radio-stack-lwb-version.inc
 
 LICENSE = "Laird"
 NO_GENERIC_LICENSE[Laird] = "LICENSE"

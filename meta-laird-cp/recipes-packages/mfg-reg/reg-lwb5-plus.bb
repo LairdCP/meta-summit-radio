@@ -2,7 +2,7 @@ SUMMARY = "Laird Connectivity Wi-Fi LWB5+ Manufacturing tools"
 
 REG_NAME = "regLWB5plus"
 
-require mfg-reg.inc ../radio-stack-lwb-version.inc
+require mfg-reg.inc radio-stack-lwb-version.inc
 
 do_install() {
 	install -D -m 775 ${B}/lru ${D}${bindir}/lru

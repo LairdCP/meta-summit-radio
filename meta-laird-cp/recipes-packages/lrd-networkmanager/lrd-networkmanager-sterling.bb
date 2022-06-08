@@ -1,1 +1,1 @@
-require lrd-networkmanager.inc ../radio-stack-sterling-60-version.inc
+require lrd-networkmanager.inc radio-stack-sterling-60-version.inc
