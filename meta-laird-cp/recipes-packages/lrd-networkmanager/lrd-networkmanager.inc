@@ -195,3 +195,23 @@ do_install:append() {
         rm ${D}/${nonarch_base_libdir}/udev/rules.d/84-nm-drivers.rules
     fi
 }
+
+RPROVIDES:${PN} += "networkmanager"
+RREPLACES:${PN} += "networkmanager"
+RCONFLICTS:${PN} += "networkmanager"
+
+RPROVIDES:${PN}-nmcli += "networkmanager-nmcli"
+RREPLACES:${PN}-nmcli += "networkmanager-nmcli"
+RCONFLICTS:${PN}-nmcli += "networkmanager-nmcli"
+
+RPROVIDES:${PN}-nmcli-doc += "networkmanager-nmcli-doc"
+RREPLACES:${PN}-nmcli-doc += "networkmanager-nmcli-doc"
+RCONFLICTS:${PN}-nmcli-doc += "networkmanager-nmcli-doc"
+
+RPROVIDES:${PN}-nmtui += "networkmanager-nmtui"
+RREPLACES:${PN}-nmtui += "networkmanager-nmtui"
+RCONFLICTS:${PN}-nmtui += "networkmanager-nmtui"
+
+RPROVIDES:${PN}-nmtui-doc += "networkmanager-nmtui-doc"
+RREPLACES:${PN}-nmtui-doc += "networkmanager-nmtui-doc"
+RCONFLICTS:${PN}-nmtui-doc += "networkmanager-nmtui-doc"
