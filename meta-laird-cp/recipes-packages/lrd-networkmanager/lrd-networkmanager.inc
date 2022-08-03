@@ -8,17 +8,14 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=b234ee4d69f5fce4486a80fdaf4a4263 \
 
 DEPENDS = " \
     intltool-native \
-    libxslt-native \
-    glib-2.0-native \
     libnl \
     udev \
     util-linux \
     libndp \
     libnewt \
-    curl \
 "
 
-inherit autotools gettext update-rc.d systemd bash-completion gtk-doc update-alternatives
+inherit autotools gettext update-rc.d systemd bash-completion update-alternatives
 
 LRD_URI ?= "${LRD_URI_BASE}"
 LRD_URI:laird-internal = "https://files.devops.rfpros.com/builds/linux/lrd-network-manager/src/${PV}"
@@ -45,8 +42,8 @@ EXTRA_OECONF = " \
     --with-dhcpcd=no \
     --with-dhcpcanon=no \
     --with-netconfig=no \
-    --disable-ovs \
     --disable-introspection \
+    --disable-concheck \
     --disable-nls \
     --disable-vala \
     --disable-gtk-doc \
@@ -183,16 +180,17 @@ ALTERNATIVE_LINK_NAME[resolv-conf] = "${@bb.utils.contains('DISTRO_FEATURES','sy
 
 do_install:append() {
     install -Dm 0644 ${WORKDIR}/NetworkManager.conf ${D}${sysconfdir}/NetworkManager/NetworkManager.conf
-    install -Dm 0755 ${WORKDIR}/networkmanager.initd ${D}${sysconfdir}/init.d/network-manager
 
     rm -rf ${D}/run ${D}${localstatedir}/run
 
-    if ${@bb.utils.contains('DISTRO_FEATURES','systemd','true','false',d)}; then
+    if ${@bb.utils.contains('DISTRO_FEATURES', 'systemd', 'true', 'false', d)}; then
         # For read-only filesystem, do not create links during bootup
         ln -sf ../run/NetworkManager/resolv.conf ${D}${sysconfdir}/resolv-conf.NetworkManager
 
         # systemd v210 and newer do not need this rule file
         rm ${D}/${nonarch_base_libdir}/udev/rules.d/84-nm-drivers.rules
+    else
+        install -Dm 0755 ${WORKDIR}/networkmanager.initd ${D}${sysconfdir}/init.d/network-manager
     fi
 }
 

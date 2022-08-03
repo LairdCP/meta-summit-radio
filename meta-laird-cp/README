@@ -90,8 +90,6 @@ Integration notes:
 
  - This layer provides a set of example image recipes that can be used as references
 
-Additional requirements for Yocto release 'zeus' (3.0) and later:
-
  - wireless-regdb-static provider must be specified in local.conf or <distro>.conf
    - When using 60 Series firmware packages, the wireless-regdb-static provider must be set
      to the firmware package added to the image and used for the radio:

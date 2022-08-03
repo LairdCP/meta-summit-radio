@@ -34,8 +34,6 @@ RDEPENDS:${PN}-passphrase = "dbus-lib libnl libnl-genl libcrypto libssl"
 INSANE_SKIP:${PN} = "ldflags already-stripped"
 INSANE_SKIP:${PN}-passphrase = "ldflags already-stripped"
 INSANE_SKIP:${PN}-cli = "ldflags already-stripped"
-INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
-INHIBIT_PACKAGE_STRIP = "1"
 
 ALLOW_EMPTY:${PN}-dev = "0"
 ALLOW_EMPTY:${PN}-dbg = "0"

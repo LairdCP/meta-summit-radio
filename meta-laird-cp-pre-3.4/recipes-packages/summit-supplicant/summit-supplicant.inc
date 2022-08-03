@@ -18,7 +18,7 @@ SUPP_ARCH_powerpc64 = "-powerpc64-e5500"
 SUPP_ARCH_arm = "-arm-${HFP}"
 SUPP_ARCH_aarch64 = "-aarch64"
 
-SRC_URI = "\
+SRC_URI += "\
 	${LRD_URI}/summit_supplicant${OPENSSLVER}${SUPP_ARCH}-${PV}.tar.bz2;subdir=src;name=summit-supplicant${OPENSSLVER}${SUPP_ARCH} \
 	file://COPYING \
 	"
@@ -34,8 +34,6 @@ RDEPENDS_${PN}-passphrase = "dbus-lib libnl libnl-genl libcrypto libssl"
 INSANE_SKIP_${PN} = "ldflags already-stripped"
 INSANE_SKIP_${PN}-passphrase = "ldflags already-stripped"
 INSANE_SKIP_${PN}-cli = "ldflags already-stripped"
-INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
-INHIBIT_PACKAGE_STRIP = "1"
 
 ALLOW_EMPTY_${PN}-dev = "0"
 ALLOW_EMPTY_${PN}-dbg = "0"

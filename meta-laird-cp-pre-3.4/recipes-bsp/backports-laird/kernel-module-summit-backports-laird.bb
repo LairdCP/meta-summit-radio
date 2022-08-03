@@ -10,4 +10,4 @@ RCONFLICTS_${PN} = " \
         kernel-module-lwb5p-backports-laird \
         "
 
-require backports-laird.inc ../radio-stack-summit-60-version.inc
+require backports-laird.inc radio-stack-summit-60-version.inc
