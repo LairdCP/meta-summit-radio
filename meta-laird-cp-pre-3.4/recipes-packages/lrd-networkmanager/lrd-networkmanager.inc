@@ -15,7 +15,7 @@ DEPENDS = " \
     libnewt \
 "
 
-inherit autotools gettext update-rc.d systemd bash-completion update-alternatives gobject-introspection
+inherit autotools gettext update-rc.d systemd bash-completion update-alternatives gobject-introspection gtk-doc
 
 LRD_URI ?= "${LRD_URI_BASE}"
 LRD_URI_laird-internal = "https://files.devops.rfpros.com/builds/linux/lrd-network-manager/src/${PV}"
@@ -45,7 +45,6 @@ EXTRA_OECONF = " \
     --disable-concheck \
     --disable-nls \
     --disable-vala \
-    --disable-gtk-doc \
 "
 
 # stolen from https://github.com/void-linux/void-packages/blob/master/srcpkgs/NetworkManager/template
