@@ -15,7 +15,7 @@ DEPENDS = " \
     libnewt \
 "
 
-inherit autotools gettext update-rc.d systemd bash-completion update-alternatives
+inherit autotools gettext update-rc.d systemd bash-completion update-alternatives gobject-introspection
 
 LRD_URI ?= "${LRD_URI_BASE}"
 LRD_URI_laird-internal = "https://files.devops.rfpros.com/builds/linux/lrd-network-manager/src/${PV}"
@@ -25,7 +25,7 @@ SRC_URI = " \
     file://networkmanager.initd \
     file://NetworkManager.conf \
     file://0001-Fixed-configure.ac-Fix-pkgconfig-sysroot-locations.patch \
-    file://0002-Do-not-create-settings-settings-property-documentati.patch \
+    file://0002-Allow-introspection-without-docs.patch \
     file://0003-install-firewalld-to-var-libdir-rather-than-hardcod-.patch \
 "
 
@@ -42,13 +42,10 @@ EXTRA_OECONF = " \
     --with-dhcpcd=no \
     --with-dhcpcanon=no \
     --with-netconfig=no \
-    --disable-introspection \
     --disable-concheck \
     --disable-nls \
     --disable-vala \
     --disable-gtk-doc \
-    --disable-gtk-doc-html \
-    --disable-gtk-doc-pdf \
 "
 
 # stolen from https://github.com/void-linux/void-packages/blob/master/srcpkgs/NetworkManager/template
