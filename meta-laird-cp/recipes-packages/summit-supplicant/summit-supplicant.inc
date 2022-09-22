@@ -1,7 +1,7 @@
 SUMMARY = "Laird Connectivity Wi-Fi Summit Supplicant"
 SECTION = "Wireless"
 
-LICENSE = "BSD"
+LICENSE = "BSD-3-Clause"
 LIC_FILES_CHKSUM = "file://../COPYING;md5=279b4f5abb9c153c285221855ddb78cc"
 
 SYSTEMD_SERVICE:${PN} = "wpa_supplicant.service wpa_supplicant-nl80211@.service wpa_supplicant-wired@.service"
