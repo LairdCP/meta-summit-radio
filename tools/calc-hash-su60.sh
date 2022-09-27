@@ -17,8 +17,11 @@ echo -e "PV = \"${ver}\"\n" > ${file}
 for i in x86 x86_64 arm-eabi arm-eabihf aarch64 powerpc64-e5500
 do
   calc_file "${prefix}/summit_supplicant/laird/${ver}/summit_supplicant-${i}-${ver}.tar.bz2" "summit-supplicant-${i}"
-  calc_file "${prefix}/summit_supplicant/laird/${ver}/summit_supplicant_openssl_1_1-${i}-${ver}.tar.bz2" "summit-supplicant_openssl_1_1-${i}"
+  calc_file "${prefix}/summit_supplicant/laird/${ver}/summit_supplicant_openssl_3_0-${i}-${ver}.tar.bz2" "summit-supplicant_openssl_3_0-${i}"
   calc_file "${prefix}/summit_supplicant/laird/${ver}/summit_supplicant_openssl_1_0_2-${i}-${ver}.tar.bz2" "summit-supplicant_openssl_1_0_2-${i}"
+  calc_file "${prefix}/summit_supplicant/laird/${ver}/summit_supplicant_legacy-${i}-${ver}.tar.bz2" "summit-supplicant_legacy-${i}"
+  calc_file "${prefix}/summit_supplicant/laird/${ver}/summit_supplicant_legacy_openssl_3_0-${i}-${ver}.tar.bz2" "summit-supplicant_legacy_openssl_3_0-${i}"
+  calc_file "${prefix}/summit_supplicant/laird/${ver}/summit_supplicant_legacy_openssl_1_0_2-${i}-${ver}.tar.bz2" "summit-supplicant_legacy_openssl_1_0_2-${i}"
   calc_file "${prefix}/adaptive_ww/laird/${ver}/adaptive_ww-${i}-${ver}.tar.bz2" "adaptive-ww-${i}"
   calc_file "${prefix}/adaptive_ww/laird/${ver}/adaptive_ww_openssl_3_0-${i}-${ver}.tar.bz2" "adaptive-ww_openssl_3_0-${i}"
   calc_file "${prefix}/adaptive_ww/laird/${ver}/adaptive_ww_openssl_1_0_2-${i}-${ver}.tar.bz2" "adaptive-ww_openssl_1_0_2-${i}"
