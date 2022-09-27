@@ -17,9 +17,9 @@ echo -e "PV = \"${ver}\"\n" > ${file}
 for i in arm-eabi arm-eabihf
 do
   calc_file "${prefix}/summit_supplicant/laird/${ver}/summit_supplicant_legacy-${i}-${ver}.tar.bz2" "summit-supplicant_legacy-${i}"
-  calc_file "${prefix}/summit_supplicant/laird/${ver}/summit_supplicant_legacy_openssl_1_0_2-${i}-${ver}.tar.bz2" "summit-supplicant_legacy_openssl_1_0_2-${i}"
+  calc_file "${prefix}/summit_supplicant/laird/${ver}/summit_supplicant_legacy_openssl_3_0-${i}-${ver}.tar.bz2" "summit-supplicant_legacy_openssl_3_0-${i}"
 done
 
-calc_file "${prefix}/backports/laird/${ver}/backports-laird-${ver}.tar.bz2" "backports-laird"
+calc_file "${prefix}/backports/laird/${ver}/backports-summit-${ver}.tar.bz2" "summit-backports"
 calc_file "${prefix}/firmware/${ver}/laird-ath6k-6003-firmware-${ver}.tar.bz2" "ath6k-6003-firmware"
 calc_file "${prefix}/firmware/${ver}/laird-ath6k-6004-firmware-${ver}.tar.bz2" "ath6k-6004-firmware"

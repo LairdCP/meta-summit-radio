@@ -15,7 +15,7 @@ calc_file () {
 echo -e "PV = \"${ver}\"\n" > ${file}
 
 calc_file "${prefix}/sterling_supplicant/src/${ver}/sterling_supplicant-src-${ver}.tar.gz" "sterling-supplicant"
-calc_file "${prefix}/backports/laird/${ver}/backports-laird-${ver}.tar.bz2" "backports-laird"
+calc_file "${prefix}/backports/laird/${ver}/backports-summit-${ver}.tar.bz2" "summit-backports"
 calc_file "${prefix}/firmware/${ver}/laird-lwbplus-firmware-${ver}.tar.bz2" "lwbplus-firmware"
 
 for i in etsi fcc jp

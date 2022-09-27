@@ -1,7 +1,7 @@
-This provides 2 variants of the meta-laird-cp layer:
+This provides 2 variants of the meta-summit-radio layer:
 
-meta-laird-cp - for Yocto 3.4 (Honister) and later
-meta-laird-cp-pre-3.4 - for any Yocto release prior to 3.4
+meta-summit-radio - for Yocto 3.4 (Honister) and later
+meta-summit-radio-pre-3.4 - for any Yocto release prior to 3.4
 
 The distinction is needed because bb file syntax changed incompatibly in Yocto 3.4
 
