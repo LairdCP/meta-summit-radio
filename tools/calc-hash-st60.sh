@@ -15,8 +15,8 @@ calc_file () {
 echo -e "PV = \"${ver}\"\n" > ${file}
 
 calc_file "${prefix}/sterling_supplicant/src/${ver}/sterling_supplicant-src-${ver}.tar.gz" "sterling-supplicant"
-calc_file "${prefix}/lrd-network-manager/src/${ver}/lrd-network-manager-src-${ver}.tar.xz" "lrd-network-manager"
-calc_file "${prefix}/backports/laird/${ver}/backports-summit-${ver}.tar.bz2" "backports-summit"
+calc_file "${prefix}/lrd-network-manager/src/${ver}/lrd-network-manager-src-${ver}.tar.xz" "summit-network-manager"
+calc_file "${prefix}/backports/laird/${ver}/backports-summit-${ver}.tar.bz2" "summit-backports"
 
 for i in pcie-uart pcie-usb sdio-uart sdio-sdio usb-usb usb-uart
 do
