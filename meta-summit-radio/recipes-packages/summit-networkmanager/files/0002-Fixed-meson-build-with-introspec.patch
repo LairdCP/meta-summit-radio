@@ -1,0 +1,70 @@
+From 93d9fd0c729ead836b51ec82059fe6677a5a0616 Mon Sep 17 00:00:00 2001
+From: Boris Krasnovskiy <boris.krasnovskiy@lairdconnect.com>
+Date: Wed, 2 Nov 2022 15:26:19 -0400
+Subject: [PATCH] lrd-network-manager: Fixed meson build with introspection
+
+Bug 22029
+---
+ meson.build                       | 6 +++---
+ src/core/meson.build              | 1 +
+ src/libnm-core-public/meson.build | 4 ++++
+ 3 files changed, 8 insertions(+), 3 deletions(-)
+
+diff --git a/meson.build b/meson.build
+index f8016fd269..62196c6034 100644
+--- a/meson.build
++++ b/meson.build
+@@ -85,9 +85,6 @@ intltool_xml_cmd = [intltool_merge, '-x', '-u', '-c', intltool_cache, po_dir, '@
+ 
+ top_inc = include_directories('.')
+ 
+-perl = find_program('perl')
+-xsltproc = find_program('xsltproc')
+-
+ check_exports = find_program(join_paths(source_root, 'tools', 'check-exports.sh'))
+ 
+ cc = meson.get_compiler('c')
+@@ -914,6 +911,9 @@ if test -n "$INTROSPECTION_MAKEFILE"; then
+       AC_MSG_ERROR(["--enable-introspection aims to build the settings documentation. This requires GObject introspection for python (pygobject)])
+     fi
+ 
++    perl = find_program('perl')
++    xsltproc = find_program('xsltproc')
++
+     AC_PATH_PROG(PERL, perl)
+     if test -z "$PERL"; then
+       AC_MSG_ERROR([--enable-introspection requires perl])
+diff --git a/src/core/meson.build b/src/core/meson.build
+index 2148d23b76..5c7da14fba 100644
+--- a/src/core/meson.build
++++ b/src/core/meson.build
+@@ -60,6 +60,7 @@ libNetworkManagerBase = static_library(
+     libnm_core_public_dep,
+     libsystemd_dep,
+     libudev_dep,
++    libnm_systemd_shared_dep_inc,
+   ],
+ )
+ 
+diff --git a/src/libnm-core-public/meson.build b/src/libnm-core-public/meson.build
+index f1da4d023d..04d67fb785 100644
+--- a/src/libnm-core-public/meson.build
++++ b/src/libnm-core-public/meson.build
+@@ -100,6 +100,8 @@ libnm_core_public_dep = declare_dependency(
+   ],
+ )
+ 
++if enable_docs
++
+ docbooks = [
+   ['nm-dbus-types',     'nm-dbus-interface.h',     'NetworkManager D-Bus API Types'],
+   ['nm-vpn-dbus-types', 'nm-vpn-dbus-interface.h', 'VPN Plugin D-Bus API Types'],
+@@ -127,3 +129,5 @@ foreach docbook: docbooks
+ 
+   content_files += xml.full_path()
+ endforeach
++
++endif
+-- 
+2.38.1
+

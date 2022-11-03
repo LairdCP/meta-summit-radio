@@ -1,12 +1,13 @@
-SUMMARY = "Summit NetworkManager"
+SUMMARY = "Summit Network Manager"
 SECTION = "net/misc"
 
-LICENSE = "GPLv2+ & LGPLv2.1+"
+LICENSE = "GPL-2.0-or-later & LGPL-2.1-or-later"
 LIC_FILES_CHKSUM = "file://COPYING;md5=b234ee4d69f5fce4486a80fdaf4a4263 \
                     file://COPYING.LGPL;md5=4fbd65380cdd255951079008b364516c \
 "
 
 DEPENDS = " \
+    coreutils-native \
     intltool-native \
     libnl \
     udev \
@@ -15,7 +16,7 @@ DEPENDS = " \
     libnewt \
 "
 
-inherit autotools gettext update-rc.d systemd bash-completion update-alternatives gobject-introspection gtk-doc
+inherit meson pkgconfig gettext update-rc.d systemd gobject-introspection gtk-doc update-alternatives upstream-version-is-even
 
 LRD_URI ?= "${LRD_URI_BASE}"
 LRD_URI:summit-internal = "https://files.devops.rfpros.com/builds/linux/lrd-network-manager/src/${PV}"
@@ -24,41 +25,43 @@ SRC_URI = " \
     ${LRD_URI}/lrd-network-manager-src-${PV}.tar.xz;name=summit-network-manager \
     file://networkmanager.initd \
     file://NetworkManager.conf \
-    file://0001-Fixed-configure.ac-Fix-pkgconfig-sysroot-locations.patch \
-    file://0002-Allow-introspection-without-docs.patch \
-    file://0003-install-firewalld-to-var-libdir-rather-than-hardcod-.patch \
+	file://0001-do-not-ask-host-for-ifcfg-defaults.patch \
+    file://0002-Fixed-meson-build-with-introspec.patch \
 "
 
 S = "${WORKDIR}/lrd-network-manager-${PV}"
 
-EXTRA_OECONF = " \
-    --disable-ifcfg-rh \
-    --disable-more-warnings \
-    --with-iptables=${sbindir}/iptables \
-    --disable-tests \
-    --with-nmtui=yes \
-    --with-udev-dir=${nonarch_base_libdir}/udev \
-    --with-dhclient=no \
-    --with-dhcpcd=no \
-    --with-dhcpcanon=no \
-    --with-netconfig=no \
-    --disable-concheck \
-    --disable-nls \
-    --disable-vala \
+# ['auto', 'symlink', 'file', 'netconfig', 'resolvconf']
+NETWORKMANAGER_DNS_RC_MANAGER_DEFAULT ??= "auto"
+
+# ['dhcpcanon', 'dhclient', 'dhcpcd', 'internal', 'nettools']
+NETWORKMANAGER_DHCP_DEFAULT ??= "internal"
+
+EXTRA_OEMESON = "\
+    -Difcfg_rh=false \
+    -Dtests=no \
+    -Dnmtui=true \
+    -Dudev_dir=${nonarch_base_libdir}/udev \
+    -Dlibpsl=false \
+    -Dqt=false \
+    -Dconfig_dns_rc_manager_default=${NETWORKMANAGER_DNS_RC_MANAGER_DEFAULT} \
+    -Dconfig_dhcp_default=${NETWORKMANAGER_DHCP_DEFAULT} \
+    -Ddhcpcanon=false \
+	-Dwext=false \
 "
 
 # stolen from https://github.com/void-linux/void-packages/blob/master/srcpkgs/NetworkManager/template
 # avoids:
 # | ../NetworkManager-1.16.0/libnm-core/nm-json.c:106:50: error: 'RTLD_DEEPBIND' undeclared (first use in this function); did you mean 'RTLD_DEFAULT'?
-CFLAGS:append_libc-musl = " \
+CFLAGS:append:libc-musl = " \
     -DRTLD_DEEPBIND=0 \
 "
 
 do_compile:prepend() {
-    export GIR_EXTRA_LIBS_PATH="${B}/src/libnm-client-impl/.libs"
+    export GI_TYPELIB_PATH="${B}}/src/libnm-client-impl${GI_TYPELIB_PATH:+:$GI_TYPELIB_PATH}"
 }
 
-PACKAGECONFIG ?= "gnutls dnsmasq nmcli \
+PACKAGECONFIG ??= "readline gnutls dnsmasq nmcli \
     ${@bb.utils.contains('DISTRO_FEATURES', 'systemd', 'systemd', bb.utils.contains('DISTRO_FEATURES', 'x11', 'consolekit', '', d), d)} \
     ${@bb.utils.contains('DISTRO_FEATURES', 'bluetooth', 'bluez5', '', d)} \
     ${@bb.utils.filter('DISTRO_FEATURES', 'wifi polkit', d)} \
@@ -67,40 +70,56 @@ PACKAGECONFIG ?= "gnutls dnsmasq nmcli \
 "
 
 inherit ${@bb.utils.contains('PACKAGECONFIG', 'nmcli', 'bash-completion', '', d)}
+inherit ${@bb.utils.contains('PACKAGECONFIG', 'vala', 'vala', '', d)}
 
-PACKAGECONFIG[systemd] = " \
-    --with-systemdsystemunitdir=${systemd_unitdir}/system --with-session-tracking=systemd, \
-    --without-systemdsystemunitdir, \
+PACKAGECONFIG[systemd] = "\
+    -Dsystemdsystemunitdir=${systemd_unitdir}/system -Dsession_tracking=systemd,\
+    -Dsystemdsystemunitdir=no -Dsystemd_journal=false -Dsession_tracking=no\
 "
-PACKAGECONFIG[polkit] = "--enable-polkit,--disable-polkit,polkit"
-PACKAGECONFIG[bluez5] = "--enable-bluez5-dun,--disable-bluez5-dun,bluez5"
+PACKAGECONFIG[polkit] = "-Dpolkit=true,-Dpolkit=false,polkit"
+PACKAGECONFIG[bluez5] = "-Dbluez5_dun=true,-Dbluez5_dun=false,bluez5"
 # consolekit is not picked by shlibs, so add it to RDEPENDS too
-PACKAGECONFIG[consolekit] = "--with-session-tracking=consolekit,,consolekit,consolekit"
-PACKAGECONFIG[modemmanager] = "--with-modem-manager-1=yes,--with-modem-manager-1=no,modemmanager"
-PACKAGECONFIG[ofono] = "--with-ofono,--without-ofono,ofono"
-PACKAGECONFIG[ppp] = "--enable-ppp,--disable-ppp,ppp,ppp"
-PACKAGECONFIG[dnsmasq] = "--with-dnsmasq=${bindir}/dnsmasq,,,dnsmasq"
-PACKAGECONFIG[nss] = "--with-crypto=nss,,nss"
-PACKAGECONFIG[resolvconf] = "--with-resolvconf=${base_sbindir}/resolvconf,,,resolvconf"
-PACKAGECONFIG[gnutls] = "--with-crypto=gnutls,,gnutls"
-PACKAGECONFIG[wifi] = "--with-wext=no --enable-wifi=yes,--with-wext=no --enable-wifi=no,wpa-supplicant"
-PACKAGECONFIG[ifupdown] = "--enable-ifupdown,--disable-ifupdown"
-PACKAGECONFIG[qt4-x11-free] = "--enable-qt,--disable-qt,qt4-x11-free"
-PACKAGECONFIG[cloud-setup] = "--with-nm-cloud-setup=yes,--with-nm-cloud-setup=no"
-PACKAGECONFIG[nmcli] = "--with-nmcli=yes,--with-nmcli=no,readline"
-PACKAGECONFIG[ovs] = "--enable-ovs,--disable-ovs,jansson"
-PACKAGECONFIG[audit] = "--with-libaudit,--without-libaudit,audit"
-PACKAGECONFIG[selinux] = "--with-selinux,--without-selinux,libselinux"
+PACKAGECONFIG[consolekit] = "-Dsession_tracking_consolekit=true,-Dsession_tracking_consolekit=false,consolekit,consolekit"
+PACKAGECONFIG[modemmanager] = "-Dmodem_manager=true -Dofono=true,-Dmodem_manager=false -Dofono=false,modemmanager mobile-broadband-provider-info"
+PACKAGECONFIG[ppp] = "-Dppp=true -Dpppd=/usr/sbin/pppd,-Dppp=false,ppp,ppp"
+PACKAGECONFIG[dnsmasq] = "-Ddnsmasq=${bindir}/dnsmasq,,,dnsmasq"
+PACKAGECONFIG[nss] = "-Dcrypto=nss,,nss"
+PACKAGECONFIG[resolvconf] = "-Dresolvconf=${base_sbindir}/resolvconf,-Dresolvconf=no,,resolvconf"
+PACKAGECONFIG[gnutls] = "-Dcrypto=gnutls,,gnutls"
+PACKAGECONFIG[wifi] = "-Dwifi=true,-Dwifi=false"
+PACKAGECONFIG[iwd] = "-Diwd=true,-Diwd=false"
+PACKAGECONFIG[ifupdown] = "-Difupdown=true,-Difupdown=false"
+PACKAGECONFIG[cloud-setup] = "-Dnm_cloud_setup=true,-Dnm_cloud_setup=false"
+PACKAGECONFIG[nmcli] = "-Dnmcli=true,-Dnmcli=false"
+PACKAGECONFIG[readline] = "-Dreadline=libreadline,,readline"
+PACKAGECONFIG[libedit] = "-Dreadline=libedit,,libedit"
+PACKAGECONFIG[ovs] = "-Dovs=true,-Dovs=false,jansson"
+PACKAGECONFIG[audit] = "-Dlibaudit=yes,-Dlibaudit=no"
+PACKAGECONFIG[selinux] = "-Dselinux=true,-Dselinux=false,libselinux"
+PACKAGECONFIG[vala] = "-Dvapi=true,-Dvapi=false"
+PACKAGECONFIG[dhcpcd] = "-Ddhcpcd=yes,-Ddhcpcd=no,,dhcpcd"
+PACKAGECONFIG[dhclient] = "-Ddhclient=yes,-Ddhclient=no,,dhcp"
+PACKAGECONFIG[concheck] = "-Dconcheck=true,-Dconcheck=false,curl,"
 
 PACKAGES =+ " \
-  ${PN}-nmcli ${PN}-nmcli-doc \
-  ${PN}-nmtui ${PN}-nmtui-doc \
-  ${PN}-adsl ${PN}-cloud-setup \
+    ${PN}-adsl \
+    ${PN}-bluetooth \
+    ${PN}-cloud-setup \
+    ${PN}-nmcli ${PN}-nmcli-doc \
+    ${PN}-nmtui ${PN}-nmtui-doc \
+    ${PN}-wifi \
+    ${PN}-wwan \
+    ${PN}-ovs ${PN}-ovs-doc \
+    ${PN}-ppp \
 "
 
 SYSTEMD_PACKAGES = "${PN} ${PN}-cloud-setup"
 
-FILES:${PN}-adsl = "${libdir}/NetworkManager/*/libnm-device-plugin-adsl.so"
+NETWORKMANAGER_PLUGINDIR = "${libdir}/NetworkManager/*"
+
+FILES:${PN}-adsl = "${NETWORKMANAGER_PLUGINDIR}/libnm-device-plugin-adsl.so"
+
+FILES:${PN}-bluetooth = "${NETWORKMANAGER_PLUGINDIR}/libnm-device-plugin-bluetooth.so"
 
 FILES:${PN}-cloud-setup = " \
     ${libexecdir}/nm-cloud-setup \
@@ -111,41 +130,6 @@ FILES:${PN}-cloud-setup = " \
 "
 ALLOW_EMPTY:${PN}-cloud-setup = "1"
 SYSTEMD_SERVICE:${PN}-cloud-setup = "${@bb.utils.contains('PACKAGECONFIG', 'cloud-setup', 'nm-cloud-setup.service nm-cloud-setup.timer', '', d)}"
-
-FILES:${PN} += " \
-    ${libexecdir} \
-    ${libdir}/NetworkManager/*/*.so \
-    ${libdir}/NetworkManager \
-    ${libdir}/firewalld/zones \
-    ${nonarch_libdir}/NetworkManager/conf.d \
-    ${nonarch_libdir}/NetworkManager/dispatcher.d \
-    ${nonarch_libdir}/NetworkManager/dispatcher.d/pre-down.d \
-    ${nonarch_libdir}/NetworkManager/dispatcher.d/pre-up.d \
-    ${nonarch_libdir}/NetworkManager/dispatcher.d/no-wait.d \
-    ${nonarch_libdir}/NetworkManager/VPN \
-    ${nonarch_libdir}/NetworkManager/system-connections \
-    ${datadir}/polkit-1 \
-    ${datadir}/dbus-1 \
-    ${nonarch_base_libdir}/udev/* \
-    ${systemd_system_unitdir} \
-    ${libdir}/pppd \
-"
-
-RDEPENDS:${PN} += "ethtool"
-RRECOMMENDS:${PN} += "iptables \
-    ${@bb.utils.filter('PACKAGECONFIG', 'dnsmasq', d)} \
-"
-RCONFLICTS:${PN} = "connman networkmanager"
-RREPLACES:${PN} = "networkmanager"
-
-FILES:${PN}-dev += " \
-    ${datadir}/NetworkManager/gdb-cmd \
-    ${libdir}/pppd/*/*.la \
-    ${libdir}/NetworkManager/*.la \
-    ${libdir}/NetworkManager/*/*.la \
-"
-
-RRECOMMENDS:${PN}-nmcli += "less"
 
 FILES:${PN}-nmcli = " \
     ${bindir}/nmcli \
@@ -166,8 +150,70 @@ FILES:${PN}-nmtui-doc = " \
     ${mandir}/man1/nmtui* \
 "
 
+FILES:${PN}-wifi = "${NETWORKMANAGER_PLUGINDIR}/libnm-device-plugin-wifi.so"
+
+FILES:${PN}-wwan = "\
+    ${NETWORKMANAGER_PLUGINDIR}/libnm-device-plugin-wwan.so \
+    ${NETWORKMANAGER_PLUGINDIR}/libnm-wwan.so \
+"
+
+FILES:${PN}-ovs = "\
+    ${NETWORKMANAGER_PLUGINDIR}/libnm-device-plugin-ovs.so \
+    ${systemd_system_unitdir}/NetworkManager.service.d/NetworkManager-ovs.conf \
+"
+
+FILES:${PN}-ovs-doc = "\
+    ${mandir}/man7/nm-openvswitch.7* \
+"
+
+FILES:${PN}-ppp = "\
+    ${NETWORKMANAGER_PLUGINDIR}/libnm-ppp-plugin.so \
+    ${libdir}/pppd/*/nm-pppd-plugin.so \
+"
+
+FILES:${PN}-dev += " \
+    ${libdir}/pppd/*/*.la \
+    ${libdir}/NetworkManager/*.la \
+    ${NETWORKMANAGER_PLUGINDIR}/*.la \
+"
+
+FILES:${PN} += " \
+    ${libexecdir} \
+    ${libdir}/NetworkManager \
+    ${nonarch_libdir}/firewalld/zones \
+    ${nonarch_libdir}/NetworkManager/conf.d \
+    ${nonarch_libdir}/NetworkManager/dispatcher.d \
+    ${nonarch_libdir}/NetworkManager/dispatcher.d/pre-down.d \
+    ${nonarch_libdir}/NetworkManager/dispatcher.d/pre-up.d \
+    ${nonarch_libdir}/NetworkManager/dispatcher.d/no-wait.d \
+    ${nonarch_libdir}/NetworkManager/VPN \
+    ${nonarch_libdir}/NetworkManager/system-connections \
+    ${datadir}/polkit-1 \
+    ${datadir}/dbus-1 \
+    ${nonarch_base_libdir}/udev/* \
+    ${systemd_system_unitdir} \
+"
+
+RRECOMMENDS:${PN} += "\
+    iptables \
+    ${@bb.utils.filter('PACKAGECONFIG', 'dnsmasq', d)} \
+    ${@bb.utils.contains('PACKAGECONFIG','adsl','${PN}-adsl','',d)} \
+    ${@bb.utils.contains('PACKAGECONFIG','bluez5','${PN}-bluetooth','',d)} \
+    ${@bb.utils.contains('PACKAGECONFIG','cloud-setup','${PN}-cloud-setup','',d)} \
+    ${@bb.utils.contains('PACKAGECONFIG','nmcli','${PN}-nmcli','',d)} \
+    ${@bb.utils.contains('PACKAGECONFIG','nmtui','${PN}-nmtui','',d)} \
+    ${@bb.utils.contains('PACKAGECONFIG','wifi','${PN}-wifi','',d)} \
+    ${@bb.utils.contains('PACKAGECONFIG','modemmanager','${PN}-wwan','',d)} \
+    ${@bb.utils.contains('PACKAGECONFIG','ovs','${PN}-ovs','',d)} \
+    ${@bb.utils.contains('PACKAGECONFIG','ppp','${PN}-ppp','',d)} \
+"
+RCONFLICTS:${PN} = "connman"
+
 INITSCRIPT_NAME = "network-manager"
-SYSTEMD_SERVICE:${PN} = "${@bb.utils.contains('PACKAGECONFIG', 'systemd', 'NetworkManager.service NetworkManager-dispatcher.service', '', d)}"
+SYSTEMD_SERVICE:${PN} = "\
+    NetworkManager.service \
+    NetworkManager-dispatcher.service \
+"
 
 ALTERNATIVE_PRIORITY = "100"
 ALTERNATIVE:${PN} = "${@bb.utils.contains('DISTRO_FEATURES','systemd','resolv-conf','',d)}"
@@ -175,11 +221,9 @@ ALTERNATIVE_TARGET[resolv-conf] = "${@bb.utils.contains('DISTRO_FEATURES','syste
 ALTERNATIVE_LINK_NAME[resolv-conf] = "${@bb.utils.contains('DISTRO_FEATURES','systemd','${sysconfdir}/resolv.conf','',d)}"
 
 do_install:append() {
-    install -Dm 0644 ${WORKDIR}/NetworkManager.conf ${D}${sysconfdir}/NetworkManager/NetworkManager.conf
+	rm -rf ${D}/run ${D}${localstatedir}/run
 
-    rm -rf ${D}/run ${D}${localstatedir}/run
-
-    if ${@bb.utils.contains('DISTRO_FEATURES', 'systemd', 'true', 'false', d)}; then
+    if ${@bb.utils.contains('DISTRO_FEATURES','systemd','true','false',d)}; then
         # For read-only filesystem, do not create links during bootup
         ln -sf ../run/NetworkManager/resolv.conf ${D}${sysconfdir}/resolv-conf.NetworkManager
 
@@ -188,7 +232,12 @@ do_install:append() {
     else
         install -Dm 0755 ${WORKDIR}/networkmanager.initd ${D}${sysconfdir}/init.d/network-manager
     fi
+
+	install -Dm 0644 ${WORKDIR}/NetworkManager.conf ${D}${sysconfdir}/NetworkManager/NetworkManager.conf
 }
+
+RDEPENDS:${PN} += "ethtool"
+RRECOMMENDS:${PN}-nmcli += "less"
 
 RPROVIDES:${PN} += "networkmanager"
 RREPLACES:${PN} += "networkmanager"
