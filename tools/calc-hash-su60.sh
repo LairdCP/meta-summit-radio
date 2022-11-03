@@ -19,9 +19,6 @@ do
   calc_file "${prefix}/summit_supplicant/laird/${ver}/summit_supplicant-${i}-${ver}.tar.bz2" "summit-supplicant-${i}"
   calc_file "${prefix}/summit_supplicant/laird/${ver}/summit_supplicant_openssl_3_0-${i}-${ver}.tar.bz2" "summit-supplicant_openssl_3_0-${i}"
   calc_file "${prefix}/summit_supplicant/laird/${ver}/summit_supplicant_openssl_1_0_2-${i}-${ver}.tar.bz2" "summit-supplicant_openssl_1_0_2-${i}"
-  calc_file "${prefix}/summit_supplicant/laird/${ver}/summit_supplicant_legacy-${i}-${ver}.tar.bz2" "summit-supplicant_legacy-${i}"
-  calc_file "${prefix}/summit_supplicant/laird/${ver}/summit_supplicant_legacy_openssl_3_0-${i}-${ver}.tar.bz2" "summit-supplicant_legacy_openssl_3_0-${i}"
-  calc_file "${prefix}/summit_supplicant/laird/${ver}/summit_supplicant_legacy_openssl_1_0_2-${i}-${ver}.tar.bz2" "summit-supplicant_legacy_openssl_1_0_2-${i}"
   calc_file "${prefix}/adaptive_ww/laird/${ver}/adaptive_ww-${i}-${ver}.tar.bz2" "adaptive-ww-${i}"
   calc_file "${prefix}/adaptive_ww/laird/${ver}/adaptive_ww_openssl_3_0-${i}-${ver}.tar.bz2" "adaptive-ww_openssl_3_0-${i}"
   calc_file "${prefix}/adaptive_ww/laird/${ver}/adaptive_ww_openssl_1_0_2-${i}-${ver}.tar.bz2" "adaptive-ww_openssl_1_0_2-${i}"
@@ -29,7 +26,7 @@ done
 
 calc_file "${prefix}/adaptive_bt/src/${ver}/adaptive_bt-src-${ver}.tar.gz" "adaptive-bt"
 calc_file "${prefix}/lrd-network-manager/src/${ver}/lrd-network-manager-src-${ver}.tar.xz" "summit-network-manager"
-calc_file "${prefix}/backports/laird/${ver}/backports-summit-${ver}.tar.bz2" "summit-backports"
+calc_file "${prefix}/backports/laird/${ver}/backports-laird-${ver}.tar.bz2" "summit-backports"
 
 for i in pcie-uart pcie-usb sdio-uart sdio-sdio usb-usb usb-uart
 do
