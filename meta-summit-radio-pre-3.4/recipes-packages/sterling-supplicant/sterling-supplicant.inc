@@ -1,9 +1,9 @@
 SECTION = "Wireless"
 
 LICENSE = "BSD-3-Clause"
-LIC_FILES_CHKSUM = "file://COPYING;md5=279b4f5abb9c153c285221855ddb78cc \
-                    file://README;beginline=1;endline=56;md5=e7d3dbb01f75f0b9799e192731d1e1ff \
-                    file://wpa_supplicant/wpa_supplicant.c;beginline=1;endline=12;md5=0a8b56d3543498b742b9c0e94cc2d18b"
+LIC_FILES_CHKSUM = "file://COPYING;md5=5ebcb90236d1ad640558c3d3cd3035df \
+                    file://README;beginline=1;endline=56;md5=e3d2f6c2948991e37c1ca4960de84747 \
+                    file://wpa_supplicant/wpa_supplicant.c;beginline=1;endline=12;md5=76306a95306fee9a976b0ac1be70f705"
 
 DEPENDS = "dbus libnl"
 RRECOMMENDS_${PN} = "${PN}-passphrase ${PN}-cli"
