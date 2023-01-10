@@ -3,7 +3,7 @@ This provides 2 variants of the meta-summit-radio layer:
 meta-summit-radio - for Yocto 3.4 (Honister) and later
 meta-summit-radio-pre-3.4 - for any Yocto release prior to 3.4
 
-The distinction is needed because bb file syntax changed incompatibly in Yocto 3.4
+The distinction is needed due to an incompatible bitbake syntax change in Yocto 3.4
 
 Please use appropriate layer variant for your system. DO NOT include both layers.
 

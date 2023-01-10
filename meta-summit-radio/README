@@ -1,5 +1,5 @@
 This README file contains information on the contents of the
-laird-cp layer.
+meta-summit-radio layer.
 
 Please see the corresponding sections below for details.
 
@@ -31,26 +31,26 @@ https://www.lairdconnect.com/resources/support
 Table of Contents
 =================
 
-  I. Adding the laird-cp layer to your build
+  I. Adding the meta-summit-radio layer to your build
  II. Misc
 
 
-I. Adding the laird-cp layer to your build
+I. Adding the meta-summit-radio layer to your build
 =================================================
 
 In order to use this layer, you need to make the build system aware of
 it.
 
-Assuming the laird-cp layer exists at the top-level of your
+Assuming the meta-summit-radio layer exists at the top-level of your
 yocto build tree, you can add it to the build system by adding the
-location of the laird-cp layer to bblayers.conf, along with any
+location of the meta-summit-radio layer to bblayers.conf, along with any
 other layers needed. e.g.:
 
   BBLAYERS ?= " \
     /path/to/yocto/meta \
     /path/to/yocto/meta-poky \
     /path/to/yocto/meta-yocto-bsp \
-    /path/to/yocto/meta-summit-cp \
+    /path/to/yocto/meta-summit-radio/meta-summit-radio \
     "
 
 
@@ -58,9 +58,10 @@ II. Misc
 ========
 
 This layer supports the following modules:
-    - Sterling & SU60, Sterling LWB/LWB5/LWB5+ Wi-Fi & BT drivers and firmware
+    - Sterling & Summit 60 series radio drivers and firmware
+    - Sterling LWB/LWB5/LWB+/LWB5+ radio drivers and firmware
     - Sterling & Summit WPA supplicant
-    - Laird NetworkManager
+    - Summit NetworkManager
 
 Integration notes:
 
@@ -76,17 +77,24 @@ Integration notes:
           to the kernel config
      bitbake <image name>
 
- - To use Laird Network Manager add the "laird-networkmanager" package to your image recipe
+ - To use Summit Network Manager add the "summit-networkmanager-su60" package to your image recipe
 
  - Summit firmware and userspace packages are not provided on the public Github.  They must
    be manually downloaded and placed into <yocto top dir>/release folder if needed.
 
- - To use the Summit Sterling or Summit supplicant:
-    - add the  "<sterling|summit>-supplicant" package to your image recipe
+ - To use the Sterling supplicant:
+    - add the  "sterling-supplicant-<st60|lwb>" package to your image recipe
     - add the following to your local.conf or <distro>.conf:
-        PREFERRED_RPROVIDER_wpa-supplicant = "<sterling|summit>-supplicant"
-        PREFERRED_RPROVIDER_wpa-supplicant-cli = "<sterling|summit>-supplicant"
-        PREFERRED_RPROVIDER_wpa-supplicant-passphrase = "<sterling|summit>-supplicant"
+        PREFERRED_RPROVIDER_wpa-supplicant = "sterling-supplicant-<st60|lwb>"
+        PREFERRED_RPROVIDER_wpa-supplicant-cli = "sterling-supplicant-<st60|lwb>"
+        PREFERRED_RPROVIDER_wpa-supplicant-passphrase = "sterling-supplicant-<st60|lwb>"
+
+ - To use the Summit supplicant:
+    - add the  "summit-supplicant" package to your image recipe
+    - add the following to your local.conf or <distro>.conf:
+        PREFERRED_RPROVIDER_wpa-supplicant = "summit-supplicant"
+        PREFERRED_RPROVIDER_wpa-supplicant-cli = "summit-supplicant"
+        PREFERRED_RPROVIDER_wpa-supplicant-passphrase = "summit-supplicant"
 
  - This layer provides a set of example image recipes that can be used as references
 
@@ -98,12 +106,12 @@ Integration notes:
      be set to the upstream provider:
 		    PREFERRED_RPROVIDER_wireless-regdb-static = "wireless-regdb"
 
-LWB, LWB5, LWB5+ driver common issues:
+LWB, LWB5, LWB+, LWB5+ driver common issues:
   - The regulatory domain must be specified in the platform based on the destination of the
     target device.  Failure to do this will prevent the Wi-Fi driver from loading.  See the
 	  Software Integration Guide for more details.
 
-  - 60 s delay on loading the firmware
+  - 60 second delay on loading the firmware
     Remove CONFIG_FW_LOADER_USER_HELPER_FALLBACK from kernel config, 
     to resolve problems with SDMA driver after that one will need to make CONFIG_IMX_SDMA a module
 
