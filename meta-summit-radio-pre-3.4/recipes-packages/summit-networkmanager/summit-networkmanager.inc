@@ -24,8 +24,6 @@ SRC_URI = " \
     ${LRD_URI}/lrd-network-manager-src-${PV}.tar.xz;name=lrd-network-manager \
     file://networkmanager.initd \
     file://NetworkManager.conf \
-    file://0001-do-not-ask-host-for-ifcfg-defaults.patch \
-    file://0002-Fixed-meson-build-with-introspec.patch \
 "
 
 S = "${WORKDIR}/lrd-network-manager-${PV}"

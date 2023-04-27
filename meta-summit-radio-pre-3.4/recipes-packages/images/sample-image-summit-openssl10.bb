@@ -31,7 +31,7 @@ IMAGE_INSTALL += "\
 	kernel-module-su60-backports-summit \
 	summit60-firmware-sdio-sdio \
 	summit-supplicant-openssl10 \
-	adaptive-ww-openssl10 \
+	adaptive-ww \
 	summit-networkmanager-su60 \
 	summit-networkmanager-su60-nmcli \
 	"

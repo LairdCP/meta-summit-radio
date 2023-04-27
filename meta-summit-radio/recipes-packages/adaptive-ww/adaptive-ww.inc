@@ -23,14 +23,14 @@ ADAP_ARCH:powerpc64 = "-powerpc64-e5500"
 ADAP_ARCH:arm = "-arm-${HFP}"
 ADAP_ARCH:aarch64 = "-aarch64"
 
-SRC_URI = "${LRD_URI}/adaptive_ww${OPENSSLVER}${ADAP_ARCH}-${PV}.tar.bz2;subdir=src;name=adaptive-ww${OPENSSLVER}${ADAP_ARCH}"
+SRC_URI = "${LRD_URI}/adaptive_ww${ADAP_ARCH}-${PV}.tar.bz2;subdir=src;name=adaptive-ww${ADAP_ARCH}"
 
 do_configure[noexec] = "1"
 do_compile[noexec] = "1"
 
 S = "${WORKDIR}/src"
 
-RDEPENDS:${PN} = "libnl libnl-genl libnl-route libcrypto libconfig"
+RDEPENDS:${PN} = "libnl libnl-genl libnl-route libconfig"
 
 INSANE_SKIP:${PN} = "ldflags already-stripped"
 
