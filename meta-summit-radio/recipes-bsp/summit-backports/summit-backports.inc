@@ -5,7 +5,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=6bc538ed5bd9a7fc9398086aedcd7e46"
 
 inherit module cml1
 
-DEPENDS += "coreutils-native bison-native flex-native"
+DEPENDS += "coreutils-native bison-native flex-native kern-tools-native"
 
 S = "${WORKDIR}/laird-backport-${PV}"
 
@@ -24,7 +24,7 @@ EXTRA_OEMAKE = "\
 	M=${S} \
 	"
 
-KCONFIG_CONFIG_COMMAND = "${EXTRA_OEMAKE} menuconfig"
+KCONFIG_CONFIG_COMMAND = "${EXTRA_OEMAKE} CC=${BUILD_CC} menuconfig"
 
 do_configure () {
 	rm -f ${S}/.kernel_config_md5
@@ -40,6 +40,7 @@ do_configure () {
 		cp "${WORKDIR}/defconfig" "${B}/.config"
 	fi
 
+	# Copy in-tree defconfig to .config if .config does not exist.
 	if [ ! -f "${B}/.config" ]; then
 		cp "${S}/defconfigs/${BACKPORTS_CONFIG}" "${B}/.config"
 	fi
@@ -52,7 +53,8 @@ do_configure () {
 
 do_savedefconfig () {
 	bbplain "Saving defconfig to:\n${B}/defconfig"
-	oe_runmake -C ${B} savedefconfig
+	unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS
+	oe_runmake -C ${B} CC=${BUILD_CC} savedefconfig
 }
 
 do_savedefconfig[nostamp] = "1"
