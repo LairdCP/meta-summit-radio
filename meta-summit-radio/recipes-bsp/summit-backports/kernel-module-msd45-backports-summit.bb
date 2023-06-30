@@ -1,8 +1,6 @@
 SUMMARY = "Summit Backports for MSD45"
 
-BACKPORTS_CONFIG = " \
-	${@bb.utils.contains('DISTRO_FEATURES','bluetooth','defconfig-wb45n','defconfig-wb45n_nbt',d)} \
-	"
+BACKPORTS_CONFIG = "${@bb.utils.contains('DISTRO_FEATURES','bluetooth','wb45n','wb45n_nbt',d)}"
 
 RCONFLICTS:${PN} = " \
         kernel-module-summit-backports-summit \

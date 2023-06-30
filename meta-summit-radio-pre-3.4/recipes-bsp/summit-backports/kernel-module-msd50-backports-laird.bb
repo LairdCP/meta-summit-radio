@@ -1,8 +1,6 @@
 SUMMARY = "Summit Backports for MSD50"
 
-BACKPORTS_CONFIG = " \
-	${@bb.utils.contains('DISTRO_FEATURES','bluetooth','defconfig-wb50n','defconfig-wb50n_nbt',d)} \
-	"
+BACKPORTS_CONFIG = "${@bb.utils.contains('DISTRO_FEATURES','bluetooth','wb50n','wb50n_nbt',d)}"
 
 RCONFLICTS_${PN} = " \
         kernel-module-summit-backports-summit \

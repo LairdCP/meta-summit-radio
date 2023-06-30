@@ -3,7 +3,7 @@ SECTION = "kernel"
 LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=6bc538ed5bd9a7fc9398086aedcd7e46"
 
-inherit module
+inherit module cml1
 
 DEPENDS += "coreutils-native bison-native flex-native"
 
@@ -21,15 +21,42 @@ EXTRA_OEMAKE = "\
 	KERNEL_CONFIG=${STAGING_KERNEL_BUILDDIR}/.config \
 	KMODDIR=updates \
 	INSTALL_MOD_DIR=updates \
-	BACKPORT_DIR=${S} \
 	M=${S} \
 	"
 
-do_compile:prepend () {
+KCONFIG_CONFIG_COMMAND = "${EXTRA_OEMAKE} menuconfig"
+
+do_configure () {
 	rm -f ${S}/.kernel_config_md5
+
+	# allow user to define their own defconfig in bbappend, taken from kernel.bbclass
+	if [ "${S}" != "${B}" ] && [ -f "${S}/.config" ] && [ ! -f "${B}/.config" ]; then
+		mv "${S}/.config" "${B}/.config"
+	fi
+
+	# Copy defconfig to .config if .config does not exist. This allows
+	# recipes to manage the .config themselves in do_configure:prepend().
+	if [ -f "${WORKDIR}/defconfig" ] && [ ! -f "${B}/.config" ]; then
+		cp "${WORKDIR}/defconfig" "${B}/.config"
+	fi
+
+	if [ ! -f "${B}/.config" ]; then
+		cp "${S}/defconfigs/${BACKPORTS_CONFIG}" "${B}/.config"
+	fi
+
+	merge_config.sh -m .config ${@" ".join(find_cfgs(d))}
+
 	unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS
-	oe_runmake CC=${BUILD_CC} ${BACKPORTS_CONFIG}
+	oe_runmake CC=${BUILD_CC} olddefconfig
 }
+
+do_savedefconfig () {
+	bbplain "Saving defconfig to:\n${B}/defconfig"
+	oe_runmake -C ${B} savedefconfig
+}
+
+do_savedefconfig[nostamp] = "1"
+addtask savedefconfig after do_configure
 
 do_install:prepend () {
 	cd ${STAGING_KERNEL_DIR}

@@ -1,8 +1,6 @@
 SUMMARY = "Summit Backports for LWB and LWB5"
 
-BACKPORTS_CONFIG = " \
-	${@bb.utils.contains('DISTRO_FEATURES','bluetooth','defconfig-lwb','defconfig-lwb_nbt',d)} \
-"
+BACKPORTS_CONFIG = "${@bb.utils.contains('DISTRO_FEATURES','bluetooth','lwb','lwb_nbt',d)}"
 
 RCONFLICTS_${PN} = " \
         kernel-module-summit-backports-summit \

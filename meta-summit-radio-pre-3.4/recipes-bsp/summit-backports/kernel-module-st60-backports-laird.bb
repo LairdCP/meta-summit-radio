@@ -1,8 +1,6 @@
 SUMMARY = "Summit Backports for ST60"
 
-BACKPORTS_CONFIG = " \
-	${@bb.utils.contains('DISTRO_FEATURES','bluetooth','defconfig-sterling60','defconfig-sterling60_nbt',d)} \
-"
+BACKPORTS_CONFIG = "${@bb.utils.contains('DISTRO_FEATURES','bluetooth','sterling60','sterling60_nbt',d)}"
 
 RCONFLICTS_${PN} = " \
         kernel-module-summit-backports-summit \
