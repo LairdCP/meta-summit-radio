@@ -1,4 +1,4 @@
-SUMMARY = "Summit Bluetooth SU60 Auto World-Wide Mode"
+SUMMARY = "Summit Bluetooth 60 Auto World-Wide Mode"
 SECTION = "Wireless"
 
 LICENSE = "MIT"
@@ -8,10 +8,10 @@ inherit pkgconfig update-rc.d systemd
 
 DEPENDS = "libnl bluez5"
 
-LRD_URI ?= "${LRD_URI_BASE}"
-LRD_URI_summit-internal = "https://files.devops.rfpros.com/builds/linux/adaptive_bt/src/${PV}"
+SUMMIT_URI ?= "${SUMMIT_URI_BASE}"
+SUMMIT_URI_summit-internal = "${SUMMIT_URI_BASE}/adaptive_bt/src/${PV}"
 
-SRC_URI = "${LRD_URI}/adaptive_bt-src-${PV}.tar.gz;name=adaptive-bt"
+SRC_URI = "${SUMMIT_URI}/adaptive_bt-src-${PV}.tar.gz;name=adaptive-bt"
 
 S = "${WORKDIR}/adaptive_bt-${PV}"
 

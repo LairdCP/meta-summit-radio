@@ -9,10 +9,10 @@ DEPENDS += "coreutils-native bison-native flex-native kern-tools-native"
 
 S = "${WORKDIR}/laird-backport-${PV}"
 
-LRD_URI ?= "${LRD_URI_BASE}"
-LRD_URI_summit-internal = "https://files.devops.rfpros.com/builds/linux/backports/laird/${PV}"
+SUMMIT_URI ?= "${SUMMIT_URI_BASE}"
+SUMMIT_URI_summit-internal = "${SUMMIT_URI_BASE}/backports/laird/${PV}"
 
-SRC_URI += "${LRD_URI}/backports-laird-${PV}.tar.bz2;name=summit-backports"
+SRC_URI += "${SUMMIT_URI}/backports-laird-${PV}.tar.bz2;name=summit-backports"
 
 EXTRA_OEMAKE = "\
 	KLIB_BUILD=${STAGING_KERNEL_DIR} \

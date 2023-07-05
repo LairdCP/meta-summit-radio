@@ -1,4 +1,4 @@
-SUMMARY = "Summit Wi-Fi SU60 Auto World-Wide Mode"
+SUMMARY = "Summit Wi-Fi 60 Auto World-Wide Mode"
 SECTION = "Wireless"
 
 LICENSE = "MIT"
@@ -14,8 +14,8 @@ INITSCRIPT_PARAMS = "defaults 30"
 
 HFP = "${@bb.utils.contains('TUNE_FEATURES', 'callconvention-hard', 'eabihf', 'eabi', d)}"
 
-LRD_URI ?= "${LRD_URI_BASE}"
-LRD_URI:summit-internal = "https://files.devops.rfpros.com/builds/linux/adaptive_ww/laird/${PV}"
+SUMMIT_URI ?= "${SUMMIT_URI_BASE}"
+SUMMIT_URI:summit-internal = "${SUMMIT_URI_BASE}/adaptive_ww/laird/${PV}"
 
 ADAP_ARCH:x86 = "-x86"
 ADAP_ARCH:x86-64 = "-x86_64"
@@ -23,7 +23,7 @@ ADAP_ARCH:powerpc64 = "-powerpc64-e5500"
 ADAP_ARCH:arm = "-arm-${HFP}"
 ADAP_ARCH:aarch64 = "-aarch64"
 
-SRC_URI = "${LRD_URI}/adaptive_ww${ADAP_ARCH}-${PV}.tar.bz2;subdir=src;name=adaptive-ww${ADAP_ARCH}"
+SRC_URI = "${SUMMIT_URI}/adaptive_ww${ADAP_ARCH}-${PV}.tar.bz2;subdir=src;name=adaptive-ww${ADAP_ARCH}"
 
 do_configure[noexec] = "1"
 do_compile[noexec] = "1"

@@ -14,7 +14,12 @@ calc_file () {
 
 echo -e "PV = \"${ver}\"\n" > ${file}
 
-calc_file "${prefix}/sterling_supplicant/src/${ver}/sterling_supplicant-src-${ver}.tar.gz" "sterling-supplicant"
+for i in x86 x86_64 arm-eabi arm-eabihf aarch64 powerpc64-e5500
+do
+  calc_file "${prefix}/summit_supplicant/laird/${ver}/summit_supplicant_libs-${i}-${ver}.tar.bz2" "summit-supplicant-libs-${i}"
+done
+
+calc_file "${prefix}/summit_supplicant/laird/${ver}/summit_supplicant-src-${ver}.tar.gz" "summit-supplicant-src"
 calc_file "${prefix}/backports/laird/${ver}/backports-laird-${ver}.tar.bz2" "summit-backports"
 calc_file "${prefix}/firmware/${ver}/laird-lwbplus-firmware-${ver}.tar.bz2" "lwbplus-firmware"
 

@@ -1,1 +1,1 @@
-require adaptive-ww.inc radio-stack-su60-version.inc
+require adaptive-ww.inc radio-stack-60-version.inc

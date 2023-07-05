@@ -2,10 +2,10 @@ SECTION = "kernel"
 
 inherit allarch
 
-LRD_URI ?= "${LRD_URI_BASE}"
-LRD_URI:summit-internal = "https://files.devops.rfpros.com/builds/linux/firmware/${PV}"
+SUMMIT_URI ?= "${SUMMIT_URI_BASE}"
+SUMMIT_URI:summit-internal = "${SUMMIT_URI_BASE}/firmware/${PV}"
 
-SRC_URI = "${LRD_URI}/laird-${BPN}-${PV}.tar.bz2;name=${BPN}"
+SRC_URI = "${SUMMIT_URI}/laird-${BPN}-${PV}.tar.bz2;name=${BPN}"
 
 do_configure[noexec] = "1"
 do_compile[noexec] = "1"

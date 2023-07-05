@@ -1,46 +1,36 @@
-SUMMARY = "Summit Wi-Fi Summit Supplicant"
 SECTION = "Wireless"
 
 LICENSE = "BSD-3-Clause"
-LIC_FILES_CHKSUM = "file://../COPYING;md5=279b4f5abb9c153c285221855ddb78cc"
+LIC_FILES_CHKSUM = "file://COPYING;md5=5ebcb90236d1ad640558c3d3cd3035df \
+                    file://README;beginline=1;endline=56;md5=e3d2f6c2948991e37c1ca4960de84747 \
+                    file://wpa_supplicant/wpa_supplicant.c;beginline=1;endline=12;md5=76306a95306fee9a976b0ac1be70f705"
+
+DEPENDS = "libnl"
+RRECOMMENDS:${PN} = "${PN}-passphrase ${PN}-cli"
+
+PACKAGECONFIG ??= "openssl"
+PACKAGECONFIG[gnutls] = ",,gnutls libgcrypt"
+PACKAGECONFIG[openssl] = ",,openssl"
+
+inherit pkgconfig systemd
 
 SYSTEMD_SERVICE:${PN} = "wpa_supplicant.service wpa_supplicant-nl80211@.service wpa_supplicant-wired@.service"
 SYSTEMD_AUTO_ENABLE = "disable"
 
-HFP = "${@bb.utils.contains('TUNE_FEATURES', 'callconvention-hard', 'eabihf', 'eabi', d)}"
+SUMMIT_URI ?= "${SUMMIT_URI_BASE}"
+SUMMIT_URI:summit-internal = "${SUMMIT_URI_BASE}/summit_supplicant/laird/${PV}"
 
-LRD_URI ?= "${LRD_URI_BASE}"
-LRD_URI:summit-internal = "https://files.devops.rfpros.com/builds/linux/summit_supplicant/laird/${PV}"
+SRC_URI += "${SUMMIT_URI}/summit_supplicant-src-${PV}.tar.gz;name=summit-supplicant-src"
 
-SUPP_ARCH:x86 = "-x86"
-SUPP_ARCH:x86-64 = "-x86_64"
-SUPP_ARCH:powerpc64 = "-powerpc64-e5500"
-SUPP_ARCH:arm = "-arm-${HFP}"
-SUPP_ARCH:aarch64 = "-aarch64"
-
-SRC_URI = "\
-	${LRD_URI}/summit_supplicant${OPENSSLVER}${SUPP_ARCH}-${PV}.tar.bz2;subdir=src;name=summit-supplicant${OPENSSLVER}${SUPP_ARCH} \
-	file://COPYING \
-	"
-
-do_configure[noexec] = "1"
-do_compile[noexec] = "1"
-
-S = "${WORKDIR}/src"
-
-RDEPENDS:${PN} = "dbus-lib libnl libnl-genl libcrypto libssl"
-RDEPENDS:${PN}-passphrase = "dbus-lib libnl libnl-genl libcrypto libssl"
-
-INSANE_SKIP:${PN} = "ldflags already-stripped"
-INSANE_SKIP:${PN}-passphrase = "ldflags already-stripped"
-INSANE_SKIP:${PN}-cli = "ldflags already-stripped"
-
-ALLOW_EMPTY:${PN}-dev = "0"
-ALLOW_EMPTY:${PN}-dbg = "0"
+S = "${WORKDIR}/summit_supplicant-${PV}"
 
 RPROVIDES:${PN} += "wpa-supplicant"
 RREPLACES:${PN} += "wpa-supplicant"
 RCONFLICTS:${PN} += "wpa-supplicant"
+
+PROVIDES:${PN} += "wpa-supplicant-dbg"
+RREPLACES:${PN} += "wpa-supplicant-dbg"
+RCONFLICTS:${PN} += "wpa-supplicant-dbg"
 
 RPROVIDES:${PN}-passphrase  += "wpa-supplicant-passphrase"
 RREPLACES:${PN}-passphrase  += "wpa-supplicant-passphrase"
@@ -53,26 +43,46 @@ RCONFLICTS:${PN}-cli += "wpa-supplicant-cli"
 PACKAGES:prepend = "${PN}-passphrase ${PN}-cli "
 FILES:${PN}-passphrase = "${bindir}/wpa_passphrase"
 FILES:${PN}-cli = "${sbindir}/wpa_cli"
-FILES:${PN} += "${datadir}/dbus-1/system-services/* ${sysconfdir}/dbus-1/system.d/* ${systemd_unitdir}/system/*"
+FILES:${PN} += "${systemd_unitdir}/system/*"
 
 SOLIBS = ".so*"
 FILES_SOLIBSDEV = ""
 
-do_install () {
-	install -D -t ${D}${sbindir} -m 755 ${S}/usr/sbin/sdcsupp
-	install -D -t ${D}${sbindir} -m 755 ${S}/usr/sbin/wpa_cli
+do_configure () {
+	cp -f wpa_supplicant/${DEFCONFIG} wpa_supplicant/.config
 
-	install -D -t ${D}${bindir} -m 755 ${S}/usr/bin/wpa_passphrase
-
-	install -D -t ${D}${sysconfdir}/dbus-1/system.d -m 644 ${S}/etc/dbus-1/system.d/wpa_supplicant.conf
-	install -D -t ${D}${datadir}/dbus-1/system-services -m 644 ${S}/usr/share/dbus-1/system-services/*.service
-
-	if ${@bb.utils.contains('DISTRO_FEATURES','systemd','true','false',d)}; then
-		install -D -t ${D}${systemd_unitdir}/system -m 644 ${S}/usr/lib/systemd/system/*.service
+	if echo "${PACKAGECONFIG}" | grep -qw "openssl"; then
+		ssl=openssl
+	elif echo "${PACKAGECONFIG}" | grep -qw "gnutls"; then
+		ssl=gnutls
+	fi
+	if [ -n "$ssl" ]; then
+		sed -i "s/%ssl%/$ssl/" wpa_supplicant/.config
 	fi
 
-	install -D -m 0644 ${S}${includedir}/wpa_ctrl.h ${D}${includedir}/wpa_ctrl.h
-	install -D -m 0644 ${S}${libdir}/libwpa_client.so ${D}${libdir}/libwpa_client.so
+	# For rebuild
+	rm -f wpa_supplicant/*.d wpa_supplicant/dbus/*.d
+}
+
+export EXTRA_CFLAGS = "${CFLAGS}"
+export BINDIR = "${sbindir}"
+
+EXTRA_OEMAKE = "CONFIG_SDC_RADIO_QCA45N=y CONFIG_DRIVER_NL80211=y"
+
+do_compile () {
+	unset CFLAGS CPPFLAGS CXXFLAGS
+	sed -e "s:CFLAGS\ =.*:& \$(EXTRA_CFLAGS):g" -i ${S}/src/lib.rules
+	oe_runmake -C wpa_supplicant
+}
+
+do_install () {
+	install -D -m 755 wpa_supplicant/wpa_supplicant ${D}${sbindir}/sdcsupp
+	install -D -t ${D}${sbindir} -m 755 wpa_supplicant/wpa_cli
+	install -D -t ${D}${bindir} -m 755 wpa_supplicant/wpa_passphrase
+
+	if ${@bb.utils.contains('DISTRO_FEATURES', 'systemd', 'true', 'false', d)}; then
+		install -D -t ${D}${systemd_unitdir}/system -m 644 wpa_supplicant/systemd/*.service
+	fi
 }
 
 pkg_postinst:${PN} () {

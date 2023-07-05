@@ -17,11 +17,11 @@ DEPENDS = " \
 
 inherit autotools gettext update-rc.d systemd bash-completion update-alternatives gobject-introspection gtk-doc
 
-LRD_URI ?= "${LRD_URI_BASE}"
-LRD_URI_summit-internal = "https://files.devops.rfpros.com/builds/linux/lrd-network-manager/src/${PV}"
+SUMMIT_URI ?= "${SUMMIT_URI_BASE}"
+SUMMIT_URI_summit-internal = "${SUMMIT_URI_BASE}/lrd-network-manager/src/${PV}"
 
 SRC_URI = " \
-    ${LRD_URI}/lrd-network-manager-src-${PV}.tar.xz;name=lrd-network-manager \
+    ${SUMMIT_URI}/lrd-network-manager-src-${PV}.tar.xz;name=lrd-network-manager \
     file://networkmanager.initd \
     file://NetworkManager.conf \
 "
