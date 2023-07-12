@@ -24,6 +24,8 @@ EXTRA_OEMAKE = "\
 	M=${S} \
 	"
 
+KERNEL_MODULE_PACKAGE_SUFFIX = "-backports-${KERNEL_VERSION}"
+
 KCONFIG_CONFIG_COMMAND = "${EXTRA_OEMAKE} CC=${BUILD_CC} menuconfig"
 
 do_configure () {
