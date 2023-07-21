@@ -28,6 +28,16 @@ KERNEL_MODULE_PACKAGE_SUFFIX = "-backports-${KERNEL_VERSION}"
 
 KCONFIG_CONFIG_COMMAND = "${EXTRA_OEMAKE} CC=${BUILD_CC} menuconfig"
 
+# returns all the elements from the src uri that are .cfg files
+def find_cfgs(d):
+    sources=src_patches(d, True)
+    sources_list=[]
+    for s in sources:
+        if s.endswith('.cfg'):
+            sources_list.append(s)
+
+    return sources_list
+
 do_configure () {
 	rm -f ${S}/.kernel_config_md5
 
