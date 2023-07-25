@@ -84,13 +84,15 @@ Integration notes:
  - Summit firmware and userspace packages are not provided on the public Github.  They must
    be manually downloaded and placed into <yocto top dir>/release folder if needed.
 
-  - To use Summit Supplicant (required, for radios):
+ - To use Summit Supplicant (required, for radios):
     - without it radios will not work correctly or at all 
-    - add the  "summit-supplicant" package to your image recipe
+    - add the  "summit-supplicant-xxx" package to your image recipe
     - add the following to your local.conf or <distro>.conf:
-        PREFERRED_RPROVIDER_wpa-supplicant = "summit-supplicant"
-        PREFERRED_RPROVIDER_wpa-supplicant-cli = "summit-supplicant"
-        PREFERRED_RPROVIDER_wpa-supplicant-passphrase = "summit-supplicant"
+        PREFERRED_RPROVIDER_wpa-supplicant = "summit-supplicant-xxx"
+        PREFERRED_RPROVIDER_wpa-supplicant-cli = "summit-supplicant-xxx"
+        PREFERRED_RPROVIDER_wpa-supplicant-passphrase = "summit-supplicant-xxx"
+
+ - Summit Supplicant Libs is recommended it provides CCKM support for Summit Supplicant
 
  - This layer provides a set of example image recipes that can be used as references
 
