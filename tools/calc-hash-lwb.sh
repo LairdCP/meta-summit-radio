@@ -21,6 +21,7 @@ do
 done
 
 calc_file "summit_supplicant/laird" "summit_supplicant-src-${ver}.tar.gz" "summit-supplicant-src"
+calc_file "lrd-network-manager/src" "lrd-network-manager-src-${ver}.tar.xz" "summit-network-manager"
 calc_file "backports/laird" "backports-laird-${ver}.tar.bz2" "summit-backports"
 calc_file "firmware" "laird-lwbplus-firmware-${ver}.tar.bz2" "lwbplus-firmware"
 

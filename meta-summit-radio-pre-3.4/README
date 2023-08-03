@@ -98,13 +98,6 @@ Integration notes:
 
 Additional requirements for Yocto release 'zeus' (3.0) and later:
 
- - For all radios OpenSSL 1.0.x related recipes must be disabled:
-   Adding the following text into local.conf or <disto>.conf:
-        BBMASK += " \
-            meta-summit-radio-pre-3.4/recipes-packages/openssl \
-            meta-summit-radio-pre-3.4/recipes-packages/.*/.*openssl10.* \
-        "
-
  - wireless-regdb-static provider must be specified in local.conf or <distro>.conf
    - When using 60 Series firmware packages, the wireless-regdb-static provider must be set
      to the firmware package added to the image and used for the radio:

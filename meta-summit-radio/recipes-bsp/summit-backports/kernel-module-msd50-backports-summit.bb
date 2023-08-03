@@ -4,7 +4,6 @@ BACKPORTS_CONFIG = "${@bb.utils.contains('DISTRO_FEATURES','bluetooth','wb50n','
 
 RCONFLICTS:${PN} = " \
         kernel-module-summit-backports-summit \
-        kernel-module-sterling-backports-summit \
         kernel-module-lwb-backports-summit \
         kernel-module-lwb5p-backports-summit \
         "
