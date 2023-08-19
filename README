@@ -7,5 +7,5 @@ The distinction is needed due to an incompatible bitbake syntax change in Yocto 
 
 Please use appropriate layer variant for your system. DO NOT include both layers.
 
-For detailed integration instructions and common issues please read README file inside 
+For detailed integration instructions and common issues please see the README file inside 
 the appropriate layer

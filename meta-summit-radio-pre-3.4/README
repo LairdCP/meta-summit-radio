@@ -60,41 +60,43 @@ II. Misc
 ========
 
 This layer supports the following modules:
-    - Sterling & Summit 60 series radio drivers and firmware
+    - Summit 60 series radio drivers and firmware
     - Sterling LWB/LWB5/LWB+/LWB5+ radio drivers and firmware
-    - Sterling & Summit WPA supplicant
+    - Summit WPA supplicant
     - Summit NetworkManager
 
 Integration notes:
 
  - To use the Wi-Fi and BT driver add the backports and firmware package corresponding to the
-   desired module to your image recipe.  Ensure the kernel config does not include Wi-Fi and
-   Bluetooth components that are provided via backports.
+   desired module to your image recipe.  
+
+ - Ensure the kernel config does not include Wi-Fi and Bluetooth components that are provided
+   in backports as built-in items ('y').  These components may be removed from the kernel
+   config or left in as modules ('m').  As of kernel version 5.19, cfg80211 must be included
+   in the main kernel config, and must be included as a module ('m').  It cannot be left out
+   and cannot be built-in.
+
    To make these changes perform a kernel menuconfig and/or change the kernel defconfig
    then completely rebuild the kernel:
      bitbake -c clean virtual/kernel
      bitbake -c menuconfig virtual/kernel
-       1. Remove cfg80211, mac80211, bluetooth from the kernel config
-       2. Explicitly add the cfg80211, mac80211, and bluetooth  dependencies (mostly crypto)
-          to the kernel config
+       1. Ensure cfg80211, mac80211, bluetooth are not listed as built-in
+       2. Ensure cfg80211 is included a module
+       3. Explicitly add cfg80211, mac80211, and bluetooth  dependencies (mostly crypto)
+          to the kernel config if needed
      bitbake <image name>
 
- - To use Summit Network Manager add the "summit-networkmanager-xxx" package to your image recipe
-
- - Summit firmware and userspace packages are not provided on the public Github.  They must
-   be manually downloaded and placed into <yocto top dir>/release folder if needed.
-
- - To use Summit Supplicant (required, for radios):
-    - without it radios will not work correctly or at all 
+ - The Summit supplicant is required for full functionality for all radios
     - add the  "summit-supplicant-xxx" package to your image recipe
     - add the following to your local.conf or <distro>.conf:
         PREFERRED_RPROVIDER_wpa-supplicant = "summit-supplicant-xxx"
         PREFERRED_RPROVIDER_wpa-supplicant-cli = "summit-supplicant-xxx"
         PREFERRED_RPROVIDER_wpa-supplicant-passphrase = "summit-supplicant-xxx"
 
- - Summit Supplicant Libs is recommended it provides CCKM support for Summit Supplicant
+ - Summit Supplicant Libs is required only if CCKM support is needed in the Summit Supplicant
 
- - This layer provides a set of example image recipes that can be used as references
+ - Summit Network Manager is an optional component that enhances the functionality of the upstream
+   to support features of the Summit supplicant
 
 Additional requirements for Yocto release 'zeus' (3.0) and later:
 
@@ -105,6 +107,8 @@ Additional requirements for Yocto release 'zeus' (3.0) and later:
    - When using LWB/LWB5/LWB5+ firmware packages, the wireless-regdb-static provider must 
      be set to the upstream provider:
 		    PREFERRED_RPROVIDER_wireless-regdb-static = "wireless-regdb"
+
+- This layer provides a set of example image recipes that can be used as references
 
 LWB, LWB5, LWB+, LWB5+ driver common issues:
   - The regulatory domain must be specified in the platform based on the destination of the
