@@ -6,9 +6,10 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=b234ee4d69f5fce4486a80fdaf4a4263 \
                     file://COPYING.LGPL;md5=4fbd65380cdd255951079008b364516c \
 "
 
+# coreutils-native needed to support 'printenv' on kirkstone and below
+
 DEPENDS = " \
     coreutils-native \
-    intltool-native \
     libnl \
     udev \
     util-linux \

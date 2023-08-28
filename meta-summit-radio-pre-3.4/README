@@ -68,7 +68,7 @@ This layer supports the following modules:
 Integration notes:
 
  - To use the Wi-Fi and BT driver add the backports and firmware package corresponding to the
-   desired module to your image recipe.  
+   desired module to your image recipe.
 
  - Ensure the kernel config does not include Wi-Fi and Bluetooth components that are provided
    in backports as built-in items ('y').  These components may be removed from the kernel
@@ -104,7 +104,7 @@ Additional requirements for Yocto release 'zeus' (3.0) and later:
    - When using 60 Series firmware packages, the wireless-regdb-static provider must be set
      to the firmware package added to the image and used for the radio:
         PREFERRED_RPROVIDER_wireless-regdb-static = "<firmware package>"
-   - When using LWB/LWB5/LWB5+ firmware packages, the wireless-regdb-static provider must 
+   - When using LWB/LWB5/LWB5+ firmware packages, the wireless-regdb-static provider must
      be set to the upstream provider:
 		    PREFERRED_RPROVIDER_wireless-regdb-static = "wireless-regdb"
 
@@ -116,7 +116,7 @@ LWB, LWB5, LWB+, LWB5+ driver common issues:
 	  Software Integration Guide for more details.
 
   - 60 second delay on loading the firmware
-    Remove CONFIG_FW_LOADER_USER_HELPER_FALLBACK from kernel config, 
+    Remove CONFIG_FW_LOADER_USER_HELPER_FALLBACK from kernel config,
     to resolve problems with SDMA driver after that one will need to make CONFIG_IMX_SDMA a module
 
   - STMicro unaligned scatterlist error
