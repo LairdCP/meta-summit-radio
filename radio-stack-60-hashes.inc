@@ -1,4 +1,4 @@
--e PV = "11.92.0.11"
+PV = "11.92.0.11"
 
 SRC_URI[adaptive-ww-x86.md5sum] = "d98f06c1429282cb71fb79dbbb46a39e"
 SRC_URI[adaptive-ww-x86.sha256sum] = "338396e0c37f8a1f19da187e7fc4a5972ec09e053aaf16535cba117c98257df4"
@@ -44,3 +44,5 @@ SRC_URI[60-radio-firmware-usb-usb.md5sum] = "50875e323ddf0a2e1193f2a20bd3ca46"
 SRC_URI[60-radio-firmware-usb-usb.sha256sum] = "24efa38b24932557c4bf0d0409e9be1c966a2365840d9531d09b8969db3f28db"
 SRC_URI[60-radio-firmware-usb-uart.md5sum] = "45fd2a1dc5bda31ee0316d2c0c379b48"
 SRC_URI[60-radio-firmware-usb-uart.sha256sum] = "24206259f517557667234b3caed16d037b3985829c0a21d055321b45bf9eb7c5"
+SRC_URI[som8mp-radio-firmware.md5sum] = "e091c819b6585bbeb0d1336ad0baf44f"
+SRC_URI[som8mp-radio-firmware.sha256sum] = "55c0caa64b88e16dec27a44f43f32ac40f11883b1c0d74e3c54be3f6d043d14f"
