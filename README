@@ -1,0 +1,15 @@
+We restructuring this repository. Now every release will have it's own branch. 
+Not all radios are necessarily supported on each release/branch, even though 
+recipes for all radios are present in each one.
+
+lrd-y.0.... branches reserved for the engineering releases, they are generally not
+supported and have no expectaion of working properly, unless prior arrangement with
+sales has been made, and FAE directed you to use it
+
+lrd-y.x.... branches usually release branch for one or more radios.
+
+Below are the branches to use for the last software release:
+
+60: lrd-11.39.0.x
+lwb: lrd-11.39.0.x
+45/50 legacy: lrd-11.39.0.x
