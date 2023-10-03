@@ -1,0 +1,29 @@
+--- a/configure.ac	2023-10-02 23:26:39.000000000 
++++ b/configure.ac	2023-10-03 12:35:17.000000000 
+@@ -664,6 +664,7 @@
+ fi
+ AC_DEFINE_UNQUOTED(NM_CONFIG_DEFAULT_MAIN_AUTH_POLKIT, "$enable_polkit", [The default value of the auth-polkit configuration option])
+ AC_SUBST(NM_CONFIG_DEFAULT_MAIN_AUTH_POLKIT_TEXT, "$enable_polkit")
++AM_CONDITIONAL(WITH_POLKIT, test "${enable_polkit}" != "false")
+ 
+ AC_ARG_WITH([polkit-agent-helper-1],
+             AS_HELP_STRING([--with-polkit-agent-helper-1=/path/to/polkit-agent-helper-1],
+
+--- a/Makefile.am	2023-08-23 02:17:13.000000000 
++++ b/Makefile.am	2023-10-03 12:14:33.000000000 
+@@ -223,6 +223,7 @@
+ 
+ ###############################################################################
+ 
++if WITH_POLKIT
+ polkit_policydir = $(datadir)/polkit-1/actions
+ 
+ dist_polkit_policy_in_in_files = \
+@@ -236,6 +237,7 @@
+ 	$(AM_V_GEN)$(MSGFMT) --xml --template $< -d $(top_srcdir)/po -o $@
+ 
+ DISTCLEANFILES += $(polkit_policy_DATA)
++endif
+ 
+ ###############################################################################
+ 
