@@ -39,3 +39,9 @@ for i in sdio-div sdio-sa sdio-sa-m2 usb-div usb-sa usb-sa-m2
 do
   calc_file "firmware" "laird-lwb5plus-${i}-firmware-${ver}.tar.bz2" "lwb5plus-${i}-firmware"
 done
+
+for i in sdio pcie
+do
+  calc_file "firmware" "laird-if573-${i}-firmware-${ver}.tar.bz2" "if573-${i}-firmware"
+done
+
