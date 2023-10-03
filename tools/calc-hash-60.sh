@@ -31,3 +31,4 @@ do
   calc_file "firmware" "laird-60-radio-firmware-${i}-${ver}.tar.bz2" "60-radio-firmware-${i}"
 done
 
+calc_file "firmware" "laird-som8mp-radio-firmware-${ver}.tar.bz2" "som8mp-radio-firmware"
