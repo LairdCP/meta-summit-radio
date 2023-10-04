@@ -1,4 +1,4 @@
-PV = "11.92.0.11"
+RADIO_VERSION = "11.92.0.11"
 
 SRC_URI[adaptive-ww-x86.md5sum] = "d98f06c1429282cb71fb79dbbb46a39e"
 SRC_URI[adaptive-ww-x86.sha256sum] = "338396e0c37f8a1f19da187e7fc4a5972ec09e053aaf16535cba117c98257df4"

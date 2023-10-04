@@ -1,4 +1,4 @@
--e PV = "11.92.0.11"
+RADIO_VERSION = "11.92.0.11"
 
 SRC_URI[summit-supplicant-libs-legacy-arm-eabi.md5sum] = "2c6ef95e25b4283f2bebf139440a4b74"
 SRC_URI[summit-supplicant-libs-legacy-arm-eabi.sha256sum] = "4e70cf85f948ab204351e1c456464dcc97dd7855da159d7079e27a53149e7c80"
