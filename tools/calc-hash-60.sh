@@ -1,3 +1,5 @@
+#! /bin/sh
+
 [ -z "${1}" ] && { echo "Usage: $0 <version>"; exit 1; }
 
 ver=${1}
@@ -13,7 +15,7 @@ calc_file () {
   rm -f ${2}
 }
 
-echo -e "PV = \"${ver}\"\n" > ${file}
+echo "RADIO_VERSION = \"${ver}\"\n" > ${file}
 
 for i in x86 x86_64 arm-eabi arm-eabihf aarch64 powerpc64-e5500
 do

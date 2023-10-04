@@ -1,5 +1,7 @@
 SECTION = "kernel"
 
+PV = "${RADIO_VERSION}"
+
 inherit allarch
 
 SUMMIT_URI ?= "${SUMMIT_URI_BASE}"

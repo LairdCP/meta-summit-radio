@@ -3,6 +3,8 @@ SECTION = "kernel"
 LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=6bc538ed5bd9a7fc9398086aedcd7e46"
 
+PV = "${RADIO_VERSION}"
+
 inherit module cml1
 
 DEPENDS += "coreutils-native bison-native flex-native kern-tools-native"

@@ -4,6 +4,8 @@ SECTION = "Wireless"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
 
+PV = "${RADIO_VERSION}"
+
 inherit update-rc.d systemd
 
 SYSTEMD_SERVICE:${PN} = "adaptive_ww.service"
