@@ -26,7 +26,7 @@ IMAGE_INSTALL += "\
 	iperf3 \
 	tcpdump \
 	iw \
-	kernel-module-lwb5p-backports-summit \
+	kernel-module-lwb-backports-summit \
 	lwb5plus-sdio-div-firmware \
 	summit-supplicant-lwb \
 	summit-supplicant-libs-lwb \

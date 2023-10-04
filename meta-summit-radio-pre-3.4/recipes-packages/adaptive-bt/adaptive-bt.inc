@@ -4,6 +4,8 @@ SECTION = "Wireless"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
 
+PV = "${RADIO_VERSION}"
+
 inherit pkgconfig update-rc.d systemd
 
 DEPENDS = "libnl bluez5"
@@ -27,6 +29,9 @@ FILES_${PN} += "${sysconfdir}"
 
 do_install () {
 	install -D -t ${D}${bindir} -m 755 ${S}/bin/adaptive_bt
-	install -D -t ${D}${systemd_unitdir}/system -m 644 ${S}/support/adaptive_bt.service
 	install -D -t ${D}${sysconfdir}/init.d -m 755 ${S}/support/adaptive_bt
+
+	if ${@bb.utils.contains('DISTRO_FEATURES','systemd','true','false',d)}; then
+		install -D -t ${D}${systemd_unitdir}/system -m 644 ${S}/support/adaptive_bt.service
+	fi
 }
