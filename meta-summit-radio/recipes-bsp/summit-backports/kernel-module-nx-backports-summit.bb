@@ -7,7 +7,6 @@ RCONFLICTS:${PN} = " \
         kernel-module-lwb-backports-summit \
         kernel-module-msd45-backports-summit \
         kernel-module-msd50-backports-summit \
-        kernel-module-qcacld-backports-summit \
         "
 
 require summit-backports.inc radio-stack-nx-version.inc
