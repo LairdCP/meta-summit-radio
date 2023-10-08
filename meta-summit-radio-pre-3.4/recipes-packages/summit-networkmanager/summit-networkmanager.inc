@@ -21,7 +21,6 @@ SUMMIT_URI_summit-internal = "${SUMMIT_URI_BASE}/lrd-network-manager/src/${PV}"
 
 SRC_URI = " \
     ${SUMMIT_URI}/lrd-network-manager-src-${PV}.tar.xz;name=summit-network-manager \
-    file://0002-Fixed-build-failure-without-polkit.patch \
     file://networkmanager.initd \
     file://NetworkManager.conf \
 "
