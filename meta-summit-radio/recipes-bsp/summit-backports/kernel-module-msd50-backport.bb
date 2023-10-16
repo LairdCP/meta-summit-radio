@@ -3,10 +3,10 @@ SUMMARY = "Summit Backports for MSD50"
 BACKPORTS_CONFIG = "${@bb.utils.contains('DISTRO_FEATURES','bluetooth','wb50n','wb50n_nbt',d)}"
 
 RCONFLICTS:${PN} = " \
-        kernel-module-60-backports-summit \
-        kernel-module-lwb-backports-summit \
-        kernel-module-msd45-backports-summit \
-        kernel-module-nx-backports-summit \
+        kernel-module-60-backports \
+        kernel-module-lwb-if-backports \
+        kernel-module-msd45-backports \
+        kernel-module-nx-backports \
         "
 
 module_conf_ath6kl_core  = "options ath6kl_core recovery_enable=1 heart_beat_poll=200"
