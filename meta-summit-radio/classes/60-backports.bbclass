@@ -1,4 +1,4 @@
-BACKPORTS_PROVIDER = "kernel-module-summit-backports-summit"
+BACKPORTS_PROVIDER = "kernel-module-60-backports"
 
 DEPENDS += "${BACKPORTS_PROVIDER}"
 
