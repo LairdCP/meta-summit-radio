@@ -1,4 +1,4 @@
-BACKPORTS_PROVIDER = "kernel-module-lwb-backports"
+BACKPORTS_PROVIDER = "kernel-module-lwb-if-backports"
 
 DEPENDS += "${BACKPORTS_PROVIDER}"
 
