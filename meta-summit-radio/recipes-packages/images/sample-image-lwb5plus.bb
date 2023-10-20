@@ -26,10 +26,10 @@ IMAGE_INSTALL += "\
 	iperf3 \
 	tcpdump \
 	iw \
-	kernel-module-lwb-backports-summit \
+	kernel-module-lwb-if-backports \
 	lwb5plus-sdio-div-firmware \
-	summit-supplicant-lwb \
-	summit-supplicant-libs-lwb \
-	summit-networkmanager-lwb \
-	summit-networkmanager-lwb-nmcli \
+	summit-supplicant-lwb-if \
+	summit-supplicant-libs-lwb-if \
+	summit-networkmanager-lwb-if \
+	summit-networkmanager-lwb-if-nmcli \
 	"
