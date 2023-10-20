@@ -26,7 +26,7 @@ IMAGE_INSTALL += "\
 	iperf3 \
 	tcpdump \
 	iw \
-	kernel-module-msd45-backports-summmit \
+	kernel-module-msd45-backports \
 	ath6k-6003-firmware \
 	summit-supplicant-legacy \
 	"

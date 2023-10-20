@@ -26,7 +26,7 @@ IMAGE_INSTALL += "\
 	iperf3 \
 	tcpdump \
 	iw \
-	kernel-module-60-backports-summit \
+	kernel-module-60-backports \
 	summit60-firmware-pcie-uart \
 	bt-uart-scripts \
 	summit-supplicant-60 \

@@ -32,13 +32,12 @@ IMAGE_INSTALL += "\
 	lwb5plus-usb-sa-firmware \
 	lwb5plus-usb-sa-m2-firmware \
 	lwbplus-firmware \
-	kernel-module-lwb-backports-summit \
-	kernel-module-lwb5p-backports-summit \
-	kernel-module-60-backports-summit \
+	kernel-module-lwb-if-backports \
+	kernel-module-60-backports \
 	summit-supplicant-60 \
-	summit-supplicant-lwb \
+	summit-supplicant-lwb-if \
 	summit-supplicant-libs-60 \
-	summit-supplicant-libs-lwb \
+	summit-supplicant-libs-lwb-if \
 	summit-networkmanager-60 \
-	summit-networkmanager-lwb \
+	summit-networkmanager-lwb-if \
 	"
