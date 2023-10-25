@@ -29,7 +29,6 @@ IMAGE_INSTALL += "\
 	kernel-module-lwb-if-backports \
 	lwb5plus-sdio-div-firmware \
 	summit-supplicant-lwb-if \
-	summit-supplicant-libs-lwb-if \
 	summit-networkmanager-lwb-if \
 	summit-networkmanager-lwb-if-nmcli \
 	"
