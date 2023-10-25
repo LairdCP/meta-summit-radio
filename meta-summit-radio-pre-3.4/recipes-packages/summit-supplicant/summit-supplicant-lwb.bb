@@ -4,7 +4,6 @@ DEFCONFIG = "config_openssl"
 require summit-supplicant.inc radio-stack-lwb-version.inc
 
 DEPENDS += "dbus"
-RRECOMMENDS_${PN} += "summit-supplicant-libs-lwb"
 
 FILES_${PN} += "${datadir}/dbus-1/system-services/* ${sysconfdir}/dbus-1/system.d/*"
 

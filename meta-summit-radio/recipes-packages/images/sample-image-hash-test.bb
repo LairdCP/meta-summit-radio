@@ -38,7 +38,6 @@ IMAGE_INSTALL += "\
 	summit-supplicant-60 \
 	summit-supplicant-lwb \
 	summit-supplicant-libs-60 \
-	summit-supplicant-libs-lwb \
 	summit-networkmanager-60 \
 	summit-networkmanager-lwb \
 	"
