@@ -3,7 +3,6 @@ BB_STRICT_CHECKSUM:summit-internal = "ignore"
 PREMIRRORS:summit-internal = ""
 MIRRORS:summit-internal = ""
 
-SUMMIT_URI_LOCAL = "file://${TOPDIR}/../release"
 SUMMIT_URI_BASE = "https://github.com/LairdCP/Sterling-60-Release-Packages/releases/download/LRD-REL-${PV}"
 SUMMIT_URI_BASE:summit-internal = "https://files.devops.rfpros.com/builds/linux"
 
