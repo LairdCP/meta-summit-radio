@@ -15,7 +15,7 @@ REG_ARCH_aarch64 = "-aarch64"
 
 REG_FULL_NAME = "${REG_NAME}${REG_ARCH}-${PV}"
 
-SUMMIT_URI ?= "${SUMMIT_URI_LOCAL}"
+SUMMIT_URI ?= "${SUMMIT_URI_BASE}"
 SUMMIT_URI_summit-internal = "${SUMMIT_URI_BASE}/${REG_NAME}/laird/${PV}"
 
 SRC_URI = "${SUMMIT_URI}/${REG_FULL_NAME}.tar.bz2;subdir=src;name=${REG_NAME}${REG_ARCH}"
