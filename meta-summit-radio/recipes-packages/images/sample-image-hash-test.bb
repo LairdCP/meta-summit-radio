@@ -12,12 +12,12 @@ IMAGE_FEATURES:remove = "\
 	"
 
 IMAGE_INSTALL += "\
-	60-firmware-sdio-sdio \
-	60-firmware-sdio-uart \
-	60-firmware-pcie-uart \
-	60-firmware-pcie-usb \
-	60-firmware-usb-uart \
-	60-firmware-usb-usb \
+	60-radio-firmware-sdio-sdio \
+	60-radio-firmware-sdio-uart \
+	60-radio-firmware-pcie-uart \
+	60-radio-firmware-pcie-usb \
+	60-radio-firmware-usb-uart \
+	60-radio-firmware-usb-usb \
 	lwb-etsi-firmware \
 	lwb-fcc-firmware \
 	lwb-jp-firmware \
