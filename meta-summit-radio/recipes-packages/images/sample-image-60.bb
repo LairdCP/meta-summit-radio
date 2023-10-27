@@ -27,7 +27,7 @@ IMAGE_INSTALL += "\
 	tcpdump \
 	iw \
 	kernel-module-60-backports \
-	summit60-firmware-pcie-uart \
+	60-radio-firmware-pcie-uart \
 	bt-uart-scripts \
 	summit-supplicant-60 \
 	summit-supplicant-libs-60 \
