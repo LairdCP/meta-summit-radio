@@ -61,7 +61,8 @@ II. Misc
 
 This layer supports the following modules:
     - Summit 60 series radio drivers and firmware
-    - Sterling LWB/LWB5/LWB+/LWB5+/IF513/IF573 radio drivers and firmware
+    - Sona IF573 radio drivers and firmware
+    - Sterling LWB/LWB5/LWB+/LWB5+ radio drivers and firmware
     - Summit WPA supplicant
     - Summit NetworkManager
 
@@ -104,13 +105,13 @@ Additional requirements for Yocto release 'zeus' (3.0) and later:
    - When using 60 Series firmware packages, the wireless-regdb-static provider must be set
      to the firmware package added to the image and used for the radio:
         PREFERRED_RPROVIDER_wireless-regdb-static = "<firmware package>"
-   - When using LWB/LWB5/LWB+/LWB5+/IF513/IF573 firmware packages, the wireless-regdb-static provider must
+   - When using IF573/LWB/LWB5/LWB+/LWB5+ firmware packages, the wireless-regdb-static provider must
      be set to the upstream provider:
 		    PREFERRED_RPROVIDER_wireless-regdb-static = "wireless-regdb"
 
 - This layer provides a set of example image recipes that can be used as references
 
-LWB, LWB5, LWB+, LWB5+, IF513, IF573 driver common issues:
+IF573, LWB, LWB5, LWB+, LWB5+ driver common issues:
   - The regulatory domain must be specified in the platform based on the destination of the
     target device.  Failure to do this will prevent the Wi-Fi driver from loading.  See the
 	  Software Integration Guide for more details.
