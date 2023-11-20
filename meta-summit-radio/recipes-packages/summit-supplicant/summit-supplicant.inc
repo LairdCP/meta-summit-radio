@@ -7,14 +7,10 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=5ebcb90236d1ad640558c3d3cd3035df \
 
 PV = "${RADIO_VERSION}"
 
-DEPENDS = "libnl"
+DEPENDS = "libnl openssl"
 RRECOMMENDS:${PN} = "${PN}-passphrase ${PN}-cli"
 
-PACKAGECONFIG ??= "openssl"
-PACKAGECONFIG[gnutls] = ",,gnutls libgcrypt"
-PACKAGECONFIG[openssl] = ",,openssl"
-
-inherit pkgconfig systemd
+inherit pkgconfig systemd 
 
 SYSTEMD_SERVICE:${PN} = "wpa_supplicant.service wpa_supplicant-nl80211@.service wpa_supplicant-wired@.service"
 SYSTEMD_AUTO_ENABLE = "disable"
@@ -25,6 +21,7 @@ SUMMIT_URI:summit-internal = "${SUMMIT_URI_BASE}/summit_supplicant/laird/${PV}"
 SRC_URI += "${SUMMIT_URI}/summit_supplicant-src-${PV}.tar.gz;name=summit-supplicant-src"
 
 S = "${WORKDIR}/summit_supplicant-${PV}"
+B = "${S}/wpa_supplicant"
 
 RPROVIDES:${PN} += "wpa-supplicant"
 RREPLACES:${PN} += "wpa-supplicant"
@@ -51,39 +48,24 @@ SOLIBS = ".so*"
 FILES_SOLIBSDEV = ""
 
 do_configure () {
-	cp -f wpa_supplicant/${DEFCONFIG} wpa_supplicant/.config
-
-	if echo "${PACKAGECONFIG}" | grep -qw "openssl"; then
-		ssl=openssl
-	elif echo "${PACKAGECONFIG}" | grep -qw "gnutls"; then
-		ssl=gnutls
-	fi
-	if [ -n "$ssl" ]; then
-		sed -i "s/%ssl%/$ssl/" wpa_supplicant/.config
-	fi
+	cp -f ${DEFCONFIG} .config
 
 	# For rebuild
-	rm -f wpa_supplicant/*.d wpa_supplicant/dbus/*.d
+	rm -f *.d dbus/*.d
 }
 
-export EXTRA_CFLAGS = "${CFLAGS}"
-export BINDIR = "${sbindir}"
-
-EXTRA_OEMAKE = "CONFIG_SDC_RADIO_QCA45N=y CONFIG_DRIVER_NL80211=y"
-
-do_compile () {
-	unset CFLAGS CPPFLAGS CXXFLAGS
-	sed -e "s:CFLAGS\ =.*:& \$(EXTRA_CFLAGS):g" -i ${S}/src/lib.rules
-	oe_runmake -C wpa_supplicant
+do_compile:append () {
+	${OBJCOPY} wpa_supplicant sdcsupp
 }
+
+EXTRA_OEMAKE = "'BINDIR=${sbindir}'"
 
 do_install () {
-	install -D -m 755 wpa_supplicant/wpa_supplicant ${D}${sbindir}/sdcsupp
-	install -D -t ${D}${sbindir} -m 755 wpa_supplicant/wpa_cli
-	install -D -t ${D}${bindir} -m 755 wpa_supplicant/wpa_passphrase
+	install -m 0755 -D -t ${D}${sbindir} wpa_cli sdcsupp
+	install -m 0755 -D -t ${D}${bindir} wpa_passphrase
 
 	if ${@bb.utils.contains('DISTRO_FEATURES', 'systemd', 'true', 'false', d)}; then
-		install -D -t ${D}${systemd_unitdir}/system -m 644 wpa_supplicant/systemd/*.service
+		install -m 0644 -D -t ${D}${systemd_unitdir}/system systemd/*.service
 	fi
 }
 
