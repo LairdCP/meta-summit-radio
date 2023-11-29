@@ -18,7 +18,10 @@ SYSTEMD_AUTO_ENABLE = "disable"
 SUMMIT_URI ?= "${SUMMIT_URI_BASE}"
 SUMMIT_URI:summit-internal = "${SUMMIT_URI_BASE}/summit_supplicant/laird/${PV}"
 
-SRC_URI += "${SUMMIT_URI}/summit_supplicant-src-${PV}.tar.gz;name=summit-supplicant-src"
+SRC_URI += "\
+	${SUMMIT_URI}/summit_supplicant-src-${PV}.tar.gz;name=summit-supplicant-src \
+	file://0001-wpa-cli-nm.patch \
+	"
 
 S = "${WORKDIR}/summit_supplicant-${PV}"
 B = "${S}/wpa_supplicant"
