@@ -14,6 +14,7 @@ DEPENDS = " \
     util-linux \
     libndp \
     libnewt \
+    openssl \
 "
 
 inherit autotools gettext update-rc.d systemd bash-completion update-alternatives gobject-introspection gtk-doc
@@ -40,6 +41,7 @@ EXTRA_OECONF = " \
     --with-dhcpcd=no \
     --with-dhcpcanon=no \
     --with-netconfig=no \
+    --with-crypto=openssl \
     --disable-concheck \
     --disable-nls \
     --disable-vala \
@@ -56,7 +58,7 @@ do_compile_prepend() {
     export GIR_EXTRA_LIBS_PATH="${B}/src/libnm-client-impl/.libs"
 }
 
-PACKAGECONFIG ?= "gnutls dnsmasq nmcli \
+PACKAGECONFIG ?= "dnsmasq nmcli \
     ${@bb.utils.contains('DISTRO_FEATURES', 'systemd', 'systemd', bb.utils.contains('DISTRO_FEATURES', 'x11', 'consolekit', '', d), d)} \
     ${@bb.utils.contains('DISTRO_FEATURES', 'bluetooth', 'bluez5', '', d)} \
     ${@bb.utils.filter('DISTRO_FEATURES', 'wifi polkit', d)} \
@@ -78,9 +80,7 @@ PACKAGECONFIG[modemmanager] = "--with-modem-manager-1=yes,--with-modem-manager-1
 PACKAGECONFIG[ofono] = "--with-ofono,--without-ofono,ofono"
 PACKAGECONFIG[ppp] = "--enable-ppp,--disable-ppp,ppp,ppp"
 PACKAGECONFIG[dnsmasq] = "--with-dnsmasq=${bindir}/dnsmasq,,,dnsmasq"
-PACKAGECONFIG[nss] = "--with-crypto=nss,,nss"
 PACKAGECONFIG[resolvconf] = "--with-resolvconf=${base_sbindir}/resolvconf,,,resolvconf"
-PACKAGECONFIG[gnutls] = "--with-crypto=gnutls,,gnutls"
 PACKAGECONFIG[wifi] = "--with-wext=no --enable-wifi=yes,--with-wext=no --enable-wifi=no,wpa-supplicant"
 PACKAGECONFIG[ifupdown] = "--enable-ifupdown,--disable-ifupdown"
 PACKAGECONFIG[qt4-x11-free] = "--enable-qt,--disable-qt,qt4-x11-free"
