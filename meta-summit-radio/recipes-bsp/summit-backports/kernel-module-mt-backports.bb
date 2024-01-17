@@ -1,6 +1,6 @@
-SUMMARY = "Summit Backports for NX61x"
+SUMMARY = "Summit Backports for Mediatek"
 
-BACKPORTS_CONFIG = "${@bb.utils.contains('DISTRO_FEATURES','bluetooth','sona_nx611','sona_nx611_nbt',d)}"
+BACKPORTS_CONFIG = "${@bb.utils.contains('DISTRO_FEATURES','bluetooth','mt320','mt320_nbt',d)}"
 
 RCONFLICTS:${PN} = " \
         kernel-module-60-backports \
@@ -10,4 +10,4 @@ RCONFLICTS:${PN} = " \
         kernel-module-qcacld-backports \
         "
 
-require summit-backports.inc radio-stack-nx-version.inc
+require summit-backports.inc radio-stack-mt-version.inc

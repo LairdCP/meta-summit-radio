@@ -1,4 +1,4 @@
-SUMMARY = "Summit Backports for 60"
+SUMMARY = "Summit Backports for NX61x"
 
 BACKPORTS_CONFIG = "${@bb.utils.contains('DISTRO_FEATURES','bluetooth','sona_nx611','sona_nx611_nbt',d)}"
 
@@ -10,4 +10,4 @@ RCONFLICTS_${PN} = " \
         kernel-module-qcacld-backports \
         "
 
-require summit-backports.inc radio-stack-60-version.inc
+require summit-backports.inc radio-stack-nx-version.inc

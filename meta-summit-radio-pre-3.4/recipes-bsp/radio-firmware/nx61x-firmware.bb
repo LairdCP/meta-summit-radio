@@ -1,4 +1,4 @@
-SUMMARY = "Sona NX61x Firmware SDIO-UART"
+SUMMARY = "NX61x Firmware SDIO-UART"
 
 require radio-firmware.inc
 
