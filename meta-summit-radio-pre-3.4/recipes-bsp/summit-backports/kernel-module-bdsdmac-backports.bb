@@ -1,6 +1,6 @@
-SUMMARY = "Summit Backports for QCACLD"
+SUMMARY = "Summit Backports for BD-SDMAC"
 
-BACKPORTS_CONFIG = "${@bb.utils.contains('DISTRO_FEATURES','bluetooth','qcacld','qcacld_nbt',d)}"
+BACKPORTS_CONFIG = "${@bb.utils.contains('DISTRO_FEATURES','bluetooth','bdsdmac','bdsdmac_nbt',d)}"
 
 RCONFLICTS_${PN} = " \
         kernel-module-60-backports \
@@ -10,4 +10,4 @@ RCONFLICTS_${PN} = " \
         kernel-module-nx-backports \
         "
 
-require summit-backports.inc radio-stack-qcacld-version.inc
+require summit-backports.inc radio-stack-bdsdmac-version.inc

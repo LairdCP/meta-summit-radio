@@ -7,7 +7,7 @@ RCONFLICTS_${PN} = " \
         kernel-module-lwb-backports \
         kernel-module-msd45-backports \
         kernel-module-nx-backports \
-        kernel-module-qcacld-backports \
+        kernel-module-bdsdmac-backports \
         "
 
 module_conf_ath6kl_core  = "options ath6kl_core recovery_enable=1 heart_beat_poll=200"
