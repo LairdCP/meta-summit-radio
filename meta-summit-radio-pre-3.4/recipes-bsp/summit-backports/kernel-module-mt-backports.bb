@@ -7,7 +7,7 @@ RCONFLICTS_${PN} = " \
         kernel-module-lwb-if-backports \
         kernel-module-msd45-backports \
         kernel-module-msd50-backports \
-        kernel-module-qcacld-backports \
+        kernel-module-bdsdmac-backports \
         "
 
 require summit-backports.inc radio-stack-mt-version.inc

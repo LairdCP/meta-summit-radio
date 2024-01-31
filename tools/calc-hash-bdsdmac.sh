@@ -4,7 +4,7 @@
 
 ver=${1}
 
-file="radio-stack-qcacld-hashes.inc"
+file="radio-stack-bdsdmac-hashes.inc"
 prefix="https://files.devops.rfpros.com/builds/linux"
 
 calc_file () {
@@ -19,4 +19,4 @@ echo "RADIO_VERSION = \"${ver}\"\n" > ${file}
 
 calc_file "summit_supplicant/laird" "summit_supplicant-src-${ver}.tar.gz" "summit-supplicant-src"
 calc_file "backports/laird" "backports-laird-${ver}.tar.bz2" "summit-backports"
-calc_file "firmware" "laird-qcacld-firmware-${ver}.tar.bz2" "qcacld-firmware"
+calc_file "firmware" "laird-bdsdmac-firmware-${ver}.tar.bz2" "bdsdmac-firmware"
