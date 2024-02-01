@@ -17,11 +17,6 @@ calc_file () {
 
 echo "RADIO_VERSION = \"${ver}\"\n" > ${file}
 
-for i in x86 x86_64 arm-eabi arm-eabihf aarch64 powerpc64-e5500
-do
-  calc_file "summit_supplicant/laird" "summit_supplicant_libs-${i}-${ver}.tar.bz2" "summit-supplicant-libs-${i}"
-done
-
 calc_file "summit_supplicant/laird" "summit_supplicant-src-${ver}.tar.gz" "summit-supplicant-src"
 calc_file "lrd-network-manager/src" "lrd-network-manager-src-${ver}.tar.xz" "summit-network-manager"
 calc_file "backports/laird" "backports-laird-${ver}.tar.bz2" "summit-backports"
