@@ -19,4 +19,4 @@ echo "RADIO_VERSION = \"${ver}\"\n" > ${file}
 
 calc_file "summit_supplicant/laird" "summit_supplicant-src-${ver}.tar.gz" "summit-supplicant-src"
 calc_file "backports/laird" "backports-laird-${ver}.tar.bz2" "summit-backports"
-calc_file "firmware" "nx61x-firmware-${ver}.tar.bz2" "nx61x-firmware"
+calc_file "firmware" "sona-nx61x-firmware-${ver}.tar.bz2" "nx61x-firmware"
