@@ -7,4 +7,4 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/MIT;md5=0835ad
 
 require radio-stack-nx-version.inc
 
-SRC_URI = "${SUMMIT_URI}/${BPN}-${PV}.tar.bz2;name=${BPN}"
+SRC_URI = "${SUMMIT_URI}/sona-${BPN}-${PV}.tar.bz2;name=${BPN}"
