@@ -1,4 +1,4 @@
-SUMMARY = "Summit Backports for 60"
+SUMMARY = "Summit Backports for NX61x"
 
 BACKPORTS_CONFIG = "${@bb.utils.contains('DISTRO_FEATURES','bluetooth','sona_nx611','sona_nx611_nbt',d)}"
 
