@@ -1,4 +1,4 @@
-SUMMARY = "Summit Backports for 60"
+SUMMARY = "Summit Backports for NX61x"
 
 BACKPORTS_CONFIG = "${@bb.utils.contains('DISTRO_FEATURES','bluetooth','sona_nx611','sona_nx611_nbt',d)}"
 
@@ -10,4 +10,7 @@ RCONFLICTS_${PN} = " \
         kernel-module-bdsdmac-backports \
         "
 
-require summit-backports.inc radio-stack-60-version.inc
+module_conf_moal = "options moal cal_data_cfg=none mfg_mode=0 fw_name=nx61x/sduart_nw61x_v1.bin.se drvdbg=6"
+
+KERNEL_MODULE_PROBECONF += "moal"
+require summit-backports.inc radio-stack-nx-version.inc
