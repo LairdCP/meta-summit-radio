@@ -40,6 +40,11 @@ def find_cfgs(d):
 
     return sources_list
 
+# Reconfiguration must be triggered on kernel config change through
+# defconfig or menuconfig, menuconfig does not have it's own stamp
+# and runs after do_configure, so use compile instead
+do_configure[depends] += "virtual/kernel:do_compile"
+
 do_configure () {
 	rm -f ${S}/.kernel_config_md5
 
