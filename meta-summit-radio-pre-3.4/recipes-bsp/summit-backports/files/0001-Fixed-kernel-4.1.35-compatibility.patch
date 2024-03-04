@@ -1,0 +1,102 @@
+From 5691857c1df44d36b86acd233c2ddddd98ef7e47 Mon Sep 17 00:00:00 2001
+From: Boris Krasnovskiy <boris.krasnovskiy@lairdconnect.com>
+Date: Mon, 4 Mar 2024 07:07:12 -0500
+Subject: [PATCH] Fixed kernel 4.1.35 compatibility
+
+PROD-7460
+---
+ backport-include/asm/io.h     | 13 +++++++++++++
+ backport-include/linux/io.h   |  8 --------
+ backport-include/linux/leds.h |  6 ++++--
+ compat/backport-4.5.c         |  4 ++++
+ 4 files changed, 21 insertions(+), 10 deletions(-)
+ create mode 100644 backport-include/asm/io.h
+
+diff --git a/backport-include/asm/io.h b/backport-include/asm/io.h
+new file mode 100644
+index 0000000000..92b63508fc
+--- /dev/null
++++ b/backport-include/asm/io.h
+@@ -0,0 +1,13 @@
++#ifndef __BP_LINUX_ASM_IO_H
++#define __BP_LINUX_ASM_IO_H
++#include_next <asm/io.h>
++
++#ifndef writel_relaxed
++#define writel_relaxed writel_relaxed
++static inline void writel_relaxed(u32 value, volatile void __iomem *addr)
++{
++	__raw_writel(__cpu_to_le32(value), addr);
++}
++#endif
++
++#endif /* __BP_LINUX_ASM_IO_H */
+diff --git a/backport-include/linux/io.h b/backport-include/linux/io.h
+index e04305c30d..f91085be9c 100644
+--- a/backport-include/linux/io.h
++++ b/backport-include/linux/io.h
+@@ -11,12 +11,4 @@
+ void __ioread32_copy(void *to, const void __iomem *from, size_t count);
+ #endif
+ 
+-#ifndef writel_relaxed
+-#define writel_relaxed writel_relaxed
+-static inline void writel_relaxed(u32 value, volatile void __iomem *addr)
+-{
+-	__raw_writel(__cpu_to_le32(value), addr);
+-}
+-#endif
+-
+ #endif /* __BP_LINUX_IO_H */
+diff --git a/backport-include/linux/leds.h b/backport-include/linux/leds.h
+index 46106fa127..a5e172b919 100644
+--- a/backport-include/linux/leds.h
++++ b/backport-include/linux/leds.h
+@@ -47,8 +47,8 @@ void led_trigger_blink(struct led_trigger *trigger,
+ extern void led_trigger_remove(struct led_classdev *led_cdev);
+ #else
+ static inline void led_trigger_remove(struct led_classdev *led_cdev) {}
+-#endif
+-#endif
++#endif /* CONFIG_LED_TRIGGERS */
++#endif /* < 4.2 */
+ 
+ #if LINUX_VERSION_IS_LESS(4,5,0) && \
+     LINUX_VERSION_IS_GEQ(3,19,0)
+@@ -69,9 +69,11 @@ extern int led_set_brightness_sync(struct led_classdev *led_cdev,
+ #endif /* < 4.5 && >= 3.19 */
+ 
+ #if LINUX_VERSION_IS_LESS(4,5,0)
++#ifdef CONFIG_LED_TRIGGERS
+ #define devm_led_trigger_register LINUX_BACKPORT(devm_led_trigger_register)
+ extern int devm_led_trigger_register(struct device *dev,
+ 				     struct led_trigger *trigger);
++#endif /* CONFIG_LED_TRIGGERS */
+ #endif /* < 4.5 */
+ 
+ #endif /* __BACKPORT_LINUX_LEDS_H */
+diff --git a/compat/backport-4.5.c b/compat/backport-4.5.c
+index 761cd73fd0..44f0af78bf 100644
+--- a/compat/backport-4.5.c
++++ b/compat/backport-4.5.c
+@@ -126,6 +126,8 @@ void phy_attached_print(struct phy_device *phydev, const char *fmt, ...)
+ }
+ EXPORT_SYMBOL_GPL(phy_attached_print);
+ 
++#ifdef CONFIG_LED_TRIGGERS
++
+ static void devm_led_trigger_release(struct device *dev, void *res)
+ {
+ 	led_trigger_unregister(*(struct led_trigger **)res);
+@@ -154,6 +156,8 @@ int devm_led_trigger_register(struct device *dev,
+ }
+ EXPORT_SYMBOL_GPL(devm_led_trigger_register);
+ 
++#endif
++
+ /**
+  * __ioread32_copy - copy data from MMIO space, in 32-bit units
+  * @to: destination (must be 32-bit aligned)
+-- 
+2.43.2
+

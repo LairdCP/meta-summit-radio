@@ -1,0 +1,36 @@
+From 582dab56c9d79ba42b500e80ad70913610dc8d5a Mon Sep 17 00:00:00 2001
+From: Doug Smith <doug.smith@lairdconnect.com>
+Date: Mon, 4 Mar 2024 10:35:45 -0500
+Subject: [PATCH] PROD-7461: libnl nla_put_s32 compatability
+
+Add macro to support nla_puts32 with
+older libnl.
+
+Bug: PROD-7461
+---
+ src/drivers/driver_nl80211.h | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/src/drivers/driver_nl80211.h b/src/drivers/driver_nl80211.h
+index 7470e9f29..f0062a82e 100644
+--- a/src/drivers/driver_nl80211.h
++++ b/src/drivers/driver_nl80211.h
+@@ -17,6 +17,15 @@
+ #include "utils/list.h"
+ #include "driver.h"
+ 
++#ifdef _SDC_
++// need NL_CAPABILITY_VERSION_xxxx for compatability checks below
++#include <netlink/utils.h>
++#endif
++
++#ifndef NL_CAPABILITY_VERSION_3_2_27
++#define nla_put_s32(msg, attr, v) \
++	nla_put_u32(msg, attr, (uint32_t)(v))
++#endif
+ #ifndef NL_CAPABILITY_VERSION_3_5_0
+ #define nla_nest_start(msg, attrtype) \
+ 	nla_nest_start(msg, NLA_F_NESTED | (attrtype))
+-- 
+2.34.1
+

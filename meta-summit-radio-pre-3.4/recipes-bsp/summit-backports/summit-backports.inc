@@ -15,6 +15,7 @@ SUMMIT_URI ?= "${SUMMIT_URI_BASE}"
 SUMMIT_URI_summit-internal = "${SUMMIT_URI_BASE}/backports/laird/${PV}"
 
 SRC_URI += "${SUMMIT_URI}/backports-laird-${PV}.tar.bz2;name=summit-backports"
+SRC_URI += "file://0001-Fixed-kernel-4.1.35-compatibility.patch"
 
 EXTRA_OEMAKE = "\
     KLIB_BUILD=${STAGING_KERNEL_DIR} \
