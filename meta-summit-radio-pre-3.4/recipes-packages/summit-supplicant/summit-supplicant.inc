@@ -19,6 +19,7 @@ SUMMIT_URI ?= "${SUMMIT_URI_BASE}"
 SUMMIT_URI_summit-internal = "${SUMMIT_URI_BASE}/summit_supplicant/laird/${PV}"
 
 SRC_URI += "${SUMMIT_URI}/summit_supplicant-src-${PV}.tar.gz;name=summit-supplicant-src"
+SRC_URI += "file://0001-libnl-nla_put_s32-compatability.patch"
 
 S = "${WORKDIR}/summit_supplicant-${PV}"
 B = "${S}/wpa_supplicant"
