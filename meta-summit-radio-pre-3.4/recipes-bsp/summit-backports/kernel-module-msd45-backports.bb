@@ -4,7 +4,7 @@ BACKPORTS_CONFIG = "${@bb.utils.contains('DISTRO_FEATURES','bluetooth','wb45n','
 
 RCONFLICTS_${PN} = " \
         kernel-module-60-backports \
-        kernel-module-lwb-backports \
+        kernel-module-lwb-if-backports \
         kernel-module-msd50-backports \
         kernel-module-nx-backports \
         kernel-module-bdsdmac-backports \
@@ -15,4 +15,5 @@ module_conf_ath6kl_core += "disable_fw_dbglog=1 suspend_mode=1"
 
 KERNEL_MODULE_PROBECONF += "ath6kl_core"
 
-require summit-backports.inc radio-stack-4550-version.inc
+require summit-backports.inc
+require radio-stack-4550-version.inc

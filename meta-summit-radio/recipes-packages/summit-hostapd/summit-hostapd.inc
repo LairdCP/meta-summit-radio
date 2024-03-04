@@ -1,5 +1,5 @@
-SUMMARY = "User space daemon for extended IEEE 802.11 management"
 SECTION = "kernel/userland"
+
 LICENSE = "BSD-3-Clause"
 LIC_FILES_CHKSUM = "file://hostapd/README;md5=c905478466c90f1cefc0df987c40e172"
 
