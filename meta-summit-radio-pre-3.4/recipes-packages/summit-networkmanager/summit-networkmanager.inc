@@ -1,4 +1,3 @@
-SUMMARY = "Summit Network Manager"
 SECTION = "net/misc"
 
 LICENSE = "GPLv2+ & LGPLv2.1+"
@@ -16,7 +15,7 @@ DEPENDS = " \
     libnewt \
 "
 
-inherit autotools gettext update-rc.d systemd bash-completion update-alternatives gobject-introspection gtk-doc
+inherit autotools gettext update-rc.d systemd bash-completion gobject-introspection update-alternatives gtk-doc
 
 SUMMIT_URI ?= "${SUMMIT_URI_BASE}"
 SUMMIT_URI_summit-internal = "${SUMMIT_URI_BASE}/lrd-network-manager/src/${PV}"
@@ -59,12 +58,11 @@ do_compile_prepend() {
 PACKAGECONFIG ?= "gnutls dnsmasq nmcli \
     ${@bb.utils.contains('DISTRO_FEATURES', 'systemd', 'systemd', bb.utils.contains('DISTRO_FEATURES', 'x11', 'consolekit', '', d), d)} \
     ${@bb.utils.contains('DISTRO_FEATURES', 'bluetooth', 'bluez5', '', d)} \
-    ${@bb.utils.filter('DISTRO_FEATURES', 'wifi polkit', d)} \
+    ${@bb.utils.contains('DISTRO_FEATURES', 'wifi', 'wifi', '', d)} \
+    ${@bb.utils.contains('DISTRO_FEATURES', 'polkit', 'polkit', '', d)} \
     ${@bb.utils.contains('DISTRO_FEATURES', 'selinux', 'selinux audit', '', d)} \
     ${@bb.utils.contains('DISTRO_FEATURES','3g','modemmanager','',d)} \
 "
-
-inherit ${@bb.utils.contains('PACKAGECONFIG', 'nmcli', 'bash-completion', '', d)}
 
 PACKAGECONFIG[systemd] = " \
     --with-systemdsystemunitdir=${systemd_unitdir}/system --with-session-tracking=systemd, \
@@ -131,7 +129,7 @@ FILES_${PN} += " \
 
 RDEPENDS_${PN} += "ethtool"
 RRECOMMENDS_${PN} += "iptables \
-    ${@bb.utils.filter('PACKAGECONFIG', 'dnsmasq', d)} \
+    ${@bb.utils.contains('PACKAGECONFIG', 'dnsmasq', 'dnsmasq', '', d)} \
 "
 RCONFLICTS_${PN} = "connman networkmanager"
 RREPLACES_${PN} = "networkmanager"

@@ -1,4 +1,4 @@
-SUMMARY = "Summit Wi-Fi 60 Auto World-Wide Mode"
+SUMMARY = "Wi-Fi Summit 60 Auto Regulatory Domain"
 SECTION = "Wireless"
 
 LICENSE = "MIT"

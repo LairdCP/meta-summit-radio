@@ -1,4 +1,4 @@
-SUMMARY = "Summit Backports for LWB and LWB5"
+SUMMARY = "Summit Backports for LWBxx and IFxxx"
 
 BACKPORTS_CONFIG = "${@bb.utils.contains('DISTRO_FEATURES','bluetooth','lwb','lwb_nbt',d)}"
 
@@ -9,4 +9,5 @@ RCONFLICTS_${PN} = " \
         kernel-module-nx-backports \
         "
 
-require summit-backports.inc radio-stack-lwb-version.inc
+require summit-backports.inc
+require radio-stack-lwb-version.inc
