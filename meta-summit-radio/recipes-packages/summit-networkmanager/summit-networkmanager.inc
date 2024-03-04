@@ -1,4 +1,3 @@
-SUMMARY = "Summit Network Manager"
 SECTION = "net/misc"
 
 LICENSE = "GPL-2.0-or-later & LGPL-2.1-or-later"
