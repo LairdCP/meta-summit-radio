@@ -27,7 +27,7 @@ RPROVIDES_${PN} += "wpa-supplicant"
 RREPLACES_${PN} += "wpa-supplicant"
 RCONFLICTS_${PN} += "wpa-supplicant"
 
-PROVIDES_${PN} += "wpa-supplicant-dbg"
+RPROVIDES_${PN} += "wpa-supplicant-dbg"
 RREPLACES_${PN} += "wpa-supplicant-dbg"
 RCONFLICTS_${PN} += "wpa-supplicant-dbg"
 
