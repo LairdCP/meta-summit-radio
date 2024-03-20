@@ -49,32 +49,27 @@ do_configure[depends] += "virtual/kernel:do_compile"
 do_configure () {
     rm -f ${S}/.kernel_config_md5
 
-    # allow user to define their own defconfig in bbappend, taken from kernel.bbclass
-    if [ "${S}" != "${B}" ] && [ -f "${S}/.config" ] && [ ! -f "${B}/.config" ]; then
-        mv "${S}/.config" "${B}/.config"
-    fi
-
     # Copy defconfig to .config if .config does not exist. This allows
     # recipes to manage the .config themselves in do_configure:prepend().
-    if [ -f "${WORKDIR}/defconfig" ] && [ ! -f "${B}/.config" ]; then
-        cp "${WORKDIR}/defconfig" "${B}/.config"
+    if [ -f "${WORKDIR}/defconfig" -a ! -f "${S}/.config" ]; then
+        cp "${WORKDIR}/defconfig" "${S}/.config"
     fi
 
     # Copy in-tree defconfig to .config if .config does not exist.
-    if [ ! -f "${B}/.config" ]; then
-        cp "${S}/defconfigs/${BACKPORTS_CONFIG}" "${B}/.config"
+    if [ ! -f "${S}/.config" ]; then
+        cp "${S}/defconfigs/${BACKPORTS_CONFIG}" "${S}/.config"
     fi
 
-    merge_config.sh -m .config ${@" ".join(find_cfgs(d))}
+    merge_config.sh -O ${S} -m ${S}/.config ${@" ".join(find_cfgs(d))}
 
     unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS
     oe_runmake CC=${BUILD_CC} olddefconfig
 }
 
 do_savedefconfig () {
-    bbplain "Saving defconfig to:\n${B}/defconfig"
+    bbplain "Saving defconfig to:\n${S}/defconfig"
     unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS
-    oe_runmake -C ${B} CC=${BUILD_CC} savedefconfig
+    oe_runmake CC=${BUILD_CC} savedefconfig
 }
 
 do_savedefconfig[nostamp] = "1"
