@@ -6,17 +6,16 @@ Branches that are not listed for a particular radio are not supported and
 should not be used unless directed by an FAE.
 
 **********************
-Summit 60 Series
+Summit/Sterling 60 Series
 **********************
-  lrd-11.92.0.x
-  lrd-11.39.0.x
+  lrd-11.171.0.x
 
 **********************
-Sterling LWB Series
+Sterling LWB/IF Series
 **********************
-  lrd-39.0.x
+  lrd-11.171.0.x
 
 **********************
 45/50 Legacy
 **********************
-  lrd-11.92.0.x
+  lrd-11.171.0.x
