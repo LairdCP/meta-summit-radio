@@ -1,6 +1,6 @@
-RADIO_VERSION = "11.0.0.261"
+RADIO_VERSION = "11.0.0.263"
 
-SRC_URI[summit-supplicant-src.md5sum] = "db2c7fb29306e09ee2297f7ee253ff7f"
-SRC_URI[summit-supplicant-src.sha256sum] = "1899d593ae34bc39ae35f5908c432852d09e1cb24b6c2ba76cab509da34e930d"
-SRC_URI[summit-backports.md5sum] = "a4102116bb66b920b591b32994c593a5"
-SRC_URI[summit-backports.sha256sum] = "b90928048cfcac6e97fb6b44deeab323d41797e413db8c61de761895064af151"
+SRC_URI[summit-supplicant-src.md5sum] = "75db95d9a57d1e963ab6f926b856cb38"
+SRC_URI[summit-supplicant-src.sha256sum] = "7678afc3c07333b6e118d08bd013b642f031f1a9ee17c3937060e2e41d969dd3"
+SRC_URI[summit-backports.md5sum] = "c16e82f08c0eef6dd7b187d1879745e1"
+SRC_URI[summit-backports.sha256sum] = "7410a6328021695ca0a7fd384374d28c643766cebbea41c954e46ab911acedbc"
