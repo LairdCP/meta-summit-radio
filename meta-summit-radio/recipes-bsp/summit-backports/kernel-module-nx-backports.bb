@@ -11,7 +11,7 @@ RCONFLICTS:${PN} = " \
         kernel-module-bdsdmac-backports \
         "
 
-module_conf_moal = "options moal cal_data_cfg=none mfg_mode=0 fw_name=nx61x/sduart_nw61x_v1.bin.se drvdbg=6"
+module_conf_moal = "options moal fw_name=nxp/sd_w61x_v1.bin.se drv_mode=3 cntry_txpwr=2 drvdbg=6"
 
 KERNEL_MODULE_PROBECONF += "moal"
 
