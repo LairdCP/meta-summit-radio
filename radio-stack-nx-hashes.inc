@@ -2,6 +2,8 @@ RADIO_VERSION = "11.0.0.263"
 
 SRC_URI[summit-supplicant-src.md5sum] = "75db95d9a57d1e963ab6f926b856cb38"
 SRC_URI[summit-supplicant-src.sha256sum] = "7678afc3c07333b6e118d08bd013b642f031f1a9ee17c3937060e2e41d969dd3"
+SRC_URI[summit-network-manager.md5sum] = "1b92136f3d21ffccea00b70c8faeb728"
+SRC_URI[summit-network-manager.sha256sum] = "a61d6e16f36728f37ea2ba314e5a599ead2549fa4b660b5d61158c4c1c16e779"
 SRC_URI[summit-backports.md5sum] = "c16e82f08c0eef6dd7b187d1879745e1"
 SRC_URI[summit-backports.sha256sum] = "7410a6328021695ca0a7fd384374d28c643766cebbea41c954e46ab911acedbc"
 SRC_URI[nx61x-firmware.md5sum] = "9d75382fc9b077ecc2936ab0951d23fa"
