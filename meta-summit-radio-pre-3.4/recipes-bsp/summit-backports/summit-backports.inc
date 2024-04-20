@@ -17,13 +17,8 @@ SUMMIT_URI_summit-internal = "${SUMMIT_URI_BASE}/backports/laird/${PV}"
 SRC_URI += "${SUMMIT_URI}/backports-laird-${PV}.tar.bz2;name=summit-backports"
 
 EXTRA_OEMAKE = "\
-    KLIB_BUILD=${STAGING_KERNEL_DIR} \
-    KLIB=${D} \
-    DESTDIR=${D} \
-    KERNEL_CONFIG=${STAGING_KERNEL_BUILDDIR}/.config \
-    KMODDIR=updates \
-    INSTALL_MOD_DIR=updates \
-    M=${S} \
+    KLIB=${STAGING_KERNEL_DIR} \
+    KLIB_BUILD=${STAGING_KERNEL_BUILDDIR} \
     "
 
 KERNEL_MODULE_PACKAGE_SUFFIX = "-backports-${KERNEL_VERSION}"
@@ -59,7 +54,7 @@ do_configure () {
         cp "${S}/defconfigs/${BACKPORTS_CONFIG}" "${S}/.config"
     fi
 
-    merge_config.sh -O ${S} -m ${S}/.config ${@" ".join(find_cfgs(d))}
+    ${S}/kconf/merge_config.sh -O ${S} -m ${S}/.config ${@" ".join(find_cfgs(d))}
 
     unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS
     oe_runmake CC=${BUILD_CC} olddefconfig
@@ -73,10 +68,6 @@ do_savedefconfig () {
 
 do_savedefconfig[nostamp] = "1"
 addtask savedefconfig after do_configure
-
-do_install_prepend () {
-    cd ${STAGING_KERNEL_DIR}
-}
 
 do_install_append () {
     install -d ${D}${includedir}/${BPN}
