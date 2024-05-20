@@ -1,5 +1,5 @@
 SUMMARY = "Summit Wi-Fi Regulatory Test tools for LWB+"
 
-REG_NAME = "regLWB5plus"
+REG_NAME = "regLWBplus"
 
 require reg-lwb.inc
