@@ -17,4 +17,4 @@ module_conf_ath6kl_core += "disable_fw_dbglog=1 suspend_mode=1"
 
 KERNEL_MODULE_PROBECONF += "ath6kl_core"
 
-require summit-backports.inc radio-stack-4550-version.inc
+require summit-backports.inc radio-stack-msd-version.inc

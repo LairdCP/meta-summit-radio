@@ -18,5 +18,5 @@ calc_file () {
 echo "RADIO_VERSION = \"${ver}\"\n" > ${file}
 
 calc_file "summit_supplicant/laird" "summit_supplicant-src-${ver}.tar.gz" "summit-supplicant-src"
-calc_file "backports/laird" "backports-laird-${ver}.tar.bz2" "summit-backports"
+calc_file "backports/laird" "backports-summit-${ver}.tar.bz2" "summit-backports"
 #calc_file "firmware" "mt320-firmware-${ver}.tar.bz2" "mt320-firmware"

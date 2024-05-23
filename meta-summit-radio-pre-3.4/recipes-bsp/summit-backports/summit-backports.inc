@@ -9,12 +9,12 @@ inherit module cml1
 
 DEPENDS += "coreutils-native bison-native flex-native kern-tools-native"
 
-S = "${WORKDIR}/laird-backport-${PV}"
+S = "${WORKDIR}/summit-backports-${PV}"
 
 SUMMIT_URI ?= "${SUMMIT_URI_BASE}"
 SUMMIT_URI_summit-internal = "${SUMMIT_URI_BASE}/backports/laird/${PV}"
 
-SRC_URI += "${SUMMIT_URI}/backports-laird-${PV}.tar.bz2;name=summit-backports"
+SRC_URI += "${SUMMIT_URI}/summit-backports-${PV}.tar.bz2;name=summit-backports"
 
 EXTRA_OEMAKE = "\
     KLIB=${STAGING_KERNEL_DIR} \

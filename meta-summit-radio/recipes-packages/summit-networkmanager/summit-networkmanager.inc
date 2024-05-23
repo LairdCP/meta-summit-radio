@@ -25,12 +25,12 @@ SUMMIT_URI ?= "${SUMMIT_URI_BASE}"
 SUMMIT_URI:summit-internal = "${SUMMIT_URI_BASE}/lrd-network-manager/src/${PV}"
 
 SRC_URI = " \
-    ${SUMMIT_URI}/lrd-network-manager-src-${PV}.tar.xz;name=summit-network-manager \
+    ${SUMMIT_URI}/summit-network-manager-src-${PV}.tar.xz;name=summit-network-manager \
     file://networkmanager.initd \
     file://NetworkManager.conf \
 "
 
-S = "${WORKDIR}/lrd-network-manager-${PV}"
+S = "${WORKDIR}/summit-network-manager-${PV}"
 
 # ['auto', 'symlink', 'file', 'netconfig', 'resolvconf']
 NETWORKMANAGER_DNS_RC_MANAGER_DEFAULT ??= "auto"

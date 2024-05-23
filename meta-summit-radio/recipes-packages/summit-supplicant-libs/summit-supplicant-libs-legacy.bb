@@ -1,6 +1,6 @@
 SUMMARY = "Wi-Fi Summit Supplicant Legacy Libraries"
 
-require summit-supplicant-libs.inc radio-stack-4550-version.inc
+require summit-supplicant-libs.inc radio-stack-msd-version.inc
 
 SRC_URI = "${SUMMIT_URI}/summit_supplicant_libs_legacy${SUPP_ARCH}-${PV}.tar.bz2;name=summit-supplicant-libs-legacy${SUPP_ARCH}"
 

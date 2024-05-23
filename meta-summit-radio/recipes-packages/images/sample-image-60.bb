@@ -18,7 +18,6 @@ IMAGE_FEATURES:remove = "\
 
 IMAGE_INSTALL += "\
 	iproute2 \
-	rng-tools \
 	ca-certificates \
 	tzdata \
 	htop \
@@ -28,10 +27,10 @@ IMAGE_INSTALL += "\
 	iw \
 	kernel-module-60-backports \
 	60-radio-firmware-pcie-uart \
-	bt-uart-scripts \
+	${@bb.utils.contains('DISTRO_FEATURES', 'bluetooth', 'summit-adaptive-bt bt-uart-scripts', '', d)} \
 	summit-supplicant-60 \
 	summit-supplicant-libs-60 \
-	adaptive-ww \
+	summit-adaptive-ww \
 	summit-networkmanager-60 \
 	summit-networkmanager-60-nmcli \
 	"
