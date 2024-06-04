@@ -2,7 +2,7 @@ require radio-firmware.inc radio-stack-lwb-version.inc
 
 LICENSE = "Ezurio"
 NO_GENERIC_LICENSE[Laird] = "LICENSE"
-LIC_FILES_CHKSUM = "file://LICENSE;md5=53d3628b28a0bc3caea61587feade5f9"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=202fa756612e170e23ac19b6348a335b"
 
 FILES:${PN} += "${sysconfdir}"
 
