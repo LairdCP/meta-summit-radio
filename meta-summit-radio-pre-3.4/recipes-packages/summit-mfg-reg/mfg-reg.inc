@@ -5,6 +5,8 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/MIT;md5=0835ad
 
 PV = "${RADIO_VERSION}"
 
+BB_STRICT_CHECKSUM = "ignore"
+
 HFP = "${@bb.utils.contains('TUNE_FEATURES', 'callconvention-hard', 'eabihf', 'eabi', d)}"
 
 REG_ARCH_x86 = "-x86"
