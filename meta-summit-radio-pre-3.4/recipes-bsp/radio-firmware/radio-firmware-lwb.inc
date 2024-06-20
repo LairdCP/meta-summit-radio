@@ -3,7 +3,8 @@ require radio-stack-lwb-version.inc
 
 LICENSE = "Ezurio"
 NO_GENERIC_LICENSE[Laird] = "LICENSE"
-LIC_FILES_CHKSUM = "file://LICENSE;md5=53d3628b28a0bc3caea61587feade5f9"
+LIC_FILES_CHKSUM = "file://LICENSE.ezurio;md5=fd3dd0630b215465b6f50540642d5b93 \
+                    file://LICENSE.cypress;md5=cbc5f665d04f741f1e006d2096236ba7"
 
 FILES_${PN} += "${sysconfdir}"
 
