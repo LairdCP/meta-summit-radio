@@ -1,4 +1,4 @@
-SUMMARY = "Broadcom Patchram Plus utility"
+SUMMARY = "Infineon/Cypress/Broadcom Patchram Plus utility"
 SECTION = "Wireless"
 
 LICENSE = "Apache-2.0"
@@ -8,7 +8,7 @@ inherit pkgconfig
 
 SRC_URI = "git://github.com/LairdCP/brcm_patchram.git;nobranch=1;protocol=https"
 
-SRCREV = "241e4896e2f2ee77883bdd6f1e404bf9e9df52f7"
+SRCREV = "2a74311ed7b26ffada931fdf0be1f62930c7ba33"
 
 S = "${WORKDIR}/git"
 
