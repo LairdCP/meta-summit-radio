@@ -1,4 +1,4 @@
-RADIO_VERSION = "12.29.0.9"
+RADIO_VERSION = "12.29.0.11"
 
-SRC_URI[summit-supplicant-src.md5sum] = "4edb63149c86418d0a6b630f57609fb8"
-SRC_URI[summit-supplicant-src.sha256sum] = "66371d5a95f57fcbd507b9554227f9690635213b868951b63ab5c856e7ce3974"
+SRC_URI[summit-supplicant-src.md5sum] = "080590db0d06d591884fe9834a0afaf0"
+SRC_URI[summit-supplicant-src.sha256sum] = "7b81ca10eb22c9e000279804cc91ea4be4449cd49865d9282c082e62cb93ecec"
