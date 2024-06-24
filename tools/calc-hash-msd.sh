@@ -23,6 +23,6 @@ do
 done
 
 calc_file "summit_supplicant/laird" "summit_supplicant-src-${ver}.tar.gz" "summit-supplicant-src"
-calc_file "backports/laird" "backports-summit-${ver}.tar.bz2" "summit-backports"
+calc_file "backports/laird" "summit-backports-${ver}.tar.bz2" "summit-backports"
 calc_file "firmware" "summit-ath6k-6003-firmware-${ver}.tar.bz2" "ath6k-6003-firmware"
 calc_file "firmware" "summit-ath6k-6004-firmware-${ver}.tar.bz2" "ath6k-6004-firmware"

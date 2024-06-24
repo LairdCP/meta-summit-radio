@@ -25,8 +25,8 @@ done
 
 calc_file "summit_supplicant/laird" "summit_supplicant-src-${ver}.tar.gz" "summit-supplicant-src"
 calc_file "adaptive_bt/src" "adaptive_bt-src-${ver}.tar.gz" "adaptive-bt"
-calc_file "lrd-network-manager/src" "lrd-network-manager-src-${ver}.tar.xz" "summit-network-manager"
-calc_file "backports/laird" "backports-summit-${ver}.tar.bz2" "summit-backports"
+calc_file "lrd-network-manager/src" "summit-network-manager-src-${ver}.tar.xz" "summit-network-manager"
+calc_file "backports/laird" "summit-backports-${ver}.tar.bz2" "summit-backports"
 
 for i in pcie-uart pcie-usb sdio-uart sdio-sdio usb-usb usb-uart
 do
