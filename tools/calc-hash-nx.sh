@@ -18,6 +18,6 @@ calc_file () {
 echo "RADIO_VERSION = \"${ver}\"\n" > ${file}
 
 calc_file "summit_supplicant/laird" "summit_supplicant-src-${ver}.tar.gz" "summit-supplicant-src"
-calc_file "lrd-network-manager/src" "lrd-network-manager-src-${ver}.tar.xz" "summit-network-manager"
-calc_file "backports/laird" "backports-summit-${ver}.tar.bz2" "summit-backports"
+calc_file "lrd-network-manager/src" "summit-network-manager-src-${ver}.tar.xz" "summit-network-manager"
+calc_file "backports/laird" "summit-backports-${ver}.tar.bz2" "summit-backports"
 calc_file "firmware" "sona-nx61x-firmware-${ver}.tar.bz2" "nx61x-firmware"
