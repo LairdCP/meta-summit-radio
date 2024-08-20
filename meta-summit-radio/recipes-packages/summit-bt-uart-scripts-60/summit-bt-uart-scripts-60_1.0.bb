@@ -1,14 +1,18 @@
-SUMMARY = "Summit 60 series Bluetooth UART Startup scripts"
+SUMMARY = "Bluetooth UART Startup scripts for 60 Series"
 
-LICENSE = "MIT"
-LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
+LICENSE = "Ezurio"
+NO_GENERIC_LICENSE[Ezurio] = "LICENSE.ezurio"
+LIC_FILES_CHKSUM = "file://LICENSE.ezurio;md5=fd3dd0630b215465b6f50540642d5b93"
 
 inherit allarch systemd
 
 BT_SERIAL_PORT ?= "/dev/ttyS1"
+BT_SERIAL_BAUD ?= "3000000"
 
 SRC_URI = " \
+    file://LICENSE.ezurio \
     file://bt-service.sh \
+    file://bttest.sh \
     file://80-btattach.rules-sysv \
     file://80-btattach.rules-sysd \
     file://btattach.service \
@@ -16,15 +20,16 @@ SRC_URI = " \
 
 S = "${WORKDIR}"
 
-FILES_${PN} += "${systemd_unitdir}/system ${sysconfdir}"
+FILES:${PN} += "${systemd_unitdir}/system ${sysconfdir}"
 
-SYSTEMD_SERVICE_${PN} = "btattach.service"
+SYSTEMD_SERVICE:${PN} = "btattach.service"
 
 do_install() {
-    install -D -m 0775 ${S}/bt-service.sh ${D}${bindir}/bt-service.sh
+    install -D -m 0775 -t ${D}${bindir} ${S}/bt-service.sh ${S}/bttest.sh
 
     install -d ${D}${sysconfdir}/default
-    echo "PORT=${BT_SERIAL_PORT}" > ${D}${sysconfdir}/default/bt-service
+    echo "PORT=${BT_SERIAL_PORT}"  > ${D}${sysconfdir}/default/bt-service
+    echo "BAUD=${BT_SERIAL_BAUD}" >> ${D}${sysconfdir}/default/bt-service
 
     if ${@bb.utils.contains('DISTRO_FEATURES','systemd','true','false',d)}; then
         install -D -m 0644 ${S}/80-btattach.rules-sysd \
