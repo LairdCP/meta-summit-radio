@@ -27,7 +27,7 @@ IMAGE_INSTALL += "\
 	iw \
 	kernel-module-60-backports \
 	60-radio-firmware-pcie-uart \
-	${@bb.utils.contains('DISTRO_FEATURES', 'bluetooth', 'summit-adaptive-bt bt-uart-scripts', '', d)} \
+	${@bb.utils.contains('DISTRO_FEATURES', 'bluetooth', 'summit-adaptive-bt summit-bt-uart-scripts-60', '', d)} \
 	summit-supplicant-60 \
 	summit-supplicant-libs-60 \
 	summit-adaptive-ww \
