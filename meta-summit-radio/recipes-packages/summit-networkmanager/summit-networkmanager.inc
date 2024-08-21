@@ -8,7 +8,6 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=b234ee4d69f5fce4486a80fdaf4a4263 \
 PV = "${RADIO_VERSION}"
 
 # coreutils-native needed to support 'printenv' on kirkstone and below
-
 DEPENDS = " \
     coreutils-native \
     libnl \
@@ -62,10 +61,11 @@ do_compile:prepend() {
     export GI_TYPELIB_PATH="${B}}/src/libnm-client-impl${GI_TYPELIB_PATH:+:$GI_TYPELIB_PATH}"
 }
 
-PACKAGECONFIG ??= "readline dnsmasq nmcli \
+PACKAGECONFIG ??= "libedit dnsmasq nmcli \
     ${@bb.utils.contains('DISTRO_FEATURES', 'systemd', 'systemd', bb.utils.contains('DISTRO_FEATURES', 'x11', 'consolekit', '', d), d)} \
     ${@bb.utils.contains('DISTRO_FEATURES', 'bluetooth', 'bluez5', '', d)} \
-    ${@bb.utils.filter('DISTRO_FEATURES', 'wifi polkit', d)} \
+    ${@bb.utils.contains('DISTRO_FEATURES', 'wifi', 'wifi', '', d)} \
+    ${@bb.utils.contains('DISTRO_FEATURES', 'polkit', 'polkit', '', d)} \
     ${@bb.utils.contains('DISTRO_FEATURES', 'selinux', 'selinux audit', '', d)} \
     ${@bb.utils.contains('DISTRO_FEATURES','3g','modemmanager','',d)} \
 "
@@ -81,12 +81,12 @@ PACKAGECONFIG[polkit] = "-Dpolkit=true,-Dpolkit=false,polkit"
 PACKAGECONFIG[bluez5] = "-Dbluez5_dun=true,-Dbluez5_dun=false,bluez5"
 # consolekit is not picked by shlibs, so add it to RDEPENDS too
 PACKAGECONFIG[consolekit] = "-Dsession_tracking_consolekit=true,-Dsession_tracking_consolekit=false,consolekit,consolekit"
-PACKAGECONFIG[modemmanager] = "-Dmodem_manager=true -Dofono=true,-Dmodem_manager=false -Dofono=false,modemmanager mobile-broadband-provider-info"
+PACKAGECONFIG[modemmanager] = "-Dmodem_manager=true,-Dmodem_manager=false,modemmanager mobile-broadband-provider-info"
+PACKAGECONFIG[ofono] = "-Dofono=true,-Dofono=false,ofono"
 PACKAGECONFIG[ppp] = "-Dppp=true -Dpppd=/usr/sbin/pppd,-Dppp=false,ppp,ppp"
 PACKAGECONFIG[dnsmasq] = "-Ddnsmasq=${bindir}/dnsmasq,,,dnsmasq"
 PACKAGECONFIG[resolvconf] = "-Dresolvconf=${base_sbindir}/resolvconf,-Dresolvconf=no,,resolvconf"
 PACKAGECONFIG[wifi] = "-Dwext=false -Dwifi=true,-Dwext=false -Dwifi=false"
-PACKAGECONFIG[iwd] = "-Diwd=true,-Diwd=false"
 PACKAGECONFIG[ifupdown] = "-Difupdown=true,-Difupdown=false"
 PACKAGECONFIG[cloud-setup] = "-Dnm_cloud_setup=true,-Dnm_cloud_setup=false"
 PACKAGECONFIG[nmcli] = "-Dnmcli=true,-Dnmcli=false"
@@ -195,7 +195,7 @@ FILES:${PN} += " \
 
 RRECOMMENDS:${PN} += "\
     iptables \
-    ${@bb.utils.filter('PACKAGECONFIG', 'dnsmasq', d)} \
+    ${@bb.utils.contains('PACKAGECONFIG', 'dnsmasq', 'dnsmasq', '', d)} \
     ${@bb.utils.contains('PACKAGECONFIG','adsl','${PN}-adsl','',d)} \
     ${@bb.utils.contains('PACKAGECONFIG','bluez5','${PN}-bluetooth','',d)} \
     ${@bb.utils.contains('PACKAGECONFIG','cloud-setup','${PN}-cloud-setup','',d)} \
@@ -206,7 +206,9 @@ RRECOMMENDS:${PN} += "\
     ${@bb.utils.contains('PACKAGECONFIG','ovs','${PN}-ovs','',d)} \
     ${@bb.utils.contains('PACKAGECONFIG','ppp','${PN}-ppp','',d)} \
 "
-RCONFLICTS:${PN} = "connman"
+
+RCONFLICTS:${PN} = "connman networkmanager"
+RREPLACES:${PN} = "networkmanager"
 
 INITSCRIPT_NAME = "network-manager"
 SYSTEMD_SERVICE:${PN} = "\
