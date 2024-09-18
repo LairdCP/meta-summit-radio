@@ -8,4 +8,4 @@ LIC_FILES_CHKSUM += "file://LICENSE.nxp2;md5=7b112d07b0616149941639c05f68f431"
 
 require radio-stack-nx-version.inc
 
-SRC_URI = "${SUMMIT_URI}/sona-${BPN}-${PV}.tar.bz2;name=${BPN}"
+SRC_URI = "${SUMMIT_URI}/summit-${BPN}-${PV}.tar.bz2;name=${BPN}"
