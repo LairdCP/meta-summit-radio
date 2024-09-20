@@ -43,7 +43,7 @@ EXTRA_OECONF = " \
     --with-nmtui=yes \
     --with-udev-dir=${nonarch_base_libdir}/udev \
     --without-libpsl \
-	--disable-qt \
+    --disable-qt \
     --with-config-dns-rc-manager-default=${NETWORKMANAGER_DNS_RC_MANAGER_DEFAULT} \
     --with-config-dhcp-default=${NETWORKMANAGER_DHCP_DEFAULT} \
     --without-dhcpcanon \
