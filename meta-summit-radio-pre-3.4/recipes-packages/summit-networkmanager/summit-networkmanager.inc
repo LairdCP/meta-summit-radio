@@ -148,7 +148,7 @@ FILES_${PN}-nmtui-doc = " \
 
 FILES_${PN}-wifi = "${NETWORKMANAGER_PLUGINDIR}/libnm-device-plugin-wifi.so"
 
-FILES:${PN}-wwan = "\
+FILES_${PN}-wwan = "\
     ${NETWORKMANAGER_PLUGINDIR}/libnm-device-plugin-wwan.so \
     ${NETWORKMANAGER_PLUGINDIR}/libnm-wwan.so \
 "
