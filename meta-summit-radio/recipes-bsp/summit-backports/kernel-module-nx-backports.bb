@@ -11,8 +11,9 @@ RCONFLICTS:${PN} = " \
         kernel-module-bdsdmac-backports \
         "
 
-module_conf_moal = "options moal fw_name=nxp/sd_w61x_v1.bin.se drv_mode=3 cntry_txpwr=2 drvdbg=6"
+module_conf_moal = "options moal mod_para=nxp/wifi_prod_params.conf"
 
 KERNEL_MODULE_PROBECONF += "moal"
 
-require summit-backports.inc radio-stack-nx-version.inc
+require summit-backports.inc
+require radio-stack-nx-version.inc
