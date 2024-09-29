@@ -1,7 +1,7 @@
 SECTION = "kernel/userland"
 
 LICENSE = "BSD-3-Clause"
-LIC_FILES_CHKSUM = "file://hostapd/README;md5=c905478466c90f1cefc0df987c40e172"
+LIC_FILES_CHKSUM = "file://hostapd/README;md5=0e430ef1be3d6eebf257cf493fc7661d"
 
 PV = "${RADIO_VERSION}"   
 
