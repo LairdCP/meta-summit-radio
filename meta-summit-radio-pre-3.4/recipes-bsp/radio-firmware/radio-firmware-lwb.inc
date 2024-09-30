@@ -1,7 +1,7 @@
 require radio-firmware.inc
 require radio-stack-lwb-version.inc
 
-LICENSE = "Ezurio"
+LICENSE = "Laird"
 NO_GENERIC_LICENSE[Laird] = "LICENSE"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=53d3628b28a0bc3caea61587feade5f9"
 
