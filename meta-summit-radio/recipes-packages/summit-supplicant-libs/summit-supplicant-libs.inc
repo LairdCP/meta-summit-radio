@@ -1,8 +1,7 @@
 SECTION = "Wireless"
 
-LICENSE = "Ezurio"
-NO_GENERIC_LICENSE[Ezurio] = "LICENSE.ezurio"
-LIC_FILES_CHKSUM = "file://LICENSE.ezurio;md5=fd3dd0630b215465b6f50540642d5b93"
+LICENSE = "BSD-3-Clause"
+LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/BSD-3-Clause;md5=550794465ba0ec5312d6919e203a55f9"
 
 PV = "${RADIO_VERSION}"
 
