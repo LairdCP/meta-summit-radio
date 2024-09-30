@@ -1,9 +1,8 @@
 require radio-firmware.inc
 require radio-stack-60-version.inc
 
-LICENSE += "& NXP1"
-NO_GENERIC_LICENSE[NXP1] = "LICENSE.nxp1"
-LIC_FILES_CHKSUM += "file://LICENSE.nxp1;md5=933884af53a2d9e6d73e4e3065819f40"
+LICENSE = "MIT"
+LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
 
 RPROVIDES_${PN}  += "wireless-regdb-static"
 RREPLACES_${PN}  += "wireless-regdb-static"

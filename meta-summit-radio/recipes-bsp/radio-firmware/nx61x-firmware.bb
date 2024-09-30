@@ -1,10 +1,9 @@
-SUMMARY = "Sona NX61x Firmware SDIO-UART"
+SUMMARY = "NX61x Firmware SDIO-UART"
 
 require radio-firmware.inc
 
-LICENSE += "& NXP2"
-NO_GENERIC_LICENSE[NXP2] = "LICENSE.nxp2"
-LIC_FILES_CHKSUM += "file://LICENSE.nxp2;md5=7b112d07b0616149941639c05f68f431"
+LICENSE = "MIT"
+LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
 
 require radio-stack-nx-version.inc
 

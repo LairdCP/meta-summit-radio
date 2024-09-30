@@ -1,11 +1,7 @@
 SECTION = "kernel"
 
-LICENSE = "GPL-2.0-only & Ezurio"
-NO_GENERIC_LICENSE[Ezurio] = "LICENSE.ezurio"
-LIC_FILES_CHKSUM = "\
-    file://COPYING;md5=6bc538ed5bd9a7fc9398086aedcd7e46 \
-    file://LICENSE.ezurio;md5=fd3dd0630b215465b6f50540642d5b93 \
-    "
+LICENSE = "GPL-2.0-only"
+LIC_FILES_CHKSUM = "file://COPYING;md5=6bc538ed5bd9a7fc9398086aedcd7e46"
 
 PV = "${RADIO_VERSION}"
 
