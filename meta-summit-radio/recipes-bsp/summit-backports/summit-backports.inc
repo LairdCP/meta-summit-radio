@@ -18,7 +18,12 @@ S = "${WORKDIR}/summit-backports-${PV}"
 SUMMIT_URI ?= "${SUMMIT_URI_BASE}"
 SUMMIT_URI:summit-internal = "${SUMMIT_URI_BASE}/backports/laird/${PV}"
 
-SRC_URI += "${SUMMIT_URI}/summit-backports-${PV}.tar.bz2;name=summit-backports"
+SRC_URI += "\
+    ${SUMMIT_URI}/summit-backports-${PV}.tar.bz2;name=summit-backports \
+    file://0001-skb_pull_data-Fixed-backports-with-kernel-5.15.patch \
+    file://0002-lrdmwl-Fixed-reset-gpio-operation.patch \
+    file://0003-lrdmwl-fix-no-macid-can-be-allocated.patch \
+    "
 
 EXTRA_OEMAKE = "\
     KLIB=${STAGING_KERNEL_DIR} \

@@ -1,0 +1,26 @@
+From 82db7e59b597452073a0703fe7530d3568302517 Mon Sep 17 00:00:00 2001
+From: Boris Krasnovskiy <boris.krasnovskiy@ezurio.com>
+Date: Mon, 23 Sep 2024 23:36:47 -0400
+Subject: [PATCH 2/2] lrdmwl: Fixed reset gpio operation
+
+PROD-14923
+---
+ drivers/net/wireless/summit/lrdmwl/gpio.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/net/wireless/summit/lrdmwl/gpio.c b/drivers/net/wireless/summit/lrdmwl/gpio.c
+index c13db258..53f3d100 100644
+--- a/drivers/net/wireless/summit/lrdmwl/gpio.c
++++ b/drivers/net/wireless/summit/lrdmwl/gpio.c
+@@ -179,7 +179,7 @@
+ 
+ int mwl_gpio_set(mwl_gpio_t *card_gpio, int value)
+ {
+-	if (mwl_gpio_valid(card_gpio))
++	if (!mwl_gpio_valid(card_gpio))
+ 		return -ENODEV;
+ 
+ 	gpio_set_value(card_gpio->gpio,
+-- 
+2.46.2
+

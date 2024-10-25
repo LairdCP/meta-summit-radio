@@ -1,7 +1,11 @@
 SECTION = "kernel"
 
-LICENSE = "GPLv2"
-LIC_FILES_CHKSUM = "file://COPYING;md5=6bc538ed5bd9a7fc9398086aedcd7e46"
+LICENSE = "GPLv2 & Ezurio"
+NO_GENERIC_LICENSE[Ezurio] = "LICENSE.ezurio"
+LIC_FILES_CHKSUM = "\
+    file://COPYING;md5=6bc538ed5bd9a7fc9398086aedcd7e46 \
+    file://LICENSE.ezurio;md5=fd3dd0630b215465b6f50540642d5b93 \
+    "
 
 PV = "${RADIO_VERSION}"
 
@@ -14,7 +18,12 @@ S = "${WORKDIR}/summit-backports-${PV}"
 SUMMIT_URI ?= "${SUMMIT_URI_BASE}"
 SUMMIT_URI_summit-internal = "${SUMMIT_URI_BASE}/backports/laird/${PV}"
 
-SRC_URI += "${SUMMIT_URI}/summit-backports-${PV}.tar.bz2;name=summit-backports"
+SRC_URI += "\
+    ${SUMMIT_URI}/summit-backports-${PV}.tar.bz2;name=summit-backports \
+    file://0001-skb_pull_data-Fixed-backports-with-kernel-5.15.patch \
+    file://0002-lrdmwl-Fixed-reset-gpio-operation.patch \
+    file://0003-lrdmwl-fix-no-macid-can-be-allocated.patch \
+    "
 
 EXTRA_OEMAKE = "\
     KLIB=${STAGING_KERNEL_DIR} \

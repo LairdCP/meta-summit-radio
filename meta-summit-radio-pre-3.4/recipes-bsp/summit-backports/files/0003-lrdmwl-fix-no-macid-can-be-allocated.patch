@@ -1,0 +1,87 @@
+From ecd830dc560ec171ae4463a7e3b17d88ad259154 Mon Sep 17 00:00:00 2001
+From: Doug Smith <doug.smith@ezurio.com>
+Date: Wed, 2 Oct 2024 10:19:39 -0400
+Subject: [PATCH] lrdmwl: fix "no macid can be allocated"
+
+Limit P2P_DEVICE support to android.
+This avoids using an additional mac-address
+for the P2P_DEVICE for linux.
+(P2P_CLIENT and P2P_GO remain unchanged).
+Add a module parameter to allow override.
+
+Bug: PROD-15155
+---
+ main.c | 29 ++++++++++++++++++++++++++++-
+ 1 file changed, 28 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/net/wireless/summit/lrdmwl/main.c b/drivers/net/wireless/summit/lrdmwl/main.c
+index db6d076..e6c34cb 100644
+--- a/drivers/net/wireless/summit/lrdmwl/main.c
++++ b/drivers/net/wireless/summit/lrdmwl/main.c
+@@ -136,6 +136,7 @@ static const struct ieee80211_iface_limit ap_if_su_limits[] = {
+ 	{ .max = SYSADPT_NUM_OF_STA,   .types = BIT(NL80211_IFTYPE_STATION) |
+ 	                                        BIT(NL80211_IFTYPE_P2P_GO) |
+ 	                                        BIT(NL80211_IFTYPE_P2P_CLIENT)},
++	/* note, the P2P_DEVICE entry must be last (see mwl_alloc_intf_combos) */
+ 	{ .max = 1,	.types = BIT(NL80211_IFTYPE_P2P_DEVICE) },
+ };
+ 
+@@ -220,6 +221,13 @@ unsigned int stop_shutdown_timeout = 12000;
+ unsigned int enable_24_40mhz = 0;
+ unsigned int ant_gain_adjust = 0;
+ unsigned int host_crypto_mode = 0;
++#ifdef CONFIG_ANDROID
++/* android needs P2P_DEVICE typically - default to enabled */
++#define DEFAULT_ENABLE_P2P_DEVICE 1
++#else
++#define DEFAULT_ENABLE_P2P_DEVICE 0
++#endif
++static uint enable_p2p_device = DEFAULT_ENABLE_P2P_DEVICE;
+ 
+ static int lrd_send_fw_event(struct device *dev, bool on)
+ {
+@@ -818,6 +826,19 @@ mwl_alloc_intf_combos(const struct ieee80211_iface_combination *c, int n_c)
+ 			combo[x].limits = (struct ieee80211_iface_limit*)end;
+ 			memcpy((void*)combo[x].limits, c[x].limits, sizeof(struct ieee80211_iface_limit)*combo[x].n_limits);
+ 			end += sizeof(struct ieee80211_iface_limit) * combo[x].n_limits;
++
++			if (combo[x].n_limits && !enable_p2p_device) {
++				int y;
++				struct ieee80211_iface_limit *limits;
++				limits = (void*)(combo[x].limits);
++				for (y = 0; y < combo[x].n_limits; y++) {
++					limits[y].types &= ~BIT(NL80211_IFTYPE_P2P_DEVICE);
++				}
++				if (limits[combo[x].n_limits-1].types == 0) {
++					// remove last entry as no types are supported
++					combo[x].n_limits--;
++				}
++			}
+ 		}
+ 	}
+ 
+@@ -995,7 +1016,9 @@ static void mwl_set_ieee_hw_caps(struct mwl_priv *priv)
+ 	hw->wiphy->interface_modes |= BIT(NL80211_IFTYPE_STATION);
+ 	hw->wiphy->interface_modes |= BIT(NL80211_IFTYPE_P2P_GO);
+ 	hw->wiphy->interface_modes |= BIT(NL80211_IFTYPE_P2P_CLIENT);
+-	hw->wiphy->interface_modes |= BIT(NL80211_IFTYPE_P2P_DEVICE);
++	if (enable_p2p_device) {
++		hw->wiphy->interface_modes |= BIT(NL80211_IFTYPE_P2P_DEVICE);
++	}
+ 	hw->wiphy->interface_modes |= BIT(NL80211_IFTYPE_ADHOC);
+ 
+ 	/* set up band information for 2.4G */
+@@ -2336,6 +2359,10 @@ MODULE_PARM_DESC(host_crypto_mode, "Use only host cryptography 0:hw/host 1:host"
+ module_param(enable_24_40mhz, uint, 0);
+ MODULE_PARM_DESC(enable_24_40mhz, "Enable 2.4 support for 40MHz channels 0:Disable 1:Enable");
+ 
++// note, enabling the P2P device will consume a mac-address
++module_param(enable_p2p_device, uint, 0444);
++MODULE_PARM_DESC(enable_p2p_device, "Enable support for non-netdev P2P_DEVICE. 0:Disable 1:Enable");
++
+ 
+ MODULE_DESCRIPTION(LRD_DESC);
+ MODULE_VERSION(LRD_DRV_VERSION);
+-- 
+2.47.0
+

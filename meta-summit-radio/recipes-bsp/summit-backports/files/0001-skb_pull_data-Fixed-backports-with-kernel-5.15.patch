@@ -1,0 +1,28 @@
+From 87ce5138c73af3afe90e3708687079552989efee Mon Sep 17 00:00:00 2001
+From: Boris Krasnovskiy <boris.krasnovskiy@ezurio.com>
+Date: Wed, 11 Sep 2024 23:05:47 -0400
+Subject: [PATCH] skb_pull_data: Fixed backports with kernel 5.15
+
+PROD-14553
+---
+ backport/backport-include/linux/skbuff.h | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/backport/backport-include/linux/skbuff.h b/backport/backport-include/linux/skbuff.h
+index 394d01da..7e7b4853 100644
+--- a/backport-include/linux/skbuff.h
++++ b/backport-include/linux/skbuff.h
+@@ -552,7 +552,9 @@ static inline void skb_set_kcov_handle(struct sk_buff *skb,
+ static inline u64 skb_get_kcov_handle(struct sk_buff *skb) { return 0; }
+ #endif
+ 
+-#if LINUX_VERSION_IS_LESS(5,17,0)
++#if LINUX_VERSION_IS_LESS(5,17,0) && \
++	!LINUX_VERSION_IN_RANGE(5,15,162, 5,16,0)
++#define skb_pull_data LINUX_BACKPORT(skb_pull_data)
+ static inline void *skb_pull_data(struct sk_buff *skb, size_t len)
+ {
+ 	void *data = skb->data;
+-- 
+2.46.2
+
