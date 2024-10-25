@@ -1,4 +1,4 @@
-SUMMARY = "Broadcom Patchram Plus utility"
+SUMMARY = "Infineon/Cypress/Broadcom Patchram Plus utility"
 SECTION = "Wireless"
 
 LICENSE = "Apache-2.0"
