@@ -21,7 +21,6 @@ IMAGE_INSTALL += "\
 	rng-tools \
 	ca-certificates \
 	tzdata \
-	alsa-utils \
 	htop \
 	ethtool \
 	iperf3 \
