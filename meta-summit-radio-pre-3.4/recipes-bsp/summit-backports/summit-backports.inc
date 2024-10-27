@@ -41,7 +41,7 @@ python fixup_rdepends () {
     suffix = d.getVar('KERNEL_MODULE_PACKAGE_SUFFIX')
     suffix_old = d.getVar('KERNEL_MODULE_PACKAGE_SUFFIX_OLD')
     for p in packages:
-        rdepends = d.getVar('RDEPEND_:' + p).split()
+        rdepends = d.getVar('RDEPEND_' + p).split()
         for i, r in enumerate(rdepends):
             if not r in packages:
                 rdepends[i] = r.replace(suffix, suffix_old)
