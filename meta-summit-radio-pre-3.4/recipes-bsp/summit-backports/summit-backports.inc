@@ -27,7 +27,14 @@ EXTRA_OEMAKE = "\
     M=${S} \
     "
 
-KERNEL_MODULE_PACKAGE_SUFFIX = "-backports-${KERNEL_VERSION}"
+def package_suffix(d):
+    bpn = d.getVar("BPN", True)
+    prefix = 'kernel-module'
+    if bpn.startswith(prefix):
+        return bpn[len(prefix):]
+    return '-backports'
+
+KERNEL_MODULE_PACKAGE_SUFFIX = "${@package_suffix(d)}-${KERNEL_VERSION}"
 
 KCONFIG_CONFIG_COMMAND = "${EXTRA_OEMAKE} CC=${BUILD_CC} menuconfig"
 
