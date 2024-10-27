@@ -32,7 +32,23 @@ def package_suffix(d):
         return bpn[len(prefix):]
     return '-backports'
 
-KERNEL_MODULE_PACKAGE_SUFFIX = "${@package_suffix(d)}-${KERNEL_VERSION}"
+KERNEL_MODULE_PACKAGE_SUFFIX_OLD := "${KERNEL_MODULE_PACKAGE_SUFFIX}"
+KERNEL_MODULE_PACKAGE_SUFFIX := "${@package_suffix(d)}-${KERNEL_VERSION}"
+
+python fixup_rdepends () {
+    import oe.utils
+    packages = oe.utils.packages_filter_out_system(d)
+    suffix = d.getVar('KERNEL_MODULE_PACKAGE_SUFFIX')
+    suffix_old = d.getVar('KERNEL_MODULE_PACKAGE_SUFFIX_OLD')
+    for p in packages:
+        rdepends = d.getVar('RDEPENDS:' + p).split()
+        for i, r in enumerate(rdepends):
+            if not r in packages:
+                rdepends[i] = r.replace(suffix, suffix_old)
+        d.setVar('RDEPENDS_' + p, ' '.join(rdepends))
+}
+
+PACKAGESPLITFUNCS += "fixup_rdepends" 
 
 KCONFIG_CONFIG_COMMAND = "${EXTRA_OEMAKE} CC=${BUILD_CC} menuconfig"
 
