@@ -25,19 +25,19 @@ FILES:${PN} += "${systemd_unitdir}/system ${sysconfdir}"
 SYSTEMD_SERVICE:${PN} = "btattach.service"
 
 do_install() {
-    install -D -m 0775 -t ${D}${bindir} ${S}/bt-service.sh ${S}/bttest.sh
+    install -D -m 0775 -t "${D}${bindir}" "${S}/bt-service.sh" "${S}/bttest.sh"
 
-    install -d ${D}${sysconfdir}/default
-    echo "PORT=${BT_SERIAL_PORT}"  > ${D}${sysconfdir}/default/bt-service
-    echo "BAUD=${BT_SERIAL_BAUD}" >> ${D}${sysconfdir}/default/bt-service
+    install -d "${D}${sysconfdir}/default"
+    echo "PORT=${BT_SERIAL_PORT}"  > "${D}${sysconfdir}/default/bt-service"
+    echo "BAUD=${BT_SERIAL_BAUD}" >> "${D}${sysconfdir}/default/bt-service"
 
     if ${@bb.utils.contains('DISTRO_FEATURES','systemd','true','false',d)}; then
-        install -D -m 0644 ${S}/80-btattach.rules-sysd \
-            ${D}${sysconfdir}/udev/rules.d/80-btattach.rules
+        install -D -m 0644 "${S}/80-btattach.rules-sysd" \
+            "${D}${sysconfdir}/udev/rules.d/80-btattach.rules"
         install -D -m 0644 ${S}/btattach.service \
-            ${D}${systemd_unitdir}/system/btattach.service
+            "${D}${systemd_unitdir}/system/btattach.service"
     else
-        install -D -m 0644 ${S}/80-btattach.rules-sysv \
-            ${D}${sysconfdir}/udev/rules.d/80-btattach.rules
+        install -D -m 0644 "${S}/80-btattach.rules-sysv" \
+            "${D}${sysconfdir}/udev/rules.d/80-btattach.rules"
     fi
 }

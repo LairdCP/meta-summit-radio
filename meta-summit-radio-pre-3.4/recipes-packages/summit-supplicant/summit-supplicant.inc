@@ -5,15 +5,15 @@ NO_GENERIC_LICENSE[Ezurio] = "LICENSE.ezurio"
 LIC_FILES_CHKSUM = "file://COPYING;md5=5ebcb90236d1ad640558c3d3cd3035df \
                     file://README;beginline=1;endline=56;md5=6e4b25e7d74bfc44a32ba37bdf5210a6 \
                     file://wpa_supplicant/wpa_supplicant.c;beginline=1;endline=12;md5=f5ccd57ea91e04800edb88267bf8eae4 \
-					file://LICENSE.ezurio;md5=fd3dd0630b215465b6f50540642d5b93 \
-					"
+                    file://LICENSE.ezurio;md5=fd3dd0630b215465b6f50540642d5b93 \
+                    "
 
 PV = "${RADIO_VERSION}"
 
 DEPENDS = "libnl openssl"
 RRECOMMENDS_${PN} = "${PN}-passphrase ${PN}-cli"
 
-inherit pkgconfig systemd 
+inherit pkgconfig systemd
 
 SYSTEMD_SERVICE_${PN} = "wpa_supplicant.service wpa_supplicant-nl80211@.service wpa_supplicant-wired@.service"
 SYSTEMD_AUTO_ENABLE = "disable"
@@ -51,30 +51,30 @@ SOLIBS = ".so*"
 FILES_SOLIBSDEV = ""
 
 do_configure () {
-	cp -f ${DEFCONFIG} .config
+    cp -f "${DEFCONFIG}" .config
 
-	# For rebuild
-	rm -f *.d dbus/*.d
+    # For rebuild
+    rm -f ./*.d dbus/*.d
 }
 
 do_compile_append () {
-	${OBJCOPY} wpa_supplicant sdcsupp
+    ${OBJCOPY} wpa_supplicant sdcsupp
 }
 
 EXTRA_OEMAKE = "'BINDIR=${sbindir}'"
 
 do_install () {
-	install -m 0755 -D -t ${D}${sbindir} wpa_cli sdcsupp
-	install -m 0755 -D -t ${D}${bindir} wpa_passphrase
+    install -m 0755 -D -t "${D}${sbindir}" wpa_cli sdcsupp
+    install -m 0755 -D -t "${D}${bindir}" wpa_passphrase
 
-	if ${@bb.utils.contains('DISTRO_FEATURES', 'systemd', 'true', 'false', d)}; then
-		install -m 0644 -D -t ${D}${systemd_unitdir}/system systemd/*.service
-	fi
+    if ${@bb.utils.contains('DISTRO_FEATURES', 'systemd', 'true', 'false', d)}; then
+        install -m 0644 -D -t "${D}${systemd_unitdir}/system" systemd/*.service
+    fi
 }
 
 pkg_postinst_${PN} () {
-	# If we're offline, we don't need to do this.
-	if [ "x$D" = "x" ]; then
-		killall -q -HUP dbus-daemon || true
-	fi
+    # If we're offline, we don't need to do this.
+    if [ -z "$D" ]; then
+        killall -q -HUP dbus-daemon || true
+    fi
 }

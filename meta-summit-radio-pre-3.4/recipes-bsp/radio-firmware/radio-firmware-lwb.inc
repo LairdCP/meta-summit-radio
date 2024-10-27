@@ -10,8 +10,8 @@ FILES_${PN} += "${sysconfdir}"
 LWB_REGDOMAIN ?= ""
 
 do_install_append() {
-    if [ ! -z ${LWB_REGDOMAIN} ]; then
-        install -d  ${D}${sysconfdir}/modprobe.d
-        echo "options brcmfmac regdomain=\"${LWB_REGDOMAIN}\"" > ${D}${sysconfdir}/modprobe.d/brcmfmac_regd.conf
+    if [ ! -z "${LWB_REGDOMAIN}" ]; then
+        install -d  "${D}${sysconfdir}/modprobe.d"
+        echo "options brcmfmac regdomain=\"${LWB_REGDOMAIN}\"" > "${D}${sysconfdir}/modprobe.d/brcmfmac_regd.conf"
     fi
 }
