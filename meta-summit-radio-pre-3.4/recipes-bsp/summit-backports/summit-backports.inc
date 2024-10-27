@@ -50,11 +50,11 @@ def find_cfgs(d):
 do_configure[depends] += "virtual/kernel:do_compile"
 
 do_configure () {
-    rm -f ${S}/.kernel_config_md5
+    rm -f "${S}/.kernel_config_md5"
 
     # Copy defconfig to .config if .config does not exist. This allows
     # recipes to manage the .config themselves in do_configure:prepend().
-    if [ -f "${WORKDIR}/defconfig" -a ! -f "${S}/.config" ]; then
+    if [ -f "${WORKDIR}/defconfig" ] && [ ! -f "${S}/.config" ]; then
         cp "${WORKDIR}/defconfig" "${S}/.config"
     fi
 
@@ -63,24 +63,24 @@ do_configure () {
         cp "${S}/defconfigs/${BACKPORTS_CONFIG}" "${S}/.config"
     fi
 
-    ${S}/kconf/merge_config.sh -O ${S} -m ${S}/.config ${@" ".join(find_cfgs(d))}
+    "${S}/kconf/merge_config.sh" -O "${S}" -m "${S}/.config" ${@" ".join(find_cfgs(d))}
 
     unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS
-    oe_runmake CC=${BUILD_CC} olddefconfig
+    oe_runmake CC="${BUILD_CC}" olddefconfig
 }
 
 do_savedefconfig () {
     bbplain "Saving defconfig to:\n${S}/defconfig"
     unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS
-    oe_runmake CC=${BUILD_CC} savedefconfig
+    oe_runmake CC="${BUILD_CC}" savedefconfig
 }
 
 do_savedefconfig[nostamp] = "1"
 addtask savedefconfig after do_configure
 
 do_install_append () {
-    install -d ${D}${includedir}/${BPN}
-    cp -R --no-dereference --preserve=mode,links -v ${S}/include ${D}${includedir}/${BPN}
-    cp -R --no-dereference --preserve=mode,links -v ${S}/backport-include ${D}${includedir}/${BPN}
-    rm -f ${D}${includedir}/${BPN}/backport-include/linux/module.h
+    install -d "${D}${includedir}/${BPN}"
+    cp -R --no-dereference --preserve=mode,links -v "${S}/include" "${D}${includedir}/${BPN}"
+    cp -R --no-dereference --preserve=mode,links -v "${S}/backport-include" "${D}${includedir}/${BPN}"
+    rm -f "${D}${includedir}/${BPN}/backport-include/linux/module.h"
 }

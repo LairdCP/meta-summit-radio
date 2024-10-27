@@ -36,5 +36,5 @@ FILES_SOLIBSDEV = ""
 FILES_${PN} += "${libdir}/libsdcsupp.so"
 
 do_install () {
-	install -D -t ${D}${libdir} -m 0644 ${S}/usr/lib/libsdcsupp.so
+	install -D -t "${D}${libdir}" -m 0644 "${S}/usr/lib/libsdcsupp.so"
 }
