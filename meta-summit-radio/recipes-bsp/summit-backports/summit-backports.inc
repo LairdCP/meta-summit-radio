@@ -28,7 +28,9 @@ EXTRA_OEMAKE = "\
 def package_suffix(d):
     bpn = d.getVar("BPN", True)
     prefix = 'kernel-module'
-    return bpn[len(prefix):] if bpn.startswith(prefix) else '-backports'
+    if bpn.startswith(prefix):
+        return bpn[len(prefix):]
+    return '-backports'
 
 KERNEL_MODULE_PACKAGE_SUFFIX = "${@package_suffix(d)}-${KERNEL_VERSION}"
 
