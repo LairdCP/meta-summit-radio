@@ -51,10 +51,10 @@ SOLIBS = ".so*"
 FILES_SOLIBSDEV = ""
 
 do_configure () {
-    cp -f ${DEFCONFIG} .config
+    cp -f "${DEFCONFIG}" .config
 
     # For rebuild
-    rm -f *.d dbus/*.d
+    rm -f ./*.d dbus/*.d
 }
 
 do_compile:append () {
@@ -64,17 +64,17 @@ do_compile:append () {
 EXTRA_OEMAKE = "'BINDIR=${sbindir}'"
 
 do_install () {
-    install -m 0755 -D -t ${D}${sbindir} wpa_cli sdcsupp
-    install -m 0755 -D -t ${D}${bindir} wpa_passphrase
+    install -m 0755 -D -t "${D}${sbindir}" wpa_cli sdcsupp
+    install -m 0755 -D -t "${D}${bindir}" wpa_passphrase
 
     if ${@bb.utils.contains('DISTRO_FEATURES', 'systemd', 'true', 'false', d)}; then
-        install -m 0644 -D -t ${D}${systemd_unitdir}/system systemd/*.service
+        install -m 0644 -D -t "${D}${systemd_unitdir}/system" systemd/*.service
     fi
 }
 
 pkg_postinst:${PN} () {
     # If we're offline, we don't need to do this.
-    if [ "x$D" = "x" ]; then
+    if [ -z "$D" ]; then
         killall -q -HUP dbus-daemon || true
     fi
 }

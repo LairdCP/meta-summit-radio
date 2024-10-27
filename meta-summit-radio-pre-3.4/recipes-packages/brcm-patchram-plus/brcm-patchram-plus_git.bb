@@ -19,6 +19,5 @@ do_compile () {
 }
 
 do_install () {
-	install -d ${D}${sbindir}
-	install -m 755 brcm_patchram_plus ${D}${sbindir}
+	install -D -t "${D}${sbindir}" -m 755 brcm_patchram_plus
 }

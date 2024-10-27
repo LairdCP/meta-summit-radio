@@ -24,6 +24,6 @@ ALLOW_EMPTY:${PN}-dev = "0"
 ALLOW_EMPTY:${PN}-dbg = "0"
 
 do_install() {
-	install -d  ${D}${nonarch_base_libdir}
-	cp -r ${S}/lib/* ${D}${nonarch_base_libdir}
+	install -d  "${D}${nonarch_base_libdir}"
+	cp -r "${S}/lib/"* "${D}${nonarch_base_libdir}"
 }

@@ -27,17 +27,17 @@ SYSTEMD_SERVICE:${PN} = "hostapd.service"
 SYSTEMD_AUTO_ENABLE:${PN} = "disable"
 
 do_configure() {
-    install -m 0644 ${B}/config_openssl ${B}/.config
+    install -m 0644 "${B}/config_openssl" "${B}/.config"
 }
 
 do_install() {
-    install -m 0644 -D -t ${D}${sysconfdir} ${B}/hostapd.conf
-    install -m 0755 -D -t ${D}${sbindir} ${B}/hostapd ${B}/hostapd_cli
-    install -m 0755 -D ${WORKDIR}/init ${D}${sysconfdir}/init.d/hostapd
+    install -m 0644 -D -t "${D}${sysconfdir}" "${B}/hostapd.conf"
+    install -m 0755 -D -t "${D}${sbindir}" "${B}/hostapd" "${B}/hostapd_cli"
+    install -m 0755 -D "${WORKDIR}/init" "${D}${sysconfdir}/init.d/hostapd"
  
     if ${@bb.utils.contains('DISTRO_FEATURES', 'systemd', 'true', 'false', d)}; then
-        install -m 0644 -D -t ${D}${systemd_unitdir}/system/ ${WORKDIR}/hostapd.service
-        sed -i -e 's,@SBINDIR@,${sbindir},g' -e 's,@SYSCONFDIR@,${sysconfdir},g' ${D}${systemd_unitdir}/system/hostapd.service
+        install -m 0644 -D -t "${D}${systemd_unitdir}/system/" "${WORKDIR}/hostapd.service"
+        sed -i -e "s,@SBINDIR@,${sbindir},g" -e "s,@SYSCONFDIR@,${sysconfdir},g" "${D}${systemd_unitdir}/system/hostapd.service"
     fi
 }
 
