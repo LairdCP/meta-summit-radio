@@ -32,8 +32,8 @@ def package_suffix(d):
         return bpn[len(prefix):]
     return '-backports'
 
-KERNEL_MODULE_PACKAGE_SUFFIX_OLD := "${KERNEL_MODULE_PACKAGE_SUFFIX}"
-KERNEL_MODULE_PACKAGE_SUFFIX := "${@package_suffix(d)}-${KERNEL_VERSION}"
+KERNEL_MODULE_PACKAGE_SUFFIX_OLD = "-${KERNEL_VERSION}"
+KERNEL_MODULE_PACKAGE_SUFFIX = "${@package_suffix(d)}-${KERNEL_VERSION}"
 
 python fixup_rdepends () {
     import oe.utils
@@ -41,16 +41,21 @@ python fixup_rdepends () {
     suffix = d.getVar('KERNEL_MODULE_PACKAGE_SUFFIX')
     suffix_old = d.getVar('KERNEL_MODULE_PACKAGE_SUFFIX_OLD')
     for p in packages:
-        rdepends = d.getVar('RDEPENDS_' + p)
-        if rdepends:
-            rlist = rdepends.split()
-            for i, r in enumerate(rlist):
-                if not r in packages:
-                    rlist[i] = r.replace(suffix, suffix_old)
+        rdep = d.getVar('RDEPENDS_' + p)
+        if not rdep:
+            continue
+
+        update = False
+        rlist = rdep.split()
+        for i, r in enumerate(rlist):
+            if not r in packages:
+                rlist[i] = r.replace(suffix, suffix_old)
+                update = True
+        if update:
             d.setVar('RDEPENDS_' + p, ' '.join(rlist))
 }
 
-PACKAGESPLITFUNCS += "fixup_rdepends" 
+PACKAGESPLITFUNCS_append = " fixup_rdepends"
 
 KCONFIG_CONFIG_COMMAND = "${EXTRA_OEMAKE} CC=${BUILD_CC} menuconfig"
 
