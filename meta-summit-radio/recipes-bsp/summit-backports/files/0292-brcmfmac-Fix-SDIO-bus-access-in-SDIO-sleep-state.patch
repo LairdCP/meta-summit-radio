@@ -1,0 +1,43 @@
+From 380d46c8ccdad90bfe1df1d120f05da143a6bfc1 Mon Sep 17 00:00:00 2001
+From: avishad verma <avishad.verma@infineon.com>
+Date: Thu, 11 Apr 2024 03:37:22 -0500
+Subject: [PATCH 292/312] brcmfmac: Fix SDIO bus access in SDIO sleep state
+
+Issue: SDIO write/read operation is happening when bus is in sleep state.
+Cause: There was a corner case when watchdog thread is trying to claim host
+ISR is occurred and dpc is triggered. Watchdog thread is not aware of this
+change and once the watchdog thread context execution is resumed it
+tries to put bus in sleep state, which is causing the dpc execution of
+SDIO read/write in bus sleep state.
+Fix: Added additional check after host is claimed by watchdog thread. If
+DPC is triggered or running skip SDIO bus sleep.
+
+Signed-off-by: avishad verma <avishad.verma@infineon.com>
+
+
+
+---
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
+index 34e58f64727a..db89f1c42827 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
+@@ -4563,7 +4563,12 @@ static void brcmf_sdio_bus_watchdog(struct brcmf_sdio *bus)
+ #endif
+ 					brcmf_sdio_wd_timer(bus, false);
+ 				bus->idlecount = 0;
+-				brcmf_sdio_bus_sleep(bus, true, false);
++
++				if (!bus->dpc_triggered && !bus->dpc_running)
++					brcmf_sdio_bus_sleep(bus, true, false);
++				else
++					brcmf_err("DPC active Skip sleep");
++
+ 				sdio_release_host(bus->sdiodev->func1);
+ 			}
+ 		} else {
+-- 
+2.17.1
+

@@ -23,6 +23,7 @@ SRC_URI += "\
     file://0001-skb_pull_data-Fixed-backports-with-kernel-5.15.patch \
     file://0002-lrdmwl-Fixed-reset-gpio-operation.patch \
     file://0003-lrdmwl-fix-no-macid-can-be-allocated.patch \
+    file://0292-brcmfmac-Fix-SDIO-bus-access-in-SDIO-sleep-state.patch \
     "
 
 EXTRA_OEMAKE = "\
